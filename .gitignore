@@ -15,5 +15,6 @@ yarn-error.log
 /public/css
 /public/mix-manifest.json
 /public/js
+/public/error.log
 version.txt
 .phpunit.result.cache
