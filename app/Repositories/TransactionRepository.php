@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Helper;
 use App\Models\Earning;
 use App\Models\Spending;
-use Carbon\Carbon;
 
 class TransactionRepository
 {
@@ -35,63 +34,46 @@ class TransactionRepository
         return $weeks;
     }
 
-    public function getTransactionsByYearMonth(array $filterBy = [])
+    /**
+     * Get All Transaction from month and year
+     * @param int $month
+     * @param int $year
+     * @param array $filterBy
+     * @return array
+     */
+    public function getTransactionsByYearMonth(int $month, int $year, array $filterBy = []): array
     {
-        $yearMonths = [];
+        $transactions = [];
+        $ignoreEarnings = false;
+        $earnings = Earning::ofSpace(session('space_id'))
+            ->whereRaw('YEAR(`happened_on`) = ? AND MONTH(`happened_on`) = ?', [$year, $month]);
 
-        // Populate yearMonths with earnings
-        foreach (Earning::ofSpace(session('space_id'))->get() as $earning) {
-            $shouldAdd = false;
+        $spendings = Spending::ofSpace(session('space_id'))
+            ->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$year, $month]);
 
-            if (!$filterBy) {
-                $shouldAdd = true;
-            }
-
-            if ($shouldAdd) {
-                $i = Carbon::parse($earning->happened_on)->format('Y-m');
-
-                if (!isset($yearMonths[$i])) {
-                    $yearMonths[$i] = [];
-                }
-
-                $yearMonths[$i][] = $earning;
+        if ($filterBy) {
+            if (array_key_exists("tag", $filterBy)) {
+                $spendings->whereIn('tag_id', [$filterBy['tag']]);
+                $ignoreEarnings = true;
             }
         }
 
-        // Populate yearMonths with spendings
-        foreach (Spending::ofSpace(session('space_id'))->get() as $spending) {
-            $shouldAdd = true;
-
-            // Filter
-            if (count($filterBy)) { // Check if any filters were provided
-                if ($filterBy[0] == 'tag') {
-                    if (!$spending->tag || $spending->tag->id != $filterBy[1]) {
-                        $shouldAdd = false;
-                    }
-                }
+        //If we filter by tag, not show earning because not tag on this
+        if (!$ignoreEarnings) {
+            foreach ($earnings->get() as $transaction) {
+                $transactions[] = $transaction;
             }
+        }
 
-            if ($shouldAdd) {
-                $i = Carbon::parse($spending->happened_on)->format('Y-m');
-
-                if (!isset($yearMonths[$i])) {
-                    $yearMonths[$i] = [];
-                }
-
-                $yearMonths[$i][] = $spending;
-            }
+        foreach ($spendings->get() as $transaction) {
+            $transactions[] = $transaction;
         }
 
         // Sort transactions
-        foreach ($yearMonths as &$yearMonth) {
-            usort($yearMonth, function ($a, $b) {
-                return $a->happened_on < $b->happened_on;
-            });
-        }
+        usort($transactions, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
 
-        // Sort yearMonths
-        krsort($yearMonths);
-
-        return $yearMonths;
+        return $transactions;
     }
 }
