@@ -62,3 +62,11 @@ const app = new Vue({
         }
     }
 });
+
+document.getElementById("menu__mobile-btn").addEventListener("click", () => {
+    document.getElementById("menu__mobile-panel").classList.remove("hidden");
+});
+
+document.getElementById("menu__mobile-panel-btn").addEventListener("click", () => {
+    document.getElementById("menu__mobile-panel").classList.add("hidden");
+});

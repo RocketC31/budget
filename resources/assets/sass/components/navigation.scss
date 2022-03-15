@@ -49,30 +49,8 @@
         }
     }
 
-    .display_on_mobile {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .navigation {
-        height: auto;
-
-        .wrapper {
-            flex-direction: column;
-
-            .navigation__menu {
-                padding-top: 15px;
-
-                &:first-child {
-                    padding-top: 0;
-                    justify-content: space-evenly;
-                    > li {
-                        padding: 10px;
-                    }
-                }
-            }
-        }
+    #menu__mobile-panel {
+        margin-left: -100%;
     }
 }
 
