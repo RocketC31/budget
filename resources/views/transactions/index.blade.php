@@ -12,8 +12,8 @@
                 <a href="{{ route('transactions.create') }}" class="button">{{ __('actions.create') }} {{ __('models.transactions') }}</a>
             </div>
         </div>
-        <div class="row row--responsive">
-            <div class="row__column mr-3" style="max-width: 300px;">
+        <div class="row md:flex-row flex-col">
+            <div class="row__column md:mr-3 mb-2 md:max-w-xs w-full">
                 <div class="box">
                     <div class="box__section">
                         <div class="mb-2">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row__column">
+            <div class="row__column w-full">
                 <h2 class="mb-2">
                     <a href="{{ route('transactions.index', ['monthIndex' => ($currentMonthIndex - 1) ]) }}"><i class="fa fa-chevron-left"></i></a>
                     {{ __('calendar.months.' . $month) }}, {{ $year }}

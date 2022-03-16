@@ -64,9 +64,11 @@ const app = new Vue({
 });
 
 document.getElementById("menu__mobile-btn").addEventListener("click", () => {
-    document.getElementById("menu__mobile-panel").classList.remove("hidden");
+    document.getElementById("menu__mobile-panel").classList.add("active");
+    document.getElementById("menu__mobile_backdrop").classList.add("active");
 });
 
 document.getElementById("menu__mobile-panel-btn").addEventListener("click", () => {
-    document.getElementById("menu__mobile-panel").classList.add("hidden");
+    document.getElementById("menu__mobile-panel").classList.remove("active");
+    document.getElementById("menu__mobile_backdrop").classList.remove("active");
 });

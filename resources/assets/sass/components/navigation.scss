@@ -51,6 +51,28 @@
 
     #menu__mobile-panel {
         margin-left: -100%;
+        -moz-transition: margin-left 0.8s ease;
+        -o-transition: margin-left 0.8s ease;
+        -webkit-transition: margin-left 0.8s ease;
+        transition: margin-left 0.8s ease;
+
+        &.active {
+            margin-left: 0;
+        }
+    }
+
+    #menu__mobile_backdrop {
+        opacity: 0;
+        display: none;
+        -moz-transition: opacity 0.8s ease;
+        -o-transition: opacity 0.8s ease;
+        -webkit-transition: opacity 0.8s ease;
+        transition: opacity 0.8s ease;
+
+        &.active {
+            display: block;
+            opacity: 0.25;
+        }
     }
 }
 
