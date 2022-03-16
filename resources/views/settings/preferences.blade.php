@@ -17,7 +17,7 @@
             </div>
             <div class="input input--small">
                 <label>{{ __('fields.theme') }}</label>
-                <select name="theme">
+                <select class="p-2.5" name="theme">
                     <option value="light" {{ Auth::user()->theme == 'light' ? 'selected' : '' }}>Light</option>
                     <option value="dark" {{ Auth::user()->theme == 'dark' ? 'selected' : '' }}>Dark (Experimental)</option>
                 </select>

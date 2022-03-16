@@ -72,3 +72,8 @@ document.getElementById("menu__mobile-panel-btn").addEventListener("click", () =
     document.getElementById("menu__mobile-panel").classList.remove("active");
     document.getElementById("menu__mobile_backdrop").classList.remove("active");
 });
+
+document.getElementById("menu__mobile_backdrop").addEventListener("click", () => {
+    document.getElementById("menu__mobile-panel").classList.remove("active");
+    document.getElementById("menu__mobile_backdrop").classList.remove("active");
+});

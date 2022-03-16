@@ -19,7 +19,7 @@
                         </div>
                         <div class="input input--small mb-0">
                             <label>{{ __('fields.currency') }}</label>
-                            <select disabled>
+                            <select class="p-2.5" disabled>
                                 <option>{{ $space->currency->name }}</option>
                             </select>
                             <div class="hint mt-05">You cannot modify the currency anymore</div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="input input--small">
                             <label>{{ __('fields.role') }}</label>
-                            <select name="role">
+                            <select class="p-2.5" name="role">
                                 <option value="admin">Admin</option>
                                 <option value="regular" selected>Regular</option>
                             </select>

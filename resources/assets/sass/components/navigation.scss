@@ -18,6 +18,13 @@
             color: #FFF;
         }
     }
+
+    #menu__mobile_backdrop {
+        &.active {
+            display: block;
+            opacity: 0.5;
+        }
+    }
 }
 
 .navigation {

@@ -21,8 +21,16 @@ class TagRepository
         return Tag::find($id);
     }
 
-    public function getMostExpensiveTags(int $spaceId, int $limit = null, int $year = null, int $month = null)
+    /**
+     * @param int $spaceId
+     * @param array $search
+     * @return array
+     */
+    public function getMostExpensiveTags(int $spaceId, array $search = [])
     {
+        $limit = array_key_exists("limit", $search) ? $search["limit"] : null;
+        $year = array_key_exists("year", $search) ? $search["year"] : null;
+        $month = array_key_exists("month", $search) ? $search["month"] : null;
         $sql = '
             SELECT
                 tags.name AS name,

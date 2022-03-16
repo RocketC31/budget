@@ -8,7 +8,7 @@
         </button>
         <div
             v-show="showModal"
-            class="dropdown__menu"
+            class="dropdown__menu z-10"
             :class="direction">
             <slot name="menu"></slot>
         </div>

@@ -6,7 +6,7 @@ return [
     'edit' => 'Modifier',
     'save' => 'Sauvegarder',
     'delete' => 'Supprimer',
-
+    'show' => 'Voir',
     'verify' => 'Vérifier',
 
     'yes' => 'Oui',

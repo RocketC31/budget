@@ -4,7 +4,7 @@
             <div class="box__section">
                 <div class="input input--small">
                     <label>{{ __('fields.type') }}</label>
-                    <select wire:model="selectedType">
+                    <select class="p-2.5" wire:model="selectedType">
                         @foreach ($types as $type)
                             <option value="{{ $type }}">{{ __('configuration.widget.'.$type) }}</option>
                         @endforeach
@@ -16,7 +16,7 @@
                         @foreach ($expectedProperties as $key => $value)
                             <div>
                                 <div class="mb-05">{{ ucfirst($key) }}</div>
-                                <select wire:model="providedProperties.{{ $key }}">
+                                <select class="p-2.5" wire:model="providedProperties.{{ $key }}">
                                     @foreach ($value as $y)
                                         <option value="{{ $y }}">{{ ucfirst(str_replace('_', ' ', $y)) }}</option>
                                     @endforeach

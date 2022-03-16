@@ -15,7 +15,7 @@
         <a class="m-auto flex items-center {!! (Request::path() == 'reports') ? 'active' : '' !!}" href="{{ route('reports.index') }}"><i class="fas fa-chart-line fa-sm color-green"></i> <span class="md:flex ml-05">{{ __('pages.reports') }}</span></a>
     </li>
 </ul>
-<div class="flex lg:hidden" id="menu__mobile-btn">
+<div class="flex lg:hidden cursor-pointer" id="menu__mobile-btn">
     <div class="space-y-2">
         <span class="block w-8 h-0.5 bg-gray-600"></span>
         <span class="block w-8 h-0.5 bg-gray-600"></span>
@@ -23,9 +23,9 @@
     </div>
 </div>
 <div class="navbar-backdrop fixed inset-0 bg-gray-800" id="menu__mobile_backdrop"></div>
-<div class="navbar-menu z-50 fixed top-0 left-0 bottom-0 flex flex-col sm:w-2/6 py-6 px-6 bg-white border-r overflow-y-auto w-full" id="menu__mobile-panel">
-    <nav class="">
-        <div class="flex items-center mb-8" id="menu__mobile-panel-btn">
+<div class="box navbar-menu z-50 fixed top-0 left-0 bottom-0 flex flex-col sm:w-2/6 py-6 px-6 bg-white border-r overflow-y-auto w-full" id="menu__mobile-panel">
+    <nav>
+        <div class="flex items-center mb-8 cursor-pointer" id="menu__mobile-panel-btn">
             <button class="p-4 navbar-close text-2xl">
                 <i class="fas fa-times"></i>
             </button>
@@ -33,19 +33,19 @@
         <div>
             <ul>
                 <li class="mb-1">
-                    <a class="block p-4 text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded {!! (Request::path() == 'dashboard') ? 'active' : '' !!}" href="{{ route('index') }}">{{ __('general.dashboard') }}</a>
+                    <a class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded {!! (Request::path() == 'dashboard') ? 'active' : '' !!}" href="{{ route('index') }}">{{ __('general.dashboard') }}</a>
                 </li>
                 <li class="mb-1">
-                    <a class="block p-4 text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded {!! (Request::path() == 'transactions') ? 'active' : '' !!}" href="{{ route('transactions.index') }}">{{ __('models.transactions') }}</a>
+                    <a class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded {!! (Request::path() == 'transactions') ? 'active' : '' !!}" href="{{ route('transactions.index') }}">{{ __('models.transactions') }}</a>
                 </li>
                 <li class="mb-1">
-                    <a class="block p-4 text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded {!! (Request::path() == 'budgets') ? 'active' : '' !!}" href="{{ route('budgets.index') }}">{{ __('models.budgets') }}</a>
+                    <a class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded {!! (Request::path() == 'budgets') ? 'active' : '' !!}" href="{{ route('budgets.index') }}">{{ __('models.budgets') }}</a>
                 </li>
                 <li class="mb-1">
-                    <a class="block p-4 text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded {!! (Request::path() == 'tags') ? 'active' : '' !!}" href="{{ route('tags.index') }}">{{ __('models.tags') }}</a>
+                    <a class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded {!! (Request::path() == 'tags') ? 'active' : '' !!}" href="{{ route('tags.index') }}">{{ __('models.tags') }}</a>
                 </li>
                 <li class="mb-1">
-                    <a class="block p-4 text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded {!! (Request::path() == 'reports') ? 'active' : '' !!}" href="{{ route('reports.index') }}">{{ __('pages.reports') }}</a>
+                    <a class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded {!! (Request::path() == 'reports') ? 'active' : '' !!}" href="{{ route('reports.index') }}">{{ __('pages.reports') }}</a>
                 </li>
             </ul>
         </div>
