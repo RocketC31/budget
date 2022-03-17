@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="/twemoji-flags.css" />
         <script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,400i,600,600i" />
-        <link rel="stylesheet" href="/css/tailwind.css" />
-        <link rel="stylesheet" href="/css/app.css" />
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}"/>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" />
         <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

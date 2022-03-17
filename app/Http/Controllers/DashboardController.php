@@ -24,7 +24,12 @@ class DashboardController extends Controller
         $currentMonth = date('m');
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
 
-        $mostExpensiveTags = $this->tagRepository->getMostExpensiveTags($space_id, 3, $currentYear, $currentMonth);
+        $search = [
+            "limit" => 3,
+            "year" => $currentYear,
+            "month" => $currentMonth
+        ];
+        $mostExpensiveTags = $this->tagRepository->getMostExpensiveTags($space_id, $search);
 
         return view('dashboard', [
             'month' => date('n'),

@@ -14,7 +14,7 @@
                     @endif
                     <div class="input input--small">
                         <label>{{ __('models.tag') }}</label>
-                        <select name="tag_id">
+                        <select class="p-2.5" name="tag_id">
                             @foreach ($tags as $tag)
                                 <option value="{{ $tag->id }}" v-pre>{{ $tag->name }}</option>
                             @endforeach
@@ -23,7 +23,7 @@
                     </div>
                     <div class="input input--small">
                         <label>{{ __('fields.period') }}</label>
-                        <select name="period">
+                        <select class="p-2.5" name="period">
                             <option value="yearly">{{ __('calendar.intervals.yearly') }}</option>
                             <option value="monthly" selected>{{ __('calendar.intervals.monthly') }}</option>
                             <option value="weekly">{{ __('calendar.intervals.weekly') }}</option>

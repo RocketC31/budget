@@ -24,6 +24,20 @@
         min-width: 150px;
         border-radius: 5px;
 
+        &.right {
+            right: -55%;
+            top: inherit;
+            transform: translate(50%, 0);
+            bottom: 50%;
+        }
+
+        &.left {
+            left: -55%;
+            top: inherit;
+            right: inherit;
+            transform: translate(-50%, 0);
+        }
+
         ul {
             list-style: none;
 

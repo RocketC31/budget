@@ -3,12 +3,13 @@
         <button
             ref="trigger"
             class="dropdown__button"
-            @click="toggleModal">
+            @click.stop="toggleModal">
             <slot name="button"></slot>
         </button>
         <div
             v-show="showModal"
-            class="dropdown__menu">
+            class="dropdown__menu z-10"
+            :class="direction">
             <slot name="menu"></slot>
         </div>
     </div>
@@ -16,6 +17,12 @@
 
 <script>
 export default {
+    props: {
+        direction: {
+            type: String,
+            default: ""
+        }
+    },
     data() {
         return {
             showModal: false

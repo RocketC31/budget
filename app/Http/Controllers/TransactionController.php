@@ -7,23 +7,28 @@ use App\Models\Spending;
 use App\Models\Tag;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\RecurringRepository;
+use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-    private $currencyRepository;
-    private $recurringRepository;
+    private TransactionRepository $repository;
+    private CurrencyRepository $currencyRepository;
+    private RecurringRepository $recurringRepository;
+    private TagRepository $tagRepository;
 
     public function __construct(
         TransactionRepository $transactionRepository,
         CurrencyRepository $currencyRepository,
-        RecurringRepository $recurringRepository
+        RecurringRepository $recurringRepository,
+        TagRepository $tagRepository
     ) {
         $this->repository = $transactionRepository;
         $this->currencyRepository = $currencyRepository;
         $this->recurringRepository = $recurringRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function index(Request $request)
@@ -48,8 +53,16 @@ class TransactionController extends Controller
         $transactions = $this->repository->getTransactionsByYearMonth($month, $year, $filterBy);
         $transactionsChart = $this->getTransactionsForChart($transactions);
 
+        $search = [
+            "year" => $year,
+            "month" => $month
+        ];
+
+        $tagsPrice = $this->tagRepository->getMostExpensiveTags(session('space_id'), $search);
+
         return view('transactions.index', [
             'transactions' => $transactions,
+            'tagsPrice' => $tagsPrice,
             'transactionsChart' => $transactionsChart,
             'currentMonthIndex' => $currentMonthIndex,
             'month' => $currentDate->format("n"),

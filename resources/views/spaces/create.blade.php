@@ -19,7 +19,7 @@
                     </div>
                     <div class="input input--small mb-0">
                         <label>{{ __('fields.currency') }}</label>
-                        <select name="currency_id">
+                        <select class="p-2.5" name="currency_id">
                             @foreach ($currencies as $currency)
                                 <option value="{{ $currency->id }}">{{ $currency->name }}</option>
                             @endforeach

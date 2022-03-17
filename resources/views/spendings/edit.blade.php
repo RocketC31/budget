@@ -12,7 +12,7 @@
                 <div class="box__section">
                     <div class="input input--small">
                         <label>{{ __('models.tag') }}</label>
-                        <select name="tag_id">
+                        <select class="p-2.5" name="tag_id">
                             <option value="">-</option>
                             @foreach ($tags as $tag)
                                 <option value="{{ $tag->id }}" {{ $tag->id === $spending->tag_id ? 'selected' : '' }} v-pre>{{ $tag->name }}</option>
