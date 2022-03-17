@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Space;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -33,10 +35,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $user = $request->user();
+        $user['spaces'] = Auth::user()->spaces()->get();
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user
             ],
+            'current_space' => session('space_id') ? Space::find(session('space_id')) : null
         ]);
     }
 }

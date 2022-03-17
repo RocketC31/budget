@@ -13,11 +13,13 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .vue()
+    .sass('resources/assets/sass/app.scss', 'public/css')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
         require('autoprefixer'),
     ])
+    .js('node_modules/chart.js/auto/auto.js', 'public/js/chartjs.js')
     .webpackConfig(require('./webpack.config'));
 
 if (mix.inProduction()) {

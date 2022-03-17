@@ -41,7 +41,7 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    //Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::post('/resend-verification-mail', ResendVerificationMailController::class)->name('resend_verification_mail');
 

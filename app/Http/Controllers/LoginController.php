@@ -8,6 +8,10 @@ use App\Repositories\LoginAttemptRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @deprecated
+ * Use Auth/AuthenticatedSessionController instead
+ */
 class LoginController extends Controller
 {
     private $loginAttemptRepository;
