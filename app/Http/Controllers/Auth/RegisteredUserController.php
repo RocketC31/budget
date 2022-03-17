@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Actions\CreateUserAction;
-use App\Actions\StoreSpaceInSessionAction;
 use App\Actions\SendVerificationMailAction;
+use App\Actions\StoreSpaceInSessionAction;
+use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use App\Models\User;
-use Illuminate\Http\Request;
-// use App\Http\Controllers\Controller;
-
+use App\Providers\RouteServiceProvider;
 use App\Repositories\LoginAttemptRepository;
 use App\Repositories\SpaceRepository;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Inertia\Inertia;
 
-/**
- * @deprecated
- * Use Auth/RegisteredUserController instead
- */
-class RegisterController extends Controller
+class RegisteredUserController extends Controller
 {
     private SpaceRepository $spaceRepository;
     private LoginAttemptRepository $loginAttemptRepository;
@@ -31,17 +31,26 @@ class RegisterController extends Controller
         $this->loginAttemptRepository = $loginAttemptRepository;
     }
 
-    public function index()
+    /**
+     * Display the registration view.
+     *
+     * @return \Inertia\Response
+     */
+    public function create()
     {
         if (config('app.disable_registration')) {
             abort(404);
         }
 
-        return view('register', [
+        return Inertia::render('Auth/Register', [
             'currencies' => Currency::orderBy('name')->get()
         ]);
     }
 
+    /**
+     * Handle an incoming registration request.
+     *
+     */
     public function store(Request $request)
     {
         if (config('app.disable_registration')) {
@@ -62,7 +71,6 @@ class RegisterController extends Controller
 
         (new StoreSpaceInSessionAction())->execute($user->spaces[0]->id);
 
-        return redirect()
-            ->route('dashboard');
+        return redirect(RouteServiceProvider::HOME);
     }
 }
