@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use App\Repositories\DashboardRepository;
+use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    private $dashboardRepository;
-    private $tagRepository;
+    private DashboardRepository $dashboardRepository;
+    private TagRepository $tagRepository;
 
     public function __construct(DashboardRepository $dashboardRepository, TagRepository $tagRepository)
     {
@@ -31,8 +32,8 @@ class DashboardController extends Controller
         ];
         $mostExpensiveTags = $this->tagRepository->getMostExpensiveTags($space_id, $search);
 
-        return view('dashboard', [
-            'month' => date('n'),
+        return Inertia::render('Dashboard', [
+            'month' => (int)date('n'),
 
             'widgets' => $request->user()->widgets()->orderBy('sorting_index')->get(),
 

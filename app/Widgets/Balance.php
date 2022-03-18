@@ -5,10 +5,11 @@ namespace App\Widgets;
 use App\Helper;
 use App\Models\Space;
 use App\Repositories\DashboardRepository;
+use Inertia\Inertia;
 
 class Balance
 {
-    private $dashboardRepository;
+    private DashboardRepository$dashboardRepository;
 
     public function __construct()
     {
@@ -22,7 +23,7 @@ class Balance
         $currencySymbol = $space->currency->symbol;
         $balance = $this->dashboardRepository->getBalance(date('Y'), date('n'));
 
-        return view('widgets.balance', [
+        return Inertia::render('Components/Widget/Balance', [
             'currencySymbol' => $currencySymbol,
             'balance' => Helper::formatNumber($balance / 100)
         ]);

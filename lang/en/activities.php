@@ -24,6 +24,6 @@ return [
     ],
 
     'balance' => [
-        'daily' => 'Daily Balance'
+        'daily' => 'Daily Widget'
     ]
 ];

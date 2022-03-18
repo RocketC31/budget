@@ -2,7 +2,7 @@
 
 return [
     'weekly_balance' => [
-        'title' => 'Weekly Balance',
+        'title' => 'Weekly Widget',
         'description' => 'Weekly balance per year&mdash;displayed in a graph.'
     ],
 

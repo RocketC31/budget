@@ -39,7 +39,7 @@ class DashboardTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertSeeText('Balance');
+            ->assertSeeText('Widget');
     }
 
     public function testSpentWidget(): void

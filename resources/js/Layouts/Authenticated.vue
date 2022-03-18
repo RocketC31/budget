@@ -5,11 +5,9 @@ import Menu from '@/Components/Menu.vue';
 <template>
     <div>
         <Menu></Menu>
-        <div class="min-h-screen bg-gray-100">
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
-        </div>
+        <!-- Page Content -->
+        <main>
+            <slot />
+        </main>
     </div>
 </template>
