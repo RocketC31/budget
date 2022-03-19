@@ -8,11 +8,11 @@ use App\Actions\FetchStripeSubscriptionAction;
 use App\Exceptions\UserStripelessException;
 use Illuminate\Http\Request;
 use App\Mail\PasswordChanged;
-use Auth;
-use Image;
-use Storage;
-use Hash;
-use Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class SettingsController extends Controller
 {
@@ -87,7 +87,10 @@ class SettingsController extends Controller
 
         // Notify upon changing of password
         if ($request->has('password')) {
-            Mail::to($user->email)->queue(new PasswordChanged($user->updated_at));
+            try {
+                Mail::to($user->email)->queue(new PasswordChanged($user->updated_at));
+            } catch (\Exception $e) {
+            }
         }
 
         return back();

@@ -111,7 +111,10 @@ class SpaceController extends Controller
                 ->with('inviteStatus', 'exists');
         }
 
-        Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite));
+        try {
+            Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite));
+        } catch (\Exception $e) {
+        }
 
         return redirect()
             ->route('spaces.edit', ['space' => $space->id])

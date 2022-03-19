@@ -61,8 +61,6 @@ class RegisteredUserController extends Controller
         $space = $this->spaceRepository->create($request->currency, $user->name . '\'s Space');
         $user->spaces()->attach($space->id, ['role' => 'admin']);
 
-        (new SendVerificationMailAction())->execute($user->id);
-
         event(new Registered($user));
 
         Auth::login($user);
@@ -70,6 +68,8 @@ class RegisteredUserController extends Controller
         $this->loginAttemptRepository->create($user->id, $request->ip(), false);
 
         (new StoreSpaceInSessionAction())->execute($user->spaces[0]->id);
+
+        (new SendVerificationMailAction())->execute($user->id);
 
         return redirect(RouteServiceProvider::HOME);
     }

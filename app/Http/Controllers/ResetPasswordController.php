@@ -48,7 +48,10 @@ class ResetPasswordController extends Controller
                     $shippingToken = $existingRecord->token;
                 }
 
-                Mail::to($email)->queue(new ResetPassword($shippingToken));
+                try {
+                    Mail::to($email)->queue(new ResetPassword($shippingToken));
+                } catch (\Exception $e) {
+                }
             }
 
             return redirect()
