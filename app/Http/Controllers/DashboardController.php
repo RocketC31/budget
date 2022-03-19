@@ -35,7 +35,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'month' => (int)date('n'),
 
-            'widgets' => $request->user()->widgets()->orderBy('sorting_index')->get(),
+            'widgets' => $request->user()->widgets(),
 
             'totalSpent' => $this->dashboardRepository->getTotalAmountSpent($currentYear, $currentMonth),
             'mostExpensiveTags' => $mostExpensiveTags,

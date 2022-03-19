@@ -3,15 +3,10 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\BudgetController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\ImportController;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RecurringController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\ResetPasswordController;
@@ -25,11 +20,9 @@ use App\Http\Controllers\TranslationsController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
-
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'store']);
+   // Route::get('/login', [LoginController::class, 'index'])->name('login');
+   // Route::post('/login', [LoginController::class, 'store']);
 
     Route::get('/verify/{token}', VerifyController::class)->name('verify');
 
@@ -152,4 +145,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/translations', TranslationsController::class);
 });
 
-Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
+// Route::get('/logout', [LogoutController::class, 'index'])->name('logout');

@@ -19,7 +19,6 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .js('node_modules/chart.js/auto/auto.js', 'public/js/chartjs.js')
     .webpackConfig(require('./webpack.config'));
 
 if (mix.inProduction()) {

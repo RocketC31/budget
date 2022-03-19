@@ -63,6 +63,12 @@ class User extends Authenticatable
 
     public function widgets()
     {
-        return $this->hasMany(Widget::class);
+        $widgets = $this->hasMany(Widget::class)->orderBy('sorting_index')->get();
+        $result = [];
+        /** @var Widget $widget */
+        foreach ($widgets as $widget) {
+            $result[] = $widget->resolve();
+        }
+        return $result;
     }
 }

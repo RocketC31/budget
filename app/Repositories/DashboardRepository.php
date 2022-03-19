@@ -51,7 +51,7 @@ class DashboardRepository
                 ->where('happened_on', $year . '-' . $month . '-' . $i)
                 ->sum('amount');
 
-            $dailyBalance[$i] = Helper::formatNumber($balanceTick / 100);
+            $dailyBalance[] = Helper::formatNumber($balanceTick / 100);
         }
 
         return $dailyBalance;

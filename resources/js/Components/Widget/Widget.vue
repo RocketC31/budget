@@ -1,11 +1,8 @@
 <script setup>
 import Balance from "@/Components/Widget/Balance";
+import Spent from "@/Components/Widget/Spent";
 
 defineProps({
-    type: {
-        type: String,
-        default: 'spent',
-    },
     widget: {
         type: Object
     }
@@ -13,5 +10,6 @@ defineProps({
 </script>
 
 <template>
-    <Balance></Balance>
+    <Balance v-if="widget.type === 'balance'"></Balance>
+    <Spent v-if="widget.type === 'spent'" :period="widget.period" :spent="widget.spent" :currency-symbol="widget.currency_symbol" ></Spent>
 </template>

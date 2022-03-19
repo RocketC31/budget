@@ -12,14 +12,12 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css" />
 
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
-        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     </head>
-    <body class="font-sans antialiased theme-{{ Auth::check() ? Auth::user()->theme : 'light' }}">
+    <body id="body" class="font-sans antialiased theme-{{ Auth::check() ? Auth::user()->theme : 'light' }}">
         @inertia
         @translations
         @env ('local')

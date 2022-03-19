@@ -3,24 +3,25 @@
 namespace App\Widgets;
 
 use App\Helper;
-use App\Models\Space;
 use App\Models\Spending;
+use App\Models\Widget;
 
-class Spent
+class Spent extends Widget
 {
-    private $properties;
-
-    public function __construct(object $properties)
+    public function __construct(array $attributes = [])
     {
-        $this->properties = $properties;
+        parent::__construct($attributes);
+        $this->appends = array_merge($this->appends, ['period', 'spent']);
     }
 
-    public function render()
+    public function getPeriodAttribute()
     {
-        $space = Space::find(session('space_id'));
+        return $this->properties->period;
+    }
 
-        $currencySymbol = $space->currency->symbol;
-
+    public function getSpentAttribute()
+    {
+        $spent = null;
         if ($this->properties->period === 'today') {
             $spent = Spending::ofSpace(session('space_id'))
                 ->whereRaw('DATE(happened_on) = ?', [date('Y-m-d')])
@@ -42,10 +43,6 @@ class Spent
                 ->sum('amount');
         }
 
-        return view('widgets.spent', [
-            'currencySymbol' => $currencySymbol,
-            'spent' => Helper::formatNumber($spent / 100),
-            'period' => $this->properties->period
-        ]);
+        return Helper::formatNumber($spent / 100);
     }
 }

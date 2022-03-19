@@ -39,11 +39,16 @@ class HandleInertiaRequests extends Middleware
         if (Auth::user()) {
             $user['spaces'] = Auth::user()->spaces()->get();
         }
+        $space = session('space_id') ? Space::find(session('space_id')) : null;
+        $versionFileExists = file_exists(base_path() . '/version.txt');
+        $versionNumber = $versionFileExists ? file_get_contents(base_path() . '/version.txt') : '-';
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $user
             ],
-            'current_space' => session('space_id') ? Space::find(session('space_id')) : null
+            'current_space' => $space,
+            'currency' => $space?->currency->symbol,
+            'versionNumber' => $versionNumber
         ]);
     }
 }

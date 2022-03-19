@@ -51,6 +51,20 @@ Use the command below to update to the latest version.
 php artisan budget:update
 ```
 
+## Lang on front
+Translations in VueJs is working with [matice librarie](https://github.com/GENL/matice)
+
+If you want to use default lang path of laravel, do that :
+```
+php artisan vendor:publish --provider="Genl\Matice\MaticeServiceProvider"
+```
+
+And edit on `config/matice.php`
+
+```PHP
+'lang_directory' => lang_path(),
+```
+
 ## Docker
 
 You can get set-up with Budget using Docker.
