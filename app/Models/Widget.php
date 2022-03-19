@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Exceptions\WidgetInvalidPropertyValueException;
+use App\Exceptions\WidgetMissingPropertyException;
+use App\Exceptions\WidgetUnknownTypeException;
 use App\Widgets\Balance;
 use App\Widgets\Spent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,9 +60,14 @@ class Widget extends Model
         $this->attributes['properties'] = json_encode($value, JSON_FORCE_OBJECT);
     }
 
+    /**
+     * @throws WidgetUnknownTypeException
+     * @throws WidgetMissingPropertyException
+     * @throws WidgetInvalidPropertyValueException
+     */
     public function resolve(): Widget
     {
-        $model = $this;
+        $model = null;
         switch ($this->type) {
             case "spent":
                 $model = new Spent();
@@ -68,7 +76,32 @@ class Widget extends Model
                 $model = new Balance();
                 break;
         }
+        if (is_null($model)) {
+            throw new WidgetUnknownTypeException();
+        }
+
         $model->setRawAttributes($this->getAttributes(), true);
+
+        $requiredProperties = config('widgets.types.' . $model->type . '.properties');
+
+        foreach ($requiredProperties as $requiredPropertyKey => $requiredPropertyOptions) {
+            /**
+             * Check if property exists
+             */
+
+            if (!isset($model->properties->{$requiredPropertyKey})) {
+                throw new WidgetMissingPropertyException();
+            }
+
+            /**
+             * Check if property has valid value
+             */
+
+            if (!in_array($model->properties->{$requiredPropertyKey}, $requiredPropertyOptions)) {
+                throw new WidgetInvalidPropertyValueException();
+            }
+        }
+
         return $model;
     }
 }

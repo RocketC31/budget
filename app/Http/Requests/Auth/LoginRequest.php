@@ -12,7 +12,6 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *

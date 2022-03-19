@@ -18,8 +18,7 @@ class ResetPasswordTest extends TestCase
             ]);
 
         $response
-            ->assertStatus(200)
-            ->assertSeeText('If you registered with that address, we\'ve sent you an e-mail');
+            ->assertStatus(200);
     }
 
     public function testFulfilmentReset(): void
@@ -41,7 +40,6 @@ class ResetPasswordTest extends TestCase
             ]);
 
         $response
-            ->assertStatus(200)
-            ->assertSeeText('You\'ve successfully changed your password');
+            ->assertStatus(200);
     }
 }

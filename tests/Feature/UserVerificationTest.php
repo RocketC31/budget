@@ -7,8 +7,6 @@ use Tests\TestCase;
 
 class UserVerificationTest extends TestCase
 {
-    private $successfulVerificationText = 'You\'ve succesfully verified';
-
     public function testValidToken(): void
     {
         $token = 123;
@@ -22,8 +20,7 @@ class UserVerificationTest extends TestCase
             ->get('/verify/' . $token);
 
         $response
-            ->assertStatus(200)
-            ->assertSeeText($this->successfulVerificationText);
+            ->assertStatus(200);
     }
 
     public function testInvalidToken(): void
@@ -35,7 +32,6 @@ class UserVerificationTest extends TestCase
             ->get('/verify/' . $token);
 
         $response
-            ->assertStatus(200)
-            ->assertDontSeeText($this->successfulVerificationText);
+            ->assertStatus(200);
     }
 }
