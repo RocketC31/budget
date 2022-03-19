@@ -8,10 +8,13 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Repositories\LoginAttemptRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Inertia\Response;
+use Nette\Schema\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,9 +28,9 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      *
-     * @return \Inertia\Response
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
@@ -38,49 +41,40 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param LoginRequest $request
+     * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): RedirectResponse
     {
-        if (
-            Auth::attempt([
-                'email' => $request->input('email'),
-                'password' => $request->input('password')
-            ])
-        ) {
-            $user = Auth::user();
+        try {
+            $request->authenticate();
 
+            $user = Auth::user();
             $this->loginAttemptRepository->create($user->id, $request->ip(), false);
-            $request->session()->regenerate();
-            (new StoreSpaceInSessionAction())->execute($user->spaces[0]->id);
+            if ($user->space) {
+                $request->session()->regenerate();
+                (new StoreSpaceInSessionAction())->execute($user->spaces[0]->id);
+            }
 
             return redirect()->intended(RouteServiceProvider::HOME);
-        } else {
+        } catch (ValidationException $validationException) {
             if ($request->input('email')) {
                 $user = User::where('email', $request->input('email'))->first();
 
-                $this->loginAttemptRepository->create($user ? $user->id : null, $request->ip(), true);
+                $this->loginAttemptRepository->create($user?->id, $request->ip(), true);
             }
-
-            $request->flash();
-
-            return redirect()
-                ->route('login')
-                ->with([
-                    'alert_type' => 'danger',
-                    'alert_message' => 'Failed to login'
-                ]);
+            throw $validationException;
         }
     }
 
     /**
      * Destroy an authenticated session.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 

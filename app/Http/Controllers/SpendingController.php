@@ -9,7 +9,6 @@ use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\SpendingRepository;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class SpendingController extends Controller
 {

@@ -14,9 +14,8 @@ use App\Repositories\SpaceRepository;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
@@ -34,9 +33,9 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      *
-     * @return \Inertia\Response
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
         if (config('app.disable_registration')) {
             abort(404);
@@ -58,14 +57,15 @@ class RegisteredUserController extends Controller
         }
 
         $request->validate(User::getValidationRulesForRegistration());
-
         $user = (new CreateUserAction())->execute($request->name, $request->email, $request->password);
         $space = $this->spaceRepository->create($request->currency, $user->name . '\'s Space');
         $user->spaces()->attach($space->id, ['role' => 'admin']);
 
         (new SendVerificationMailAction())->execute($user->id);
 
-        Auth::loginUsingId($user->id);
+        event(new Registered($user));
+
+        Auth::login($user);
 
         $this->loginAttemptRepository->create($user->id, $request->ip(), false);
 

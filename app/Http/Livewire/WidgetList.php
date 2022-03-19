@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class WidgetList extends Component
 {
-    public $widgets;
+    public array $widgets;
 
     protected $listeners = [
         'widgetCreated' => 'reloadWidgets'
@@ -15,15 +15,13 @@ class WidgetList extends Component
 
     public function __construct()
     {
+        parent::__construct();
         $this->reloadWidgets();
     }
 
     public function reloadWidgets()
     {
-        $this->widgets = request()->user()
-            ->widgets()
-            ->orderBy('sorting_index')
-            ->get();
+        $this->widgets = request()->user()->widgets();
     }
 
     public function up(Widget $widget)

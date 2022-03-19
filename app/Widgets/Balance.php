@@ -20,7 +20,7 @@ class Balance extends Widget
     /**
      * @return string
      */
-    public function getBalanceAttributes(): string
+    public function getBalanceAttribute(): string
     {
         $balance = $this->dashboardRepository->getBalance(date('Y'), date('n'));
         return Helper::formatNumber($balance / 100);
