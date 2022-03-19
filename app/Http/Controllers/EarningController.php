@@ -11,8 +11,8 @@ use App\Repositories\EarningRepository;
 
 class EarningController extends Controller
 {
-    private $earningRepository;
-    private $conversionRateRepository;
+    private EarningRepository $earningRepository;
+    private ConversionRateRepository $conversionRateRepository;
 
     public function __construct(
         EarningRepository $earningRepository,
@@ -88,12 +88,10 @@ class EarningController extends Controller
     {
         $this->authorize('delete', $earning);
 
-        $restorableEarning = $earning->id;
-
         $earning->delete();
 
         return redirect()
-            ->route('transactions.index');
+            ->back();
     }
 
     public function restore($id)

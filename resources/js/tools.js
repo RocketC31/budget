@@ -8,5 +8,9 @@ module.exports = {
     isDarkMode() {
         const app = document.getElementsByTagName("html")[0];
         return app.classList.contains('dark');
+    },
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     }
 }

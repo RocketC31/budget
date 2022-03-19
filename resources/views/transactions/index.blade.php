@@ -152,13 +152,8 @@
             let labels = [];
             let transactionsData = [];
             let transactionsColor = [];
-            let testDataset = [];
+
             @foreach($transactionsChart as $label => $content)
-                testDataset.push({
-                    label: '{{ $label }}',
-                    data: ['{{ $content['amount'] }}'],
-                    backgroundColor: [ '{{ $content['color'] }}' ],
-                })
                 labels.push('{{ $label }}');
                 transactionsData.push('{{ $content['amount'] }}');
                 transactionsColor.push('{{ $content['color'] }}');

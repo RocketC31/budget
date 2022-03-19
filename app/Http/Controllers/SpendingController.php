@@ -9,11 +9,12 @@ use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\SpendingRepository;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SpendingController extends Controller
 {
-    private $spendingRepository;
-    private $conversionRateRepository;
+    private SpendingRepository $spendingRepository;
+    private ConversionRateRepository $conversionRateRepository;
 
     public function __construct(
         SpendingRepository $spendingRepository,
@@ -92,16 +93,15 @@ class SpendingController extends Controller
         return redirect()->route('transactions.index');
     }
 
-    public function destroy(Spending $spending)
+    public function destroy($id)
     {
+        $spending = Spending::find($id);
         $this->authorize('delete', $spending);
-
-        $restorableSpending = $spending->id;
 
         $spending->delete();
 
         return redirect()
-            ->route('transactions.index');
+            ->back();
     }
 
     public function restore($id)

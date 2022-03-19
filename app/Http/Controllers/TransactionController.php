@@ -83,7 +83,7 @@ class TransactionController extends Controller
             ];
         }
 
-        return view('transactions.create', [
+        return Inertia::render('Transactions/Create', [
             'tags' => $tags,
             'currencies' => $this->currencyRepository->getIfConversionRatePresent(),
             'defaultTransactionType' => Auth::user()->default_transaction_type,

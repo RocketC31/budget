@@ -26,6 +26,8 @@ class Spending extends Model
         'amount'
     ];
 
+    protected $appends = [ 'type', 'formatted_amount' ];
+
     protected $dispatchesEvents = [
         'created' => TransactionCreated::class,
         'deleted' => TransactionDeleted::class
@@ -42,6 +44,11 @@ class Spending extends Model
         $secondsDifference = strtotime(date('Y-m-d')) - strtotime($this->happened_on);
 
         return ($secondsDifference / 60 / 60 / 24) . ' days ago';
+    }
+
+    public function getTypeAttribute(): string
+    {
+        return 'spendings';
     }
 
     // Relations

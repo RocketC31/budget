@@ -22,5 +22,6 @@ return [
     'resent' => 'Resent',
     'previous' => 'Previous',
     'next' => 'Next',
-    'submit' => 'Submit'
+    'submit' => 'Submit',
+    'confirm_action' => 'Are you sure you want to do this action ?'
 ];

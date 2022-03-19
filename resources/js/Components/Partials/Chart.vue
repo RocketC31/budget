@@ -1,5 +1,4 @@
 <script>
-import { isDarkMode } from '@/tools';
 import { v4 as uuidv4 } from 'uuid';
 import Chart from 'chart.js/auto';
 import { onMounted } from 'vue';
@@ -50,8 +49,8 @@ export default {
         }];
 
         onMounted(() => {
-            const chart = document.getElementById(unique_id).getContext('2d');
-            new Chart(chart, {
+            const canvas = document.getElementById(unique_id).getContext('2d');
+            new Chart(canvas, {
                     type: props.type,
                     data: {
                         labels: props.labels,
@@ -67,7 +66,7 @@ export default {
 
 </script>
 <template>
-    <div :class="[additionalClass, {circle : type === 'pie'}]">
+    <div :class="[additionalClass, { circle : type === 'pie' }]">
         <canvas :id="unique_id"></canvas>
     </div>
 </template>

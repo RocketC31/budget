@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { Link } from "@inertiajs/inertia-vue3";
 import { usePage } from '@inertiajs/inertia-vue3';
 
 import BreezeDropdown from '@/Components/Dropdown.vue';
@@ -19,19 +20,19 @@ const openMobileMenu = ref(false);
         <div class="wrapper items-center">
             <ul class="hidden w-full lg:flex">
                 <li class="flex w-1/5">
-                    <a :class="{active :route().current('dashboard')}" class="m-auto flex items-center" :href="route('index')"><i class="fas fa-home fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('general.dashboard') }}</span></a>
+                    <Link :class="{active :route().current('dashboard')}" class="m-auto flex items-center" :href="route('index')"><i class="fas fa-home fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('general.dashboard') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <a :class="{active :route().current('transactions')}" class="m-auto flex items-center" :href="route('transactions.index')"><i class="fas fa-exchange-alt fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('models.transactions') }}</span></a>
+                    <Link :class="{active :route().current('transactions')}" class="m-auto flex items-center" :href="route('transactions.index')"><i class="fas fa-exchange-alt fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('models.transactions') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <a :class="{active :route().current('budgets')}" class="m-auto flex items-center" :href="route('budgets.index')"><i class="fas fa-wallet fa-sm color-red"></i> <span class="md:flex ml-05">{{ trans('models.budgets') }}</span></a>
+                    <Link :class="{active :route().current('budgets')}" class="m-auto flex items-center" :href="route('budgets.index')"><i class="fas fa-wallet fa-sm color-red"></i> <span class="md:flex ml-05">{{ trans('models.budgets') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <a :class="{active :route().current('tags')}" class="m-auto flex items-center" :href="route('tags.index')"><i class="fas fa-tag fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('models.tags') }}</span></a>
+                    <Link :class="{active :route().current('tags')}" class="m-auto flex items-center" :href="route('tags.index')"><i class="fas fa-tag fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('models.tags') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <a :class="{active :route().current('reports')}" class="m-auto flex items-center" :href="route('reports.index')"><i class="fas fa-chart-line fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('pages.reports') }}</span></a>
+                    <Link :class="{active :route().current('reports')}" class="m-auto flex items-center" :href="route('reports.index')"><i class="fas fa-chart-line fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('pages.reports') }}</span></Link>
                 </li>
             </ul>
             <div class="flex lg:hidden cursor-pointer" id="menu__mobile-btn" @click.stop="openMobileMenu = true">
@@ -52,19 +53,19 @@ const openMobileMenu = ref(false);
                     <div>
                         <ul>
                             <li class="mb-1">
-                                <a :class="{active: route().current('dashboard')}" class="block p-4 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('index')">{{ trans('general.dashboard') }}</a>
+                                <Link :class="{active: route().current('dashboard')}" class="block p-4 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('index')">{{ trans('general.dashboard') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <a :class="{active: route().current('transactions')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('transactions.index')">{{ trans('models.transactions') }}</a>
+                                <Link :class="{active: route().current('transactions')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('transactions.index')">{{ trans('models.transactions') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <a :class="{active: route().current('budgets')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('budgets.index')">{{ trans('models.budgets') }}</a>
+                                <Link :class="{active: route().current('budgets')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('budgets.index')">{{ trans('models.budgets') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <a :class="{active: route().current('tags')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('tags.index')">{{ trans('models.tags') }}</a>
+                                <Link :class="{active: route().current('tags')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('tags.index')">{{ trans('models.tags') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <a :class="{active: route().current('reports')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('reports.index')">{{ trans('pages.reports') }}</a>
+                                <Link :class="{active: route().current('reports')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('reports.index')">{{ trans('pages.reports') }}</Link>
                             </li>
                         </ul>
                     </div>

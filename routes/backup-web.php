@@ -42,20 +42,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/attachments/{attachment}/download', [AttachmentController::class, 'download']);
     Route::post('/attachments/{id}/delete', [AttachmentController::class, 'delete']);
 
-    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-
-    Route::name('transactions.')->group(function () {
-        Route::get('/transactions', [TransactionController::class, 'index'])->name('index');
-        Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
-    });
-
     Route::name('earnings.')->group(function () {
         Route::get('/earnings/{earning}', [EarningController::class, 'show'])->name('show');
         Route::get('/earnings/create', [EarningController::class, 'create'])->name('create');
         Route::post('/earnings', [EarningController::class, 'store']);
         Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
         Route::patch('/earnings/{earning}', [EarningController::class, 'update']);
-        Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
         Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
     });
 
@@ -65,7 +57,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/spendings', [SpendingController::class, 'store']);
         Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
         Route::patch('/spendings/{spending}', [SpendingController::class, 'update']);
-        Route::delete('/spendings/{spending}', [SpendingController::class, 'destroy'])->name('delete');
         Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
     });
 

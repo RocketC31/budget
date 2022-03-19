@@ -17,5 +17,6 @@ return [
     'resent' => 'Renvoyer',
     'previous' => 'Précédent',
     'next' => 'Suivant',
-    'submit' => 'Soumettre'
+    'submit' => 'Soumettre',
+    'confirm_action' => 'Êtes vous sûr de vouloir réaliser cette action ?'
 ];
