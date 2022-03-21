@@ -23,5 +23,9 @@ return [
     'previous' => 'Previous',
     'next' => 'Next',
     'submit' => 'Submit',
-    'confirm_action' => 'Are you sure you want to do this action ?'
+    'confirm_action' => 'Are you sure you want to do this action ?',
+    'create_for_me_future' => 'create it for me in the future',
+    'loading' => 'Loading',
+    'select' => 'Select',
+    'search' => 'Search'
 ];

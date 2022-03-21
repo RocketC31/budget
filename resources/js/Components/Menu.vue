@@ -8,7 +8,7 @@ import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 import { trans } from 'matice';
 
 const showingNavigationDropdown = ref(false);
-const spaces = computed(() => usePage().props.value.auth.user.spaces);
+const spaces = computed(() => usePage().props.value.spaces);
 const avatar = computed(() => usePage().props.value.auth.user.avatar);
 const currentSpace = computed(() => usePage().props.value.current_space);
 const openMobileMenu = ref(false);
@@ -94,7 +94,7 @@ const openMobileMenu = ref(false);
                     <BreezeDropdownLink :href="route('settings.index')" method="get" as="button">
                         {{ trans('pages.settings') }}
                     </BreezeDropdownLink>
-                    <BreezeDropdownLink :href="route('logout')" method="get" as="button">
+                    <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                         {{ trans('pages.log_out') }}
                     </BreezeDropdownLink>
                     <BreezeDropdown :align="'left'" width="48" v-if="spaces.length > 1">

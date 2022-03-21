@@ -41,5 +41,9 @@ return [
     'or' => 'or',
     'spent' => 'Spent',
     'properties' => 'Properties',
-    'other' => 'Other'
+    'other' => 'Other',
+    'will_convert' => 'will be converted into',
+    'how_long_spending' => 'How long will this spending go on for?',
+    'forever' => 'Forever',
+    'until' => 'Until'
 ];

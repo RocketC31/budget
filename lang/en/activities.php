@@ -3,7 +3,8 @@
 return [
     'transaction' => [
         'created' => 'Created Transaction',
-        'deleted' => 'Deleted Transaction'
+        'deleted' => 'Deleted Transaction',
+        'success_created' => 'Successfully created transaction'
     ],
 
     'recurring' => [

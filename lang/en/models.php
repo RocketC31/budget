@@ -15,9 +15,11 @@ return [
 
     'earnings' => 'Earnings',
     'earning' => 'Earning',
+    'placeholder_earning' => 'Paycheck February',
 
     'spendings' => 'Spendings',
     'spending' => 'Spending',
+    'placeholder_spending' => 'Birthday Present for Angela',
 
     'transactions' => 'Transactions',
     'transaction' => 'Transaction',
@@ -26,5 +28,6 @@ return [
     'import' => 'Import',
 
     'attachment' => 'Attachment',
-    'attachments' => 'Attachments'
+    'attachments' => 'Attachments',
+    'recurring_transaction' => 'This is a recurring transaction'
 ];

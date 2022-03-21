@@ -59,7 +59,7 @@ class EarningController extends Controller
             $amount
         );
 
-        return redirect()->route('dashboard');
+        return redirect()->route('transactions.index');
     }
 
     public function edit(Earning $earning)

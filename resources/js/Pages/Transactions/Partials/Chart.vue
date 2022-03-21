@@ -1,7 +1,6 @@
 <script>
 import Chart from "@/Components/Partials/Chart";
 import { trans } from "matice";
-import { onMounted } from 'vue';
 
 export default {
     components: {

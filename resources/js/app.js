@@ -13,6 +13,18 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .mixin({ methods: { route } })
+            .directive('click-outside', {
+                created: function (e, binding, vnode) {
+                    document.body.addEventListener('click', (event) => {
+                        if (!(e == event.target || e.contains(event.target))) {
+                            binding.value();
+                        }
+                    })
+                },
+                unmounted: function (e) {
+                    document.body.removeEventListener('click', e.clickOutsideEvent)
+                }
+            })
             .mount(el);
     },
 });

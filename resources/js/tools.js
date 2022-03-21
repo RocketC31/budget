@@ -12,5 +12,10 @@ module.exports = {
     formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    },
+    capitalize(value) {
+        value = value.toString();
+
+        return value.charAt(0).toUpperCase() + value.slice(1);
     }
 }
