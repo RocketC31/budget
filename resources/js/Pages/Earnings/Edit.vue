@@ -18,23 +18,19 @@ export default {
     },
 
     props: {
-        spending: Object,
+        earning: Object,
         tags: Array
     },
 
     setup(props) {
         const errors = computed(() => usePage().props.value.errors);
         const form = useForm({
-            tag_id: props.spending.tag_id,
-            date: new Date(props.spending.happened_on).toISOString().slice(0, 10),
-            description: props.spending.description,
-            amount: props.spending.formatted_amount
+            date: new Date(props.earning.happened_on).toISOString().slice(0, 10),
+            description: props.earning.description,
+            amount: props.earning.formatted_amount
         });
         function submit() {
-            form.patch(route('spendings.update', { spending: props.spending.id }))
-        }
-        function tagUpdated(payload) {
-            form.tag_id = payload.key;
+            form.patch(route('earnings.update', { earning: props.earning.id }))
         }
         function onDateUpdate(date) {
             form.happened_on = date;
@@ -44,29 +40,20 @@ export default {
             errors,
             form,
             submit,
-            tagUpdated,
             onDateUpdate
         }
     },
 }
 </script>
 <template>
-    <Head :title="trans('models.spending')" />
+    <Head :title="trans('models.earning')" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
-            <h2>{{ trans('actions.edit') }} {{ trans('models.spending') }}</h2>
+            <h2>{{ trans('actions.edit') }} {{ trans('models.earning') }}</h2>
             <div class="box mt-3">
                 <form @submit.prevent="submit" autocomplete="off">
                     <div class="box__section">
-                        <div class="input">
-                            <label>{{ trans('models.tag') }}</label>
-                            <select class="p-2.5" name="tag_id" v-model="form.tag_id" >
-                                <option value="">-</option>
-                                <option v-for="tag in tags" :value="tag.id">{{ tag.name }}</option>
-                            </select>
-                            <ValidationError v-if="errors.tag_id" :message="errors.tag_id"></ValidationError>
-                        </div>
                         <div class="input">
                             <label>{{ trans('fields.date') }}</label>
                             <DatePicker :start-date="form.date" @DateUpdated="onDateUpdate"></DatePicker>

@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Helper;
 use App\Models\Space;
 use Illuminate\Support\ServiceProvider;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {

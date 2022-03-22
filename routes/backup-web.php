@@ -21,36 +21,12 @@ use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest']], function () {
-   // Route::get('/login', [LoginController::class, 'index'])->name('login');
-   // Route::post('/login', [LoginController::class, 'store']);
-
     Route::get('/reset_password', [ResetPasswordController::class, 'get'])->name('reset_password');
     Route::post('/reset_password', [ResetPasswordController::class, 'post']);
-
- /*   Route::get('/register', [RegisterController::class, 'index'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);*/
 });
 
 Route::group(['middleware' => ['auth']], function () {
     //Route::get('/dashboard', DashboardController::class)->name('dashboard');
-
-    Route::post('/resend-verification-mail', ResendVerificationMailController::class)->name('resend_verification_mail');
-
-    Route::name('earnings.')->group(function () {
-        //Route::get('/earnings/create', [EarningController::class, 'create'])->name('create');
-        Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
-        Route::patch('/earnings/{earning}', [EarningController::class, 'update']);
-        Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
-    });
-
-    Route::name('spendings.')->group(function () {
-
-        //Route::get('/spendings/create', [SpendingController::class, 'create'])->name('create');
-        Route::post('/spendings', [SpendingController::class, 'store']);
-        Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
-        Route::patch('/spendings/{spending}', [SpendingController::class, 'update']);
-        Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
-    });
 
     Route::resource('/budgets', BudgetController::class)->only([
         'index',
@@ -112,11 +88,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/spaces/{space}/invites/{invite}/accept', [SpaceInviteController::class, 'accept'])->name('accept');
         Route::post('/spaces/{space}/invites/{invite}/deny', [SpaceInviteController::class, 'deny'])->name('deny');
     });
-
-   /* Route::name('ideas.')->group(function () {
-        Route::get('/ideas/create', [IdeaController::class, 'create'])->name('create');
-        Route::post('/ideas', [IdeaController::class, 'store']);
-    });*/
 
     Route::get('/translations', TranslationsController::class);
 });

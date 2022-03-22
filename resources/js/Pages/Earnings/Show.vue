@@ -5,16 +5,16 @@ import { trans } from 'matice';
 import Attachments from "@/Components/Partials/Attachments";
 
 defineProps({
-    spending: Object
+    earning: Object
 });
 </script>
 <template>
-    <Head :title="trans('models.spending')" />
+    <Head :title="trans('models.earning')" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
-            <h2>{{ spending.description }}</h2>
-            <Attachments :element="spending" :type="'spending'"></Attachments>
+            <h2>{{ earning.description }}</h2>
+            <Attachments :element="earning" :type="'earning'"></Attachments>
         </div>
     </BreezeAuthenticatedLayout>
 </template>

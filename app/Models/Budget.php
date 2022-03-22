@@ -21,6 +21,8 @@ class Budget extends Model
         'starts_on'
     ];
 
+    protected $appends = [ "tag", 'formatted_spent', 'formatted_amount', 'spent'];
+
     public function space()
     {
         return $this->belongsTo(Space::class);
@@ -45,5 +47,10 @@ class Budget extends Model
     public function getFormattedSpentAttribute()
     {
         return Helper::formatNumber($this->spent / 100);
+    }
+
+    public function getTagAttribute()
+    {
+        return $this->tag()->first();
     }
 }

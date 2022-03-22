@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Earning;
 use App\Models\Space;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\EarningRepository;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class EarningController extends Controller
 {
@@ -23,7 +25,7 @@ class EarningController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
-    public function show(Request $request, Earning $earning)
+    public function show(Request $request, Earning $earning): Response
     {
         $this->authorize('view', $earning);
 
@@ -40,7 +42,7 @@ class EarningController extends Controller
         return view('earnings.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->earningRepository->getValidationRules());
 
@@ -70,7 +72,7 @@ class EarningController extends Controller
     {
         $this->authorize('edit', $earning);
 
-        return view('earnings.edit', compact('earning'));
+        return Inertia::render('Earnings/Edit', compact('earning'));
     }
 
     public function update(Request $request, Earning $earning)
@@ -88,7 +90,7 @@ class EarningController extends Controller
         return redirect()->route('transactions.index');
     }
 
-    public function destroy(Earning $earning)
+    public function destroy(Earning $earning): RedirectResponse
     {
         $this->authorize('delete', $earning);
 
@@ -98,7 +100,7 @@ class EarningController extends Controller
             ->back();
     }
 
-    public function restore($id)
+    public function restore($id): RedirectResponse
     {
         $earning = Earning::withTrashed()->find($id);
 

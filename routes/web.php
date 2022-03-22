@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RecurringController;
+use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\TransactionController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,17 +21,10 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-/*Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('index');*/
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::group(['middleware' => ['auth']], function () {
+    Route::post('/resend-verification-mail', ResendVerificationMailController::class)->name('resend_verification_mail');
+
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     //Transactions
@@ -40,24 +33,40 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
     });
 
+    //Earnings
     Route::name('earnings.')->group(function () {
         Route::get('/earnings/{earning}', [EarningController::class, 'show'])->name('show');
-        Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
+        Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
+        Route::patch('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
+        Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
         Route::post('/earnings', [EarningController::class, 'store']);
+        Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
     });
 
+    //Spendings
     Route::name('spendings.')->group(function () {
-        Route::delete('/spendings/{id}', [SpendingController::class, 'destroy'])->name('delete');
         Route::get('/spendings/{spending}', [SpendingController::class, 'show'])->name('show');
+        Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
+        Route::patch('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
+        Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
+        Route::post('/spendings', [SpendingController::class, 'store']);
+        Route::delete('/spendings/{id}', [SpendingController::class, 'destroy'])->name('delete');
     });
 
+    //Attachments
     Route::name('attachments.')->group(function () {
         Route::get('/attachments/{attachment}/download', [AttachmentController::class, 'download'])->name('download');
         Route::delete('/attachments/{id}/delete', [AttachmentController::class, 'delete'])->name('delete');
         Route::post('/attachments', [AttachmentController::class, 'store'])->name('create');
     });
 
-    //TODO: deprecated, maybe we can remove component too
+    //Budgets
+    Route::name('budgets.')->group(function () {
+        Route::get('/budgets', [BudgetController::class, 'index'])->name('index');
+        Route::get('/budgets/create', [BudgetController::class, 'create'])->name('create');
+        Route::post('/budgets', [BudgetController::class, 'store'])->name('store');
+    });
+
     Route::resource('/recurrings', RecurringController::class)->only([
         'index',
         'create',

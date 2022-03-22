@@ -9,11 +9,13 @@ use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class BudgetController extends Controller
 {
-    private $budgetRepository;
-    private $tagRepository;
+    private BudgetRepository $budgetRepository;
+    private TagRepository $tagRepository;
 
     public function __construct(BudgetRepository $budgetRepository, TagRepository $tagRepository)
     {
@@ -21,9 +23,9 @@ class BudgetController extends Controller
         $this->tagRepository = $tagRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
-        return view('budgets.index', [
+        return Inertia::render('Budgets/Index', [
             'budgets' => $this->budgetRepository->getActive()
         ]);
     }
@@ -32,7 +34,7 @@ class BudgetController extends Controller
     {
         $tags = Tag::ofSpace(session('space_id'))->latest()->get();
 
-        return view('budgets.create', ['tags' => $tags]);
+        return Inertia::render('Budgets/Create', ['tags' => $tags]);
     }
 
     public function store(Request $request)
@@ -48,7 +50,7 @@ class BudgetController extends Controller
 
         if ($this->budgetRepository->doesExist(session('space_id'), $request->tag_id)) {
             return redirect('/budgets/create')
-                ->with('message', 'A budget like this already exists');
+                ->with('message', __('validation.budget_like_this_exist'));
         }
 
         $amount = Helper::rawNumberToInteger($request->amount);

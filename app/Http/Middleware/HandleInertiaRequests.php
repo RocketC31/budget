@@ -49,7 +49,10 @@ class HandleInertiaRequests extends Middleware
             'spaces' => $spaces,
             'current_space' => $space,
             'currency' => $space?->currency->symbol,
-            'versionNumber' => $versionNumber
+            'versionNumber' => $versionNumber,
+            'flash' => [
+                'message' => fn () => $request->session()->get('message')
+            ],
         ]);
     }
 }

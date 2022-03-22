@@ -8,8 +8,10 @@ use App\Models\Spending;
 use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\SpendingRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SpendingController extends Controller
 {
@@ -69,16 +71,16 @@ class SpendingController extends Controller
             $amount
         );
 
-        return redirect()->route('dashboard');
+        return redirect()->route('transactions.index');
     }
 
-    public function edit(Spending $spending)
+    public function edit(Spending $spending): Response
     {
         $this->authorize('edit', $spending);
 
         $tags = Tag::ofSpace(session('space_id'))->latest()->get();
 
-        return view('spendings.edit', compact('tags', 'spending'));
+        return Inertia::render('Spendings/Edit', compact('tags', 'spending'));
     }
 
     public function update(Request $request, Spending $spending)
@@ -97,7 +99,7 @@ class SpendingController extends Controller
         return redirect()->route('transactions.index');
     }
 
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $spending = Spending::find($id);
         $this->authorize('delete', $spending);
