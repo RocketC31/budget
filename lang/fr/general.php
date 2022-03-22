@@ -43,5 +43,8 @@ return [
     'will_convert' => 'sera converti vers',
     'how_long_spending' => 'Combien de temps dureront ces dépenses ?',
     'forever' => 'Toujours',
-    'until' => 'Depuis'
+    'until' => 'Jusqu\'au',
+    'active' => 'Actif',
+    'inactive' => 'Inactif',
+    'end' => 'Fin'
 ];

@@ -45,5 +45,8 @@ return [
     'will_convert' => 'will be converted into',
     'how_long_spending' => 'How long will this spending go on for?',
     'forever' => 'Forever',
-    'until' => 'Until'
+    'until' => 'Until',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'end' => 'end'
 ];

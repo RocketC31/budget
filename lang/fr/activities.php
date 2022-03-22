@@ -9,7 +9,12 @@ return [
 
     'recurring' => [
         'created' => 'Opération récurrente créée',
-        'deleted' => 'Opération récurrente supprimée'
+        'deleted' => 'Opération récurrente supprimée',
+        'due_in' => 'Dû dans :due jours'
+    ],
+
+    'spending' => [
+        'no_spendings' => 'Il n\'y a pas (encore) de dépenses'
     ],
 
     'tag' => [

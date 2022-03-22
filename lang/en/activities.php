@@ -9,7 +9,12 @@ return [
 
     'recurring' => [
         'created' => 'Created Recurring',
-        'deleted' => 'Deleted Recurring'
+        'deleted' => 'Deleted Recurring',
+        'due_in' => 'Due in :due days'
+    ],
+
+    'spending' => [
+        'no_spendings' => 'There aren\'t any spendings (yet)'
     ],
 
     'tag' => [

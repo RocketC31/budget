@@ -8,6 +8,7 @@ use App\Models\Earning;
 use App\Models\Space;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\EarningRepository;
+use Inertia\Inertia;
 
 class EarningController extends Controller
 {
@@ -26,11 +27,14 @@ class EarningController extends Controller
     {
         $this->authorize('view', $earning);
 
-        return view('earnings.show', [
+        return Inertia::render('Earnings/Show', [
             'earning' => $earning
         ]);
     }
 
+    /**
+     * @deprecated Now use creation by transactions urls
+     */
     public function create()
     {
         return view('earnings.create');

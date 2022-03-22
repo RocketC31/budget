@@ -20,10 +20,10 @@ class ProcessRecurrings implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    private $recurringRepository;
-    private $conversionRateRepository;
-    private $earningRepository;
-    private $spendingRepository;
+    private RecurringRepository $recurringRepository;
+    private ConversionRateRepository $conversionRateRepository;
+    private EarningRepository $earningRepository;
+    private SpendingRepository $spendingRepository;
 
     public function __construct()
     {

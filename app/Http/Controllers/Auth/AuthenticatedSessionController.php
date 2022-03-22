@@ -51,9 +51,9 @@ class AuthenticatedSessionController extends Controller
             $request->authenticate();
 
             $user = Auth::user();
+            $request->session()->regenerate();
             $this->loginAttemptRepository->create($user->id, $request->ip(), false);
-            if ($user->spaces) {
-                $request->session()->regenerate();
+            if (count($user->spaces) > 0) {
                 (new StoreSpaceInSessionAction())->execute($user->spaces[0]->id);
             }
 

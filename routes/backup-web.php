@@ -24,8 +24,6 @@ Route::group(['middleware' => ['guest']], function () {
    // Route::get('/login', [LoginController::class, 'index'])->name('login');
    // Route::post('/login', [LoginController::class, 'store']);
 
-    Route::get('/verify/{token}', VerifyController::class)->name('verify');
-
     Route::get('/reset_password', [ResetPasswordController::class, 'get'])->name('reset_password');
     Route::post('/reset_password', [ResetPasswordController::class, 'post']);
 
@@ -38,34 +36,21 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/resend-verification-mail', ResendVerificationMailController::class)->name('resend_verification_mail');
 
-    Route::post('/attachments', [AttachmentController::class, 'store']);
-    Route::get('/attachments/{attachment}/download', [AttachmentController::class, 'download']);
-    Route::post('/attachments/{id}/delete', [AttachmentController::class, 'delete']);
-
     Route::name('earnings.')->group(function () {
-        Route::get('/earnings/{earning}', [EarningController::class, 'show'])->name('show');
-        Route::get('/earnings/create', [EarningController::class, 'create'])->name('create');
-        Route::post('/earnings', [EarningController::class, 'store']);
+        //Route::get('/earnings/create', [EarningController::class, 'create'])->name('create');
         Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
         Route::patch('/earnings/{earning}', [EarningController::class, 'update']);
         Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
     });
 
     Route::name('spendings.')->group(function () {
-        Route::get('/spendings/{spending}', [SpendingController::class, 'show'])->name('show');
-        Route::get('/spendings/create', [SpendingController::class, 'create'])->name('create');
+
+        //Route::get('/spendings/create', [SpendingController::class, 'create'])->name('create');
         Route::post('/spendings', [SpendingController::class, 'store']);
         Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
         Route::patch('/spendings/{spending}', [SpendingController::class, 'update']);
         Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
     });
-
-    Route::resource('/recurrings', RecurringController::class)->only([
-        'index',
-        'create',
-        'store',
-        'show'
-    ]);
 
     Route::resource('/budgets', BudgetController::class)->only([
         'index',
@@ -128,10 +113,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/spaces/{space}/invites/{invite}/deny', [SpaceInviteController::class, 'deny'])->name('deny');
     });
 
-    Route::name('ideas.')->group(function () {
+   /* Route::name('ideas.')->group(function () {
         Route::get('/ideas/create', [IdeaController::class, 'create'])->name('create');
         Route::post('/ideas', [IdeaController::class, 'store']);
-    });
+    });*/
 
     Route::get('/translations', TranslationsController::class);
 });

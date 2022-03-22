@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\SpendingRepository;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SpendingController extends Controller
 {
@@ -23,6 +24,9 @@ class SpendingController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
+    /**
+     * @deprecated Now use creation by transactions urls
+     */
     public function create()
     {
         $tags = Tag::ofSpace(session('space_id'))->latest()->get();
@@ -33,9 +37,10 @@ class SpendingController extends Controller
     public function show(Request $request, Spending $spending)
     {
         $this->authorize('view', $spending);
-
-        return view('spendings.show', [
-            'spending' => $spending
+        $spendingToArray = $spending;
+        $spendingToArray['attachments'] = $spending->attachments()->get();
+        return Inertia::render('Spendings/Show', [
+            'spending' => $spendingToArray
         ]);
     }
 

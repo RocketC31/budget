@@ -33,5 +33,6 @@ return [
     ],
     'today' => 'Aujourd\'hui',
     'this_week' => 'Cette semaine',
-    'this_month' => 'Ce mois'
+    'this_month' => 'Ce mois',
+    'day' => 'Jour'
 ];

@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 class RecurringTest extends TestCase
 {
+    //TODO : replace this test to transaction
     public function testUnauthorizedUserCantViewRecurring()
     {
         $user = User::factory()->create();

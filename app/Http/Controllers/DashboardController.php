@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use App\Repositories\DashboardRepository;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class DashboardController extends Controller

@@ -3,36 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Recurring;
 use App\Jobs\ProcessRecurrings;
 use App\Models\Tag;
 use App\Repositories\RecurringRepository;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class RecurringController extends Controller
 {
-    private $recurringRepository;
+    private RecurringRepository $recurringRepository;
 
     public function __construct(RecurringRepository $recurringRepository)
     {
         $this->recurringRepository = $recurringRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
         $recurrings = Recurring::ofSpace(session('space_id'))->latest()->get();
 
-        return view('recurrings.index', ['recurrings' => $recurrings]);
+        return Inertia::render('Recurrings/Index', ['recurrings' => $recurrings]);
     }
 
-    public function show(Recurring $recurring)
+    public function show(Recurring $recurring): Response
     {
         $this->authorize('view', $recurring);
 
-        return view('recurrings.show', compact('recurring'));
+        return Inertia::render('Recurrings/Show', compact('recurring'));
     }
 
-    public function create()
+    public function create(): Response
     {
         $tags = [];
 
@@ -40,10 +43,10 @@ class RecurringController extends Controller
             $tags[] = ['key' => $tag->id, 'label' => $tag->name];
         }
 
-        return view('recurrings.create', compact('tags'));
+        return Inertia::render('Recurrings/Create', compact('tags'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->recurringRepository->getValidationRules());
 

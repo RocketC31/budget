@@ -1,7 +1,7 @@
 <script>
 import { trans } from 'matice';
-import { Head } from '@inertiajs/inertia-vue3';
-import { ref } from "vue";
+import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { ref, computed } from "vue";
 import { capitalize } from "@/tools";
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import Searchable from "@/Components/Searchable";
@@ -30,8 +30,6 @@ export default {
 
     data() {
         return {
-            errors: [],
-
             tag: null,
             date: this.getTodaysDate(),
             description: '',
@@ -40,20 +38,19 @@ export default {
             recurringInterval: 'monthly',
             recurringEnd: 'forever',
             recurringEndDate: this.get100DaysFutureDate(),
-
-            loading: false,
-            success: false
+            success: false,
+            loading: false
         }
     },
 
     setup(props) {
         let type = ref(props.defaultTransactionType);
         let selectedCurrencyId = ref(props.defaultCurrencyId);
-        return { type, selectedCurrencyId, trans, capitalize }
+        const errors = computed(() => usePage().props.value.errors)
+        return { type, selectedCurrencyId, trans, capitalize, errors }
     },
 
     methods: {
-        // Children
         onDateUpdate(date) {
             this.date = date
         },
@@ -89,93 +86,40 @@ export default {
             if (!this.loading) {
                 this.loading = true
 
+                let body = {
+                    amount: this.amount,
+                    currency_id: this.selectedCurrencyId,
+                    description: this.description
+                }
                 if (this.isRecurring) { // It's a recurring
-                    let body = {
-                        //_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        type: this.type,
-                        interval: this.recurringInterval,
-                        day: this.date.slice(-2),
-                        start: this.date,
-                        description: this.description,
-                        amount: this.amount,
-                        currency_id: this.selectedCurrencyId
-                    }
+                    body["type"] = this.type;
+                    body["interval"] = this.recurringInterval;
+                    body["day"] = this.date.slice(-2);
+                    body["start"] = this.date;
 
-                    if (this.recurringEnd == 'fixed') {
-                        body.end = this.recurringEndDate
+                    if (this.recurringEnd === 'fixed') {
+                        body["end"] = this.recurringEndDate
                     }
 
                     if (this.tag) {
-                        body.tag_id = this.tag
+                        body["tag_id"] = this.tag
                     }
 
-                    axios.post('/recurrings', body).then(response => {
-                        this.handleSuccess()
-                    }).catch(error => {
-                        this.handleErrors(error.response)
-                    })
-                } else { // It's an earning or a spending, not a recurring
-                    let body = {
-                        //_token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        date: this.date,
-                        description: this.description,
-                        currency_id: this.selectedCurrencyId,
-                        amount: this.amount
+                    Inertia.post('/recurrings', body, {
+                        onFinish: () => this.loading = false
+                    });
+                } else {
+                    body["date"] = this.date;
+
+                    if (this.type === 'spending' && this.tag) {
+                        body["tag_id"] = this.tag;
                     }
 
-                    if (this.type == 'spending' && this.tag) {
-                        body.tag_id = this.tag
-                    }
-
-                    Inertia.post('/' + this.type + 's', body);
-
-                    /*axios.post('/' + this.type + 's', body).then(response => {
-                        this.handleSuccess()
-                    }).catch(error => {
-                        this.handleErrors(error.response)
-                    })*/
+                    Inertia.post('/' + this.type + 's', body, {
+                        onFinish: () => this.loading = false
+                    });
                 }
             }
-        },
-
-        handleSuccess() {
-            this.loading = false
-
-            this.errors = []
-
-            //
-            //window.location.href = '/transactions'
-
-            this.date = this.getTodaysDate()
-            this.description = ''
-            this.amount = ''
-            // Leave isRecurring as is
-            this.recurringEnd = 'forever'
-            this.recurringEndDate = ''
-
-            this.success = true
-        },
-
-        handleErrors(response) {
-            this.loading = false
-
-            let errors = []
-
-            if (response.data.errors) {
-                for (let key in response.data.errors) {
-                    if (response.data.errors.hasOwnProperty(key)) {
-                        errors[key] = response.data.errors[key][0]
-                    }
-                }
-            }
-
-            this.errors = errors
-
-            if (response.status != 422) {
-                alert('Something went wrong')
-            }
-
-            this.success = false
         }
     }
 }

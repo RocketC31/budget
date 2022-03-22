@@ -20,8 +20,5 @@
     <body id="body" class="font-sans antialiased theme-{{ Auth::check() ? Auth::user()->theme : 'light' }}">
         @inertia
         @translations
-        @env ('local')
-            <script src="http://localhost:8080/js/bundle.js"></script>
-        @endenv
     </body>
 </html>
