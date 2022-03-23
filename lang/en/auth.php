@@ -12,4 +12,7 @@ return [
         email you a password reset link that will allow you to choose a new one.',
     'confirm_password' => 'Confirm Password',
     'remember_me' => 'Remember me',
+    'verification_sent' => 'An e-mail has been sent your way',
+    'verification_already_verified' => 'You\'ve already been verified',
+    'verification_wait_next_send' => 'Please wait a few minutes before requesting another e-mail'
 ];

@@ -19,7 +19,8 @@ class User extends Authenticatable
         'verification_token',
         'last_verification_mail_sent_at',
         'stripe_customer_id',
-        'plan'
+        'plan',
+        'language'
     ];
 
     protected $hidden = [

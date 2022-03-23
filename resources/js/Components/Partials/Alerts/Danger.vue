@@ -1,7 +1,13 @@
 <script setup>
 defineProps({
-    classes: String,
-    message: String
+    classes: {
+        type: String,
+        default: ''
+    },
+    message: {
+        type: String,
+        default: ''
+    }
 });
 </script>
 <template>

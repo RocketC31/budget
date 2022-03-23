@@ -63,6 +63,9 @@ const submit = () => {
                     {{ trans('auth.login') }}
                 </BreezeButton>
             </div>
+            <div class="flex items-center justify-end mt-4">
+                <Link :href="route('register')">{{ trans('auth.first_time_here') }} {{ trans('auth.register') }}</Link>
+            </div>
         </form>
     </BreezeGuestLayout>
 </template>

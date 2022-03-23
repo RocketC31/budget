@@ -52,7 +52,7 @@ class HandleInertiaRequests extends Middleware
             'versionNumber' => $versionNumber,
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
-            ],
+            ]
         ]);
     }
 }

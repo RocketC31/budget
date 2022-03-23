@@ -13,4 +13,7 @@ return [
         d'en choisir un nouveau.",
     'confirm_password' => 'Confirmer le mot de passe',
     'remember_me' => 'Se souvenir de moi',
+    'verification_sent' => 'Un email a été envoyé',
+    'verification_already_verified' => 'Vous avez déjà été vérifié',
+    'verification_wait_next_send' => 'Merci de patienter quelques minutes avant de redemander un autre email'
 ];
