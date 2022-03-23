@@ -30,10 +30,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@ckpack/vue-color": "^1.1.8",
         "axios": "^0.26.1",
         "chart.js": "^3.7.1",
         "matice": "^1.1.4",
-        "uuid": "^8.3.2",
-        "vue-color": "^2.7.0"
+        "uuid": "^8.3.2"
     }
 }

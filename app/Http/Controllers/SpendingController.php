@@ -26,17 +26,7 @@ class SpendingController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
-    /**
-     * @deprecated Now use creation by transactions urls
-     */
-    public function create()
-    {
-        $tags = Tag::ofSpace(session('space_id'))->latest()->get();
-
-        return view('spendings.create', ['tags' => $tags]);
-    }
-
-    public function show(Request $request, Spending $spending)
+    public function show(Spending $spending)
     {
         $this->authorize('view', $spending);
         $spendingToArray = $spending;

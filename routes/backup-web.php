@@ -1,23 +1,11 @@
 <?php
 
-use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\BudgetController;
-use App\Http\Controllers\EarningController;
-use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\ImportController;
-use App\Http\Controllers\RecurringController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\SpaceInviteController;
-use App\Http\Controllers\SpendingController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TranslationsController;
-use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest']], function () {
@@ -28,24 +16,6 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     //Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::resource('/budgets', BudgetController::class)->only([
-        'index',
-        'create',
-        'store'
-    ]);
-
-    Route::resource('/tags', TagController::class)->only([
-        'index',
-        'create',
-        'store',
-        'edit',
-        'update',
-        'destroy'
-    ]);
-
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/{slug}', [ReportController::class, 'show']);
-
     Route::name('imports.')->group(function () {
         Route::get('/imports', [ImportController::class, 'index'])->name('index');
         Route::get('/imports/create', [ImportController::class, 'create'])->name('create');
@@ -55,10 +25,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/imports/{import}/complete', [ImportController::class, 'getComplete'])->name('complete');
         Route::post('/imports/{import}/complete', [ImportController::class, 'postComplete']);
         Route::delete('/imports/{import}', [ImportController::class, 'destroy']);
-    });
-
-    Route::name('activities.')->group(function () {
-        Route::get('/activities', [ActivityController::class, 'index'])->name('index');
     });
 
     Route::name('settings.')->group(function () {

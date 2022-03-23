@@ -25,21 +25,13 @@ class EarningController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
-    public function show(Request $request, Earning $earning): Response
+    public function show(Earning $earning): Response
     {
         $this->authorize('view', $earning);
 
         return Inertia::render('Earnings/Show', [
             'earning' => $earning
         ]);
-    }
-
-    /**
-     * @deprecated Now use creation by transactions urls
-     */
-    public function create()
-    {
-        return view('earnings.create');
     }
 
     public function store(Request $request): RedirectResponse

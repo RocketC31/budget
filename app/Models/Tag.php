@@ -6,6 +6,7 @@ use App\Events\TagCreated;
 use App\Events\TagDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
@@ -23,23 +24,23 @@ class Tag extends Model
     ];
 
     // Relations
-    public function budgets()
+    public function budgets(): HasMany
     {
         return $this->hasMany(Budget::class);
     }
 
-    public function spendings()
+    public function spendings(): HasMany
     {
         return $this->hasMany(Spending::class);
     }
 
     // Custom
-    private static function randomColorPart()
+    private static function randomColorPart(): string
     {
         return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
     }
 
-    public static function randomColor()
+    public static function randomColor(): string
     {
         return self::randomColorPart() . self::randomColorPart() . self::randomColorPart();
     }

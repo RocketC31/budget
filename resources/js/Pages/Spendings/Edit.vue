@@ -33,9 +33,6 @@ export default {
         function submit() {
             form.patch(route('spendings.update', { spending: props.spending.id }))
         }
-        function tagUpdated(payload) {
-            form.tag_id = payload.key;
-        }
         function onDateUpdate(date) {
             form.happened_on = date;
         }
@@ -44,7 +41,6 @@ export default {
             errors,
             form,
             submit,
-            tagUpdated,
             onDateUpdate
         }
     },

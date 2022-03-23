@@ -6,11 +6,13 @@ use App\Models\Spending;
 use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ReportController extends Controller
 {
-    private $transactionRepository;
-    private $tagRepository;
+    private TransactionRepository $transactionRepository;
+    private TagRepository $tagRepository;
 
     public function __construct(TransactionRepository $transactionRepository, TagRepository $tagRepository)
     {
@@ -18,28 +20,28 @@ class ReportController extends Controller
         $this->tagRepository = $tagRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
-        return view('reports.index');
+        return Inertia::render('Reports/Index');
     }
 
-    private function weeklyReport($year)
+    private function weeklyReport($year): Response
     {
-        return view('reports.weekly_report', [
+        return Inertia::render('Reports/WeeklyReport', [
             'year' => $year,
             'weeks' => $this->transactionRepository->getWeeklyBalance($year)
         ]);
     }
 
-    private function mostExpensiveTags()
+    private function mostExpensiveTags(): Response
     {
         $totalSpent = Spending::ofSpace(session('space_id'))->sum('amount');
         $mostExpensiveTags = $this->tagRepository->getMostExpensiveTags(session('space_id'));
 
-        return view('reports.most_expensive_tags', compact('totalSpent', 'mostExpensiveTags'));
+        return Inertia::render('Reports/MostExpensiveTags', compact('totalSpent', 'mostExpensiveTags'));
     }
 
-    public function show(Request $request, $slug)
+    public function show(Request $request, $slug): string|Response
     {
         switch ($slug) {
             case 'weekly-report':
@@ -55,7 +57,7 @@ class ReportController extends Controller
                 return $this->mostExpensiveTags();
 
             default:
-                return '404';
+                return redirect('reports.index');
         }
     }
 }

@@ -1,7 +1,6 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, Head } from "@inertiajs/inertia-vue3";
 import { trans } from 'matice';
-import { Head } from '@inertiajs/inertia-vue3';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import List from "@/Pages/Transactions/Partials/List";
 import { ref } from "vue";

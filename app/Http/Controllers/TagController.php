@@ -5,26 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class TagController extends Controller
 {
-    private $tagRepository;
+    private TagRepository $tagRepository;
 
     public function __construct(TagRepository $tagRepository)
     {
         $this->tagRepository = $tagRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
-        $tags = Tag::ofSpace(session('space_id'))->latest()->get();
-
-        return view('tags.index', ['tags' => $tags]);
+        $tags = Tag::ofSpace(session('space_id'))->with('spendings')->with('budgets')->latest()->get();
+        return Inertia::render('Tags/Index', ['tags' => $tags]);
     }
 
-    public function create()
+    public function create(): Response
     {
-        return view('tags.create');
+        return Inertia::render('Tags/Create');
     }
 
     public function store(Request $request)
@@ -36,11 +37,11 @@ class TagController extends Controller
         return redirect()->route('tags.index');
     }
 
-    public function edit(Tag $tag)
+    public function edit(Tag $tag): Response
     {
         $this->authorize('edit', $tag);
 
-        return view('tags.edit', compact('tag'));
+        return Inertia::render('Tags/Edit', compact('tag'));
     }
 
     public function update(Request $request, Tag $tag)

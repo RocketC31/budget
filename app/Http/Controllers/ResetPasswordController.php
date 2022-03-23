@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ * @deprecated Use NewPasswordController instead
+ */
 class ResetPasswordController extends Controller
 {
     private $passwordResetRepository;

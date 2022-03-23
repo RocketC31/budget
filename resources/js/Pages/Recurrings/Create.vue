@@ -25,7 +25,7 @@ const recurring = ref({
 let loading = ref(false);
 let tag = ref("");
 
-const submit = () => {
+function submit() {
     if (!loading.value) {
         loading.value = true;
         let body = recurring.value;
@@ -36,7 +36,7 @@ const submit = () => {
     }
 }
 
-const tagUpdated = (payload) => {
+function tagUpdated(payload) {
     tag.value = payload.key;
 }
 

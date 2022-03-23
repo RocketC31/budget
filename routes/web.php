@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RecurringController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\SpendingController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -73,6 +76,27 @@ Route::group(['middleware' => ['auth']], function () {
         'store',
         'show'
     ]);
+
+    // Tags
+    Route::name('tags.')->group(function () {
+        Route::get('/tags', [TagController::class, 'index'])->name('index');
+        Route::get('/tags/create', [TagController::class, 'create'])->name('create');
+        Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('edit');
+        Route::post('/tags', [TagController::class, 'store'])->name('store');
+        Route::patch('/tags/{tag}', [TagController::class, 'update'])->name('update');
+        Route::delete('/tags/{tag}', [TagController::class, 'destroy'])->name('delete');
+    });
+
+    //Reports
+    Route::name('reports.')->group(function () {
+        Route::get('/reports', [ReportController::class, 'index'])->name('index');
+        Route::get('/reports/{slug}', [ReportController::class, 'show'])->name('show');
+    });
+
+    //Activities
+    Route::name('activities.')->group(function () {
+        Route::get('/activities', [ActivityController::class, 'index'])->name('index');
+    });
 });
 
 require __DIR__ . '/auth.php';
