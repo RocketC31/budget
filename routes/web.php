@@ -10,9 +10,12 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RecurringController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResendVerificationMailController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\WidgetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -109,6 +112,36 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/imports/{import}/complete', [ImportController::class, 'getComplete'])->name('complete');
         Route::post('/imports/{import}/complete', [ImportController::class, 'postComplete'])->name('complete.store');
         Route::delete('/imports/{import}', [ImportController::class, 'destroy'])->name('delete');
+    });
+
+    Route::name('widgets.')->group(function () {
+        Route::post('/widgets', [WidgetController::class, 'store'])->name('store');
+        Route::post('/widgets/{widget}/up', [WidgetController::class, 'up'])->name('up');
+        Route::post('/widgets/{widget}/down', [WidgetController::class, 'down'])->name('down');
+        Route::delete('/widgets/{widget}', [WidgetController::class, 'delete'])->name('delete');
+    });
+
+    //Settings
+    Route::name('settings.')->group(function () {
+        Route::get('/settings', [SettingsController::class, 'getIndex'])->name('index');
+        Route::get('/settings/profile', [SettingsController::class, 'getProfile'])->name('profile');
+        Route::post('/settings/profile', [SettingsController::class, 'postProfile'])->name('profile');
+        Route::get('/settings/account', [SettingsController::class, 'getAccount'])->name('account');
+        Route::post('/settings/account', [SettingsController::class, 'postAccount'])->name('account');
+        Route::get('/settings/preferences', [SettingsController::class, 'getPreferences'])->name('preferences');
+        Route::post('/settings/preferences', [SettingsController::class, 'postPreferences'])->name('preferences');
+        Route::get('/settings/dashboard', [SettingsController::class, 'getDashboard'])->name('dashboard');
+        Route::get('/settings/spaces', [SettingsController::class, 'getSpaces'])->name('spaces.index');
+    });
+
+    //Space
+    Route::name('spaces.')->group(function () {
+        Route::get('/spaces/create', [SpaceController::class, 'create'])->name('create');
+        Route::post('/spaces', [SpaceController::class, 'store'])->name('store');
+        Route::get('/spaces/{space}', [SpaceController::class, 'show'])->name('show');
+        Route::get('/spaces/{space}/edit', [SpaceController::class, 'edit'])->name('edit');
+        Route::patch('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
+        Route::post('/spaces/{space}/invite', [SpaceController::class, 'invite'])->name('invite');
     });
 });
 

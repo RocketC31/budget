@@ -1,9 +1,7 @@
 <script setup>
-import {Link, Head, useForm, usePage} from "@inertiajs/inertia-vue3";
+import { Head, useForm, usePage} from "@inertiajs/inertia-vue3";
 import { trans } from 'matice';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import EmptyState from "@/Components/Partials/EmptyState";
-import { Inertia } from "@inertiajs/inertia";
 import { computed } from "vue";
 import ValidationError from "@/Components/ValidationError";
 

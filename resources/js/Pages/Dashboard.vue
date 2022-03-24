@@ -8,8 +8,6 @@ import Widget from "@/Components/Widget/Widget";
 import Chart from "@/Components/Partials/Chart";
 import { computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import Success from "@/Components/Partials/Alerts/Success";
-import Danger from "@/Components/Partials/Alerts/Danger";
 
 defineProps({
     month: Number,
@@ -27,32 +25,12 @@ defineProps({
     currency: String
 });
 
-const user = computed(() => usePage().props.value.auth.user);
-const flash = computed(() => usePage().props.value.flash.message);
-
-function submit() {
-    Inertia.post(route('resend_verification_mail'));
-}
-
 </script>
 
 <template>
     <Head :title="trans('general.dashboard')" />
 
     <BreezeAuthenticatedLayout>
-        <div v-if="user.verification_token" class="text-center" style="
-                    padding: 15px;
-                    color: #FFF;
-                    background: #F86380;
-                ">
-            <span v-html="trans('general.verify_account')"></span>
-            ({{ trans('general.or') }} <button @click="submit" class="button link">{{ trans('actions.resent').toLowerCase() }}</button>)
-        </div>
-        <div class="wrapper mt-3">
-            <Success v-if="flash === 'success'" :message="trans('auth.verification_sent')"></Success>
-            <Danger v-if="flash === 'already_verified'" :message="trans('auth.verification_already_verified')"></Danger>
-            <Danger v-if="flash === 'rate_limited'" :message="trans('auth.verification_wait_next_send')"></Danger>
-        </div>
         <div class="wrapper my-3">
             <h2>{{ trans('general.dashboard') }}</h2>
             <p class="mt-1">{{ trans('calendar.months.' + month) }} {{ year }}</p>

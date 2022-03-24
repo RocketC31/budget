@@ -22,6 +22,6 @@ class ResendVerificationMailController extends Controller
             $request->session()->flash('message', 'rate_limited');
         }
 
-        return redirect()->route('dashboard');
+        return back();
     }
 }

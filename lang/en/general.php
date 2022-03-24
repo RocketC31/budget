@@ -48,5 +48,6 @@ return [
     'until' => 'Until',
     'active' => 'Active',
     'inactive' => 'Inactive',
-    'end' => 'end'
+    'end' => 'end',
+    'cant_edit_currency' => 'You cannot modify the currency anymore'
 ];

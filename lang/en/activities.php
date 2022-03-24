@@ -31,5 +31,16 @@ return [
 
     'balance' => [
         'daily' => 'Daily Widget'
+    ],
+
+    'widgets' => [
+        "no_widgets" => "There aren't any widgets yet"
+    ],
+
+    'invites' => [
+        "no_invites" => "There aren't any invites",
+        "invite_sent" => "An invite has been sent",
+        'already_present' => "User is already part of space",
+        "already_sent" => "Invite has already been sent"
     ]
 ];

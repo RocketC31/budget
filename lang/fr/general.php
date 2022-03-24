@@ -46,5 +46,6 @@ return [
     'until' => 'Jusqu\'au',
     'active' => 'Actif',
     'inactive' => 'Inactif',
-    'end' => 'Fin'
+    'end' => 'Fin',
+    'cant_edit_currency' => 'Vous ne pouvez plus modifier la devise'
 ];

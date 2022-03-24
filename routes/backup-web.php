@@ -18,27 +18,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-    Route::name('settings.')->group(function () {
-        Route::get('/settings', [SettingsController::class, 'getIndex'])->name('index');
-        Route::post('/settings', [SettingsController::class, 'postIndex']);
-        Route::get('/settings/profile', [SettingsController::class, 'getProfile'])->name('profile');
-        Route::get('/settings/account', [SettingsController::class, 'getAccount'])->name('account');
-        Route::get('/settings/preferences', [SettingsController::class, 'getPreferences'])->name('preferences');
-        Route::get('/settings/dashboard', [SettingsController::class, 'getDashboard'])->name('dashboard');
-        Route::get('/settings/billing', [SettingsController::class, 'getBilling'])->name('billing')->middleware('stripe');
-        Route::post('/settings/billing/upgrade', [SettingsController::class, 'postUpgrade'])->name('billing.upgrade')->middleware('stripe');
-        Route::post('/settings/billing/cancel', [SettingsController::class, 'postCancel'])->name('billing.cancel')->middleware('stripe');
-        Route::get('/settings/spaces', [SettingsController::class, 'getSpaces'])->name('spaces.index');
-    });
 
-    Route::name('spaces.')->group(function () {
-        Route::get('/spaces/create', [SpaceController::class, 'create'])->name('create');
-        Route::post('/spaces', [SpaceController::class, 'store'])->name('store');
-        Route::get('/spaces/{space}', [SpaceController::class, 'show'])->name('show');
-        Route::get('/spaces/{space}/edit', [SpaceController::class, 'edit'])->name('edit');
-        Route::post('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
-        Route::post('/spaces/{space}/invite', [SpaceController::class, 'invite'])->name('invite');
-    });
+
+
 
     Route::name('space_invites.')->group(function () {
         Route::get('/spaces/{space}/invites/{invite}', [SpaceInviteController::class, 'show'])->name('show');

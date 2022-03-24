@@ -26,13 +26,12 @@ class SpendingController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
-    public function show(Spending $spending)
+    public function show(Spending $spending): Response
     {
         $this->authorize('view', $spending);
-        $spendingToArray = $spending;
-        $spendingToArray['attachments'] = $spending->attachments()->get();
+        $spending->load('attachments');
         return Inertia::render('Spendings/Show', [
-            'spending' => $spendingToArray
+            'spending' => $spending
         ]);
     }
 

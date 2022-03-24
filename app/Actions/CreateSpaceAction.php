@@ -13,7 +13,7 @@ class CreateSpaceAction
             'currency_id' => $currencyId
         ]);
 
-        $space->users()->attach($creatorUserId);
+        $space->users()->attach($creatorUserId, ['role' => 'admin']);
 
         return $space;
     }

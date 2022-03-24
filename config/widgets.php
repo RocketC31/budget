@@ -8,7 +8,11 @@ return [
 
         'spent' => [
             'properties' => [
-                'period' => ['today', 'this_week', 'this_month']
+                'period' => [
+                    'calendar.today' => 'today',
+                    'calendar.this_week' => 'this_week',
+                    'calendar.this_month' => 'this_month'
+                ]
             ]
         ],
 

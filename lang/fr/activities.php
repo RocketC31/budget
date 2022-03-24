@@ -31,5 +31,13 @@ return [
 
     'balance' => [
         'daily' => 'Solde quotidien'
+    ],
+
+    'widgets' => [
+        "no_widgets" => "Il n'y a pas encore de widgets"
+    ],
+
+    'invites' => [
+        "no_invites" => "Il n'y a pas d'invitations"
     ]
 ];
