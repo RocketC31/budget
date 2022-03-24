@@ -5,6 +5,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EarningController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RecurringController;
 use App\Http\Controllers\ReportController;
@@ -96,6 +97,18 @@ Route::group(['middleware' => ['auth']], function () {
     //Activities
     Route::name('activities.')->group(function () {
         Route::get('/activities', [ActivityController::class, 'index'])->name('index');
+    });
+
+    //Import
+    Route::name('imports.')->group(function () {
+        Route::get('/imports', [ImportController::class, 'index'])->name('index');
+        Route::get('/imports/create', [ImportController::class, 'create'])->name('create');
+        Route::post('/imports', [ImportController::class, 'store'])->name('store');
+        Route::get('/imports/{import}/prepare', [ImportController::class, 'getPrepare'])->name('prepare');
+        Route::post('/imports/{import}/prepare', [ImportController::class, 'postPrepare'])->name('prepare.store');
+        Route::get('/imports/{import}/complete', [ImportController::class, 'getComplete'])->name('complete');
+        Route::post('/imports/{import}/complete', [ImportController::class, 'postComplete'])->name('complete.store');
+        Route::delete('/imports/{import}', [ImportController::class, 'destroy'])->name('delete');
     });
 });
 

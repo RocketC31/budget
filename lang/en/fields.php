@@ -14,6 +14,7 @@ return [
     'first_day_of_week' => 'First day of the week',
 
     'date' => 'Date',
+    'date_format' => 'Date Format',
     'description' => 'Description',
     'amount' => 'Amount',
 
@@ -26,5 +27,6 @@ return [
     'role' => 'Role',
     'type' => 'Type',
     'list' => 'List',
-    'chart' => 'Chart'
+    'chart' => 'Chart',
+    'status' => 'Status'
 ];

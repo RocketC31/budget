@@ -16,16 +16,7 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     //Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::name('imports.')->group(function () {
-        Route::get('/imports', [ImportController::class, 'index'])->name('index');
-        Route::get('/imports/create', [ImportController::class, 'create'])->name('create');
-        Route::post('/imports', [ImportController::class, 'store'])->name('store');
-        Route::get('/imports/{import}/prepare', [ImportController::class, 'getPrepare'])->name('prepare');
-        Route::post('/imports/{import}/prepare', [ImportController::class, 'postPrepare']);
-        Route::get('/imports/{import}/complete', [ImportController::class, 'getComplete'])->name('complete');
-        Route::post('/imports/{import}/complete', [ImportController::class, 'postComplete']);
-        Route::delete('/imports/{import}', [ImportController::class, 'destroy']);
-    });
+
 
     Route::name('settings.')->group(function () {
         Route::get('/settings', [SettingsController::class, 'getIndex'])->name('index');

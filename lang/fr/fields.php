@@ -18,5 +18,7 @@ return [
     'color' => 'Couleur',
     'period' => 'Période',
     'list' => 'Liste',
-    'chart' => 'Graphique'
+    'chart' => 'Graphique',
+    'status' => 'Statut',
+    'date_format' => 'Format de date',
 ];

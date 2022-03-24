@@ -22,5 +22,10 @@ return [
     'create_for_me_future' => 'créez-le pour moi dans le futur',
     'loading' => 'Chargement',
     'select' => 'Sélectionner',
-    'search' => 'Rechercher'
+    'search' => 'Rechercher',
+    'completed' => 'Complété',
+    'complete' => 'Complète',
+    'prepare' => 'Préparer',
+    'select_all' => 'Tout sélectionner',
+    'deselect_all' => 'Tout désélectionner'
 ];
