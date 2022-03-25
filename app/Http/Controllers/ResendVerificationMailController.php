@@ -15,13 +15,13 @@ class ResendVerificationMailController extends Controller
         try {
             (new SendVerificationMailAction())->execute(Auth::user()->id);
 
-            $request->session()->flash('verification_mail_status', 'success');
+            $request->session()->flash('message', 'success');
         } catch (UserAlreadyVerifiedException $e) {
-            $request->session()->flash('verification_mail_status', 'already_verified');
+            $request->session()->flash('message', 'already_verified');
         } catch (VerificationMailRateLimitException $e) {
-            $request->session()->flash('verification_mail_status', 'rate_limited');
+            $request->session()->flash('message', 'rate_limited');
         }
 
-        return redirect()->route('dashboard');
+        return back();
     }
 }

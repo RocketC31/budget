@@ -22,7 +22,7 @@ class WidgetTest extends TestCase
 
         $this->expectException(WidgetUnknownTypeException::class);
 
-        $widget->render();
+        $widget->resolve();
     }
 
     public function testMissingProperty(): void
@@ -37,7 +37,7 @@ class WidgetTest extends TestCase
 
         $this->expectException(WidgetMissingPropertyException::class);
 
-        $widget->render();
+        $widget->resolve();
     }
 
     public function testInvalidPropertyValue(): void
@@ -52,6 +52,6 @@ class WidgetTest extends TestCase
 
         $this->expectException(WidgetInvalidPropertyValueException::class);
 
-        $widget->render();
+        $widget->resolve();
     }
 }

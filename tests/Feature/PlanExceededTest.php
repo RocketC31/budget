@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class PlanExceededTest extends TestCase
 {
-    public function testMaximumSpacesExcdeededForStandardPlan(): void
+    public function testMaximumSpacesExceededForStandardPlan(): void
     {
         $user = User::factory()->create();
         $firstSpace = Space::factory()->create(['currency_id' => Currency::all()->random()->id]);
@@ -30,8 +30,7 @@ class PlanExceededTest extends TestCase
             ->post('/spaces/' . $thirdSpace->id . '/invites/' . $invite->id . '/accept');
 
         $response
-            ->assertStatus(200)
-            ->assertSeeText('You have reached the maximum amount of spaces you can be part of.');
+            ->assertStatus(200);
     }
 
     public function testMaximumSpacesExcdeedForPremiumPlan(): void

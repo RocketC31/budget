@@ -21,6 +21,6 @@ class Activity extends Model
     // Scopes
     public function scopeOfSpace($query, $spaceId)
     {
-        return $query->where('space_id', $spaceId);
+        return $query->where('space_id', $spaceId)->whereYear('created_at', date('Y'));
     }
 }

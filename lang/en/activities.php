@@ -3,12 +3,18 @@
 return [
     'transaction' => [
         'created' => 'Created Transaction',
-        'deleted' => 'Deleted Transaction'
+        'deleted' => 'Deleted Transaction',
+        'success_created' => 'Successfully created transaction'
     ],
 
     'recurring' => [
         'created' => 'Created Recurring',
-        'deleted' => 'Deleted Recurring'
+        'deleted' => 'Deleted Recurring',
+        'due_in' => 'Due in :due days'
+    ],
+
+    'spending' => [
+        'no_spendings' => 'There aren\'t any spendings (yet)'
     ],
 
     'tag' => [
@@ -24,6 +30,17 @@ return [
     ],
 
     'balance' => [
-        'daily' => 'Daily Balance'
+        'daily' => 'Daily Widget'
+    ],
+
+    'widgets' => [
+        "no_widgets" => "There aren't any widgets yet"
+    ],
+
+    'invites' => [
+        "no_invites" => "There aren't any invites",
+        "invite_sent" => "An invite has been sent",
+        'already_present' => "User is already part of space",
+        "already_sent" => "Invite has already been sent"
     ]
 ];

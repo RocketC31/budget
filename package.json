@@ -10,22 +10,30 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "autoprefixer": "^10.4.2",
+        "@inertiajs/inertia": "^0.11.0",
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "@inertiajs/progress": "^0.2.6",
+        "@tailwindcss/forms": "^0.4.0",
+        "@vue/compiler-sfc": "^3.2.30",
+        "autoprefixer": "^10.4.4",
         "cross-env": "^5.0.1",
         "laravel-mix": "^6.0.43",
         "lodash": "^4.17.21",
-        "postcss": "^8.4.7",
+        "postcss": "^8.4.12",
+        "postcss-import": "^14.0.2",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.7",
         "sass-loader": "7.*",
-        "tailwindcss": "^3.0.23",
-        "vue": "^2.5.3",
-        "vue-loader": "^15.9.5",
+        "tailwindcss": "^3.0.18",
+        "vue": "^3.2.30",
+        "vue-loader": "^16.1.2",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "axios": "^0.26.0",
+        "@ckpack/vue-color": "^1.1.8",
+        "axios": "^0.26.1",
         "chart.js": "^3.7.1",
-        "vue-color": "^2.7.0"
+        "matice": "^1.1.4",
+        "uuid": "^8.3.2"
     }
 }

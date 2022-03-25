@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,7 @@ class CreateUserAction
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
+            'language' => App::getLocale(),
             'verification_token' => Str::random(100)
         ]);
 

@@ -3,7 +3,7 @@
 return [
     'dashboard' => 'Dashboard',
 
-    'balance' => 'Balance',
+    'balance' => 'Widget',
     'recurrings' => 'Recurrings',
     'left_to_spend' => 'Left to Spend',
     'total_earned' => 'Total Earned',
@@ -41,5 +41,13 @@ return [
     'or' => 'or',
     'spent' => 'Spent',
     'properties' => 'Properties',
-    'other' => 'Other'
+    'other' => 'Other',
+    'will_convert' => 'will be converted into',
+    'how_long_spending' => 'How long will this spending go on for?',
+    'forever' => 'Forever',
+    'until' => 'Until',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'end' => 'end',
+    'cant_edit_currency' => 'You cannot modify the currency anymore'
 ];

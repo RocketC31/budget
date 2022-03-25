@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Exceptions\WidgetInvalidPropertyValueException;
 use App\Exceptions\WidgetMissingPropertyException;
 use App\Exceptions\WidgetUnknownTypeException;
+use App\Widgets\Balance;
+use App\Widgets\Spent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +23,8 @@ class Widget extends Model
         'properties'
     ];
 
+    protected $appends = ['currency_symbol'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -33,6 +37,13 @@ class Widget extends Model
     public function getPropertiesAttribute($value)
     {
         return json_decode($value);
+    }
+
+    public function getCurrencySymbolAttribute()
+    {
+        $space = Space::find(session('space_id'));
+
+        return $space->currency->symbol;
     }
 
     /**
@@ -50,24 +61,35 @@ class Widget extends Model
     }
 
     /**
-     * Custom
+     * @throws WidgetUnknownTypeException
+     * @throws WidgetMissingPropertyException
+     * @throws WidgetInvalidPropertyValueException
      */
-    public function render(): string
+    public function resolve(): Widget
     {
-        $widgetClass = '\App\Widgets\\' . ucfirst($this->type);
-
-        if (!class_exists($widgetClass)) {
+        $model = null;
+        switch ($this->type) {
+            case "spent":
+                $model = new Spent();
+                break;
+            case "balance":
+                $model = new Balance();
+                break;
+        }
+        if (is_null($model)) {
             throw new WidgetUnknownTypeException();
         }
 
-        $requiredProperties = config('widgets.types.' . $this->type . '.properties');
+        $model->setRawAttributes($this->getAttributes(), true);
+
+        $requiredProperties = config('widgets.types.' . $model->type . '.properties');
 
         foreach ($requiredProperties as $requiredPropertyKey => $requiredPropertyOptions) {
             /**
              * Check if property exists
              */
 
-            if (!isset($this->properties->{$requiredPropertyKey})) {
+            if (!isset($model->properties->{$requiredPropertyKey})) {
                 throw new WidgetMissingPropertyException();
             }
 
@@ -75,13 +97,11 @@ class Widget extends Model
              * Check if property has valid value
              */
 
-            if (!in_array($this->properties->{$requiredPropertyKey}, $requiredPropertyOptions)) {
+            if (!in_array($model->properties->{$requiredPropertyKey}, $requiredPropertyOptions)) {
                 throw new WidgetInvalidPropertyValueException();
             }
         }
 
-        $widgetInstance = new $widgetClass($this->properties);
-
-        return $widgetInstance->render();
+        return $model;
     }
 }

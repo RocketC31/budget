@@ -3,12 +3,18 @@
 return [
     'transaction' => [
         'created' => 'Opération créée',
-        'deleted' => 'Opération supprimée'
+        'deleted' => 'Opération supprimée',
+        'success_created' => 'Transaction créée avec succès'
     ],
 
     'recurring' => [
         'created' => 'Opération récurrente créée',
-        'deleted' => 'Opération récurrente supprimée'
+        'deleted' => 'Opération récurrente supprimée',
+        'due_in' => 'Dû dans :due jours'
+    ],
+
+    'spending' => [
+        'no_spendings' => 'Il n\'y a pas (encore) de dépenses'
     ],
 
     'tag' => [
@@ -25,5 +31,13 @@ return [
 
     'balance' => [
         'daily' => 'Solde quotidien'
+    ],
+
+    'widgets' => [
+        "no_widgets" => "Il n'y a pas encore de widgets"
+    ],
+
+    'invites' => [
+        "no_invites" => "Il n'y a pas d'invitations"
     ]
 ];

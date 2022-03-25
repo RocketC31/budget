@@ -11,6 +11,7 @@ use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class TransactionController extends Controller
 {
@@ -60,7 +61,7 @@ class TransactionController extends Controller
 
         $tagsPrice = $this->tagRepository->getMostExpensiveTags(session('space_id'), $search);
 
-        return view('transactions.index', [
+        return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,
             'tagsPrice' => $tagsPrice,
             'transactionsChart' => $transactionsChart,
@@ -82,7 +83,7 @@ class TransactionController extends Controller
             ];
         }
 
-        return view('transactions.create', [
+        return Inertia::render('Transactions/Create', [
             'tags' => $tags,
             'currencies' => $this->currencyRepository->getIfConversionRatePresent(),
             'defaultTransactionType' => Auth::user()->default_transaction_type,

@@ -57,12 +57,15 @@ class SendWeeklyReports implements ShouldQueue
 
                 // Only send if user wants to receive report
                 if ($user->weekly_report) {
-                    Mail::to($user->email)->queue(new WeeklyReport(
-                        $space,
-                        $week,
-                        $totalSpent,
-                        $largestSpendingWithTag
-                    ));
+                    try {
+                        Mail::to($user->email)->queue(new WeeklyReport(
+                            $space,
+                            $week,
+                            $totalSpent,
+                            $largestSpendingWithTag
+                        ));
+                    } catch (\Exception $e) {
+                    }
                 }
             }
         }

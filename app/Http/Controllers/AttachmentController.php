@@ -4,20 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Attachment;
 use App\Repositories\AttachmentRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AttachmentController extends Controller
 {
-    private $attachmentRepository;
+    private AttachmentRepository $attachmentRepository;
 
     public function __construct(AttachmentRepository $attachmentRepository)
     {
         $this->attachmentRepository = $attachmentRepository;
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'transaction_type' => 'required|in:earning,spending',
@@ -33,10 +35,10 @@ class AttachmentController extends Controller
 
         $this->attachmentRepository->create($transactionType, $transactionId, $filePath);
 
-        return redirect('/' . $transactionType . 's/' . $transactionId);
+        return redirect()->intended('/' . $transactionType . 's/' . $transactionId);
     }
 
-    public function download(Request $request, Attachment $attachment)
+    public function download(Request $request, Attachment $attachment): ?BinaryFileResponse
     {
         $user = Auth::user();
 

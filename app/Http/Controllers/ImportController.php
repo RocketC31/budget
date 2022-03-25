@@ -6,31 +6,34 @@ use App\Helper;
 use App\Models\Import;
 use App\Models\Tag;
 use App\Repositories\SpendingRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ImportController extends Controller
 {
-    private $spendingRepository;
+    private SpendingRepository $spendingRepository;
 
     public function __construct(SpendingRepository $spendingRepository)
     {
         $this->spendingRepository = $spendingRepository;
     }
 
-    public function index()
+    public function index(): Response
     {
-        return view('imports.index')->with([
+        return Inertia::render('Imports/Index')->with([
             'imports' => Import::ofSpace(session('space_id'))->latest()->get()
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
-        return view('imports.create');
+        return Inertia::render('Imports/Create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -40,16 +43,16 @@ class ImportController extends Controller
         $path = $request->file('file')->store('imports');
         $pathParts = explode('/', $path);
 
-        Import::create([
+        $import = Import::create([
             'space_id' => session('space_id'),
             'name' => $request->input('name'),
             'file' => end($pathParts)
         ]);
 
-        return redirect()->route('imports.index');
+        return redirect()->route('imports.prepare', [ "import" => $import ]);
     }
 
-    public function getPrepare(Import $import)
+    public function getPrepare(Import $import): Response
     {
         $this->authorize('modify', $import);
 
@@ -68,10 +71,10 @@ class ImportController extends Controller
             $headers[] = $column;
         }
 
-        return view('imports.prepare', compact('headers'));
+        return Inertia::render('Imports/Prepare', compact('headers', 'import'));
     }
 
-    public function postPrepare(Request $request, Import $import)
+    public function postPrepare(Request $request, Import $import): RedirectResponse
     {
         $this->authorize('modify', $import);
 
@@ -90,10 +93,10 @@ class ImportController extends Controller
             'status' => 1
         ])->save();
 
-        return redirect()->route('imports.index');
+        return redirect()->route('imports.complete', [ "import" => $import ]);
     }
 
-    public function getComplete(Import $import)
+    public function getComplete(Import $import): Response
     {
         $this->authorize('modify', $import);
 
@@ -111,14 +114,15 @@ class ImportController extends Controller
             $rows[] = [
                 'happened_on' => $row[$import->column_happened_on],
                 'description' => $row[$import->column_description],
-                'amount' => $row[$import->column_amount]
+                'amount' => $row[$import->column_amount],
+                'tag_id' => null,
             ];
         }
 
-        return view('imports.complete', compact('tags', 'rows'));
+        return Inertia::render('Imports/Complete', compact('tags', 'rows', 'import'));
     }
 
-    public function postComplete(Request $request, Import $import)
+    public function postComplete(Request $request, Import $import): RedirectResponse
     {
         $this->authorize('modify', $import);
 
@@ -131,7 +135,7 @@ class ImportController extends Controller
         $errors = [];
 
         foreach ($request->input('rows') as $i => $row) {
-            if (isset($row['import']) && $row['import'] == 'on') {
+            if (isset($row['selected']) && $row['selected'] == true) {
                 $validator = Validator::make($row, [
                     'tag_id' => 'nullable|exists:tags,id', // TODO CHECK IF TAG BELONGS TO USER
                     'happened_on' => 'date|date_format:' . $date_format,
@@ -154,7 +158,7 @@ class ImportController extends Controller
         }
 
         foreach ($request->input('rows') as $row) {
-            if (isset($row['import'])) {
+            if (isset($row['selected']) && $row['selected'] == true) {
                 // TODO CHECK HOW THIS WORKS WITH 1k+ AMOUNTS
                 $amount = str_replace(',', '.', $row['amount']);
 

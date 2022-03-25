@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\ImportCreated;
 use App\Events\ImportDeleted;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,6 +26,13 @@ class Import extends Model
         'created' => ImportCreated::class,
         'deleted' => ImportDeleted::class
     ];
+
+    protected $appends = [ "spendings" ];
+
+    public function getSpendingsAttribute(): Collection
+    {
+        return $this->spendings()->get();
+    }
 
     // Relations
     public function spendings()

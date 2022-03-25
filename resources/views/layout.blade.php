@@ -44,9 +44,6 @@
     </head>
     <body class="bg-gray-50 theme-{{ Auth::check() ? Auth::user()->theme : 'light' }}">
         <div id="app">
-            @if (Auth::check())
-                @include('navigation.menu')
-            @endif
             @if (Auth::check() && Auth::user()->verification_token)
                 <div class="text-center" style="
                     padding: 15px;
@@ -73,15 +70,6 @@
                 </div>
             @endif
             @yield('body')
-            @if (auth()->check())
-                <div class="text-center mb-3">
-                    @if ($suggestionBoxEnabled)
-                        <a class="fs-sm" href="/ideas/create">{{ __('general.got_a_suggestion') }}?</a> &middot; {{ $versionNumber }}
-                    @else
-                        {{ $versionNumber }}
-                    @endif
-                </div>
-            @endif
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('scripts')

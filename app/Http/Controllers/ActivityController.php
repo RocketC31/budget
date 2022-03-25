@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use Inertia\Inertia;
 
 class ActivityController extends Controller
 {
@@ -10,6 +11,6 @@ class ActivityController extends Controller
     {
         $activities = Activity::ofSpace(session('space_id'))->get();
 
-        return view('activities.index', ['activities' => $activities]);
+        return Inertia::Render('Activities/Index', ['activities' => $activities]);
     }
 }

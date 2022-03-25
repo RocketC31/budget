@@ -14,10 +14,14 @@ use App\Repositories\LoginAttemptRepository;
 use App\Repositories\SpaceRepository;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @deprecated
+ * Use Auth/RegisteredUserController instead
+ */
 class RegisterController extends Controller
 {
-    private $spaceRepository;
-    private $loginAttemptRepository;
+    private SpaceRepository $spaceRepository;
+    private LoginAttemptRepository $loginAttemptRepository;
 
     public function __construct(
         SpaceRepository $spaceRepository,

@@ -1,10 +1,10 @@
 # Budget
 
-![GitHub latest release](https://img.shields.io/github/v/release/range-of-motion/budget?include_prereleases)
-![GitHub downloads](https://img.shields.io/github/downloads/range-of-motion/budget/total)
-[![Build status](https://travis-ci.com/range-of-motion/budget.svg?branch=master)](https://travis-ci.com/range-of-motion/budget)
-[![codecov](https://codecov.io/gh/range-of-motion/budget/branch/master/graph/badge.svg)](https://codecov.io/gh/range-of-motion/budget)
-[![GitHub license](https://img.shields.io/github/license/range-of-motion/budget.svg)](https://github.com/range-of-motion/budget/blob/master/LICENSE)
+![GitHub latest release](https://img.shields.io/github/v/release/RocketC31/budget?include_prereleases)
+![GitHub downloads](https://img.shields.io/github/downloads/RocketC31/budget/total)
+[![Build status](https://travis-ci.com/RocketC31/budget.svg?branch=master)](https://travis-ci.com/RocketC31/budget)
+[![codecov](https://codecov.io/gh/RocketC31/budget/branch/master/graph/badge.svg)](https://codecov.io/gh/RocketC31/budget)
+[![GitHub license](https://img.shields.io/github/license/RocketC31/budget.svg)](https://github.com/RocketC31/budget/blob/master/LICENSE)
 
 Budget is an open-source web application that helps you keep track of your finances.
 
@@ -33,7 +33,7 @@ You can use Budget by hosting it yourself, or using [the instance hosted by us](
 
 ## Installation
 
-* Clone the repository (`git clone https://github.com/range-of-motion/budget.git`)
+* Clone the repository (`git clone https://github.com/RocketC31/budget.git`)
     * You should always check out a tag, since the `master` branch might not always be stable (`git checkout TAG`)
 * Install dependencies (`composer install --no-dev -o`)
 * Run installation command (`php artisan budget:install`)
@@ -49,6 +49,20 @@ Use the command below to update to the latest version.
 
 ```
 php artisan budget:update
+```
+
+## Lang on front
+Translations in VueJs is working with [matice librarie](https://github.com/GENL/matice)
+
+If you want to use default lang path of laravel, do that :
+```
+php artisan vendor:publish --provider="Genl\Matice\MaticeServiceProvider"
+```
+
+And edit on `config/matice.php`
+
+```PHP
+'lang_directory' => lang_path(),
 ```
 
 ## Docker

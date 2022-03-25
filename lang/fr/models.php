@@ -15,9 +15,11 @@ return [
 
     'earnings' => 'Gains',
     'earning' => 'Gain',
+    'placeholder_earning' => 'Paye de février',
 
     'spendings' => 'Dépenses',
     'spending' => 'Dépense',
+    'placeholder_spending' => 'Cadeau d\'anniversaire pour Angela',
 
     'transactions' => 'Opérations',
     'transaction' => 'Opération',
@@ -26,5 +28,6 @@ return [
     'import' => 'Import',
 
     'attachment' => 'Pièce jointe',
-    'attachments' => 'Pièces jointes'
+    'attachments' => 'Pièces jointes',
+    'recurring_transaction' => 'Il s\'agit d\'une opération récurrente'
 ];

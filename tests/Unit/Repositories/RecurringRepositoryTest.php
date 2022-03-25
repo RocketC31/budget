@@ -5,6 +5,7 @@ namespace Tests\Unit\Repositories;
 use App\Models\Recurring;
 use App\Models\Space;
 use App\Repositories\RecurringRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 // TODO
@@ -13,8 +14,10 @@ use Tests\TestCase;
 
 class RecurringRepositoryTest extends TestCase
 {
-    private $recurringRepository;
-    private $space;
+    use RefreshDatabase;
+
+    private RecurringRepository $recurringRepository;
+    private Space $space;
 
     public function setUp(): void
     {
@@ -26,11 +29,10 @@ class RecurringRepositoryTest extends TestCase
 
     public function testCreation(): void
     {
-        $space = Space::find(1);
         $tagId = 1;
 
         $recurring = $this->recurringRepository->create(
-            $space->id,
+            $this->space->id,
             'spending',
             'monthly',
             3,
@@ -39,7 +41,7 @@ class RecurringRepositoryTest extends TestCase
             $tagId,
             'Foo',
             10000,
-            $space->currency_id
+            $this->space->currency_id
         );
 
         $this->assertNotNull($recurring);

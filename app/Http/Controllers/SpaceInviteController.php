@@ -7,10 +7,11 @@ use App\Actions\DenySpaceInviteAction;
 use App\Models\Space;
 use App\Models\SpaceInvite;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SpaceInviteController extends Controller
 {
-    public function show(Request $request, Space $space, SpaceInvite $invite)
+    public function show(Space $space, SpaceInvite $invite)
     {
         if ($invite->space->id !== $space->id) {
             abort(404);
@@ -22,7 +23,11 @@ class SpaceInviteController extends Controller
             abort(410);
         }
 
-        return view('space_invites.show', [
+        $invite->load('space');
+        $invite->load('invitee');
+        $invite->load('inviter');
+
+        return Inertia::render('SpacesInvite/Show', [
             'invite' => $invite
         ]);
     }

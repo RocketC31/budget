@@ -47,6 +47,10 @@ jobs:
         run: composer install --no-interaction
       - name: Generate key
         run: php artisan key:generate
+      - name: npm install
+        run: npm install
+      - name: Run build js (for mix)
+        run: npm run production
       - name: Prepare database
         run: php artisan migrate --database=testing
       - name: Run PHPUnit

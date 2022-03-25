@@ -3,28 +3,26 @@
 namespace App\Widgets;
 
 use App\Helper;
-use App\Models\Space;
+use App\Models\Widget;
 use App\Repositories\DashboardRepository;
 
-class Balance
+class Balance extends Widget
 {
-    private $dashboardRepository;
+    private DashboardRepository $dashboardRepository;
 
     public function __construct()
     {
+        parent::__construct();
         $this->dashboardRepository = new DashboardRepository();
+        $this->appends = array_merge($this->appends, ['balance']);
     }
 
-    public function render()
+    /**
+     * @return string
+     */
+    public function getBalanceAttribute(): string
     {
-        $space = Space::find(session('space_id'));
-
-        $currencySymbol = $space->currency->symbol;
         $balance = $this->dashboardRepository->getBalance(date('Y'), date('n'));
-
-        return view('widgets.balance', [
-            'currencySymbol' => $currencySymbol,
-            'balance' => Helper::formatNumber($balance / 100)
-        ]);
+        return Helper::formatNumber($balance / 100);
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 
+/**
+ * @deprecated We will use github for idea
+ */
 class IdeaController extends Controller
 {
     public function create()

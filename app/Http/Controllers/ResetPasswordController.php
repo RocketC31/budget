@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ * @deprecated Use PasswordResetLinkController instead
+ */
 class ResetPasswordController extends Controller
 {
-    private $passwordResetRepository;
+    private PasswordResetRepository $passwordResetRepository;
 
     public function __construct(PasswordResetRepository $passwordResetRepository)
     {
@@ -48,7 +51,10 @@ class ResetPasswordController extends Controller
                     $shippingToken = $existingRecord->token;
                 }
 
-                Mail::to($email)->queue(new ResetPassword($shippingToken));
+                try {
+                    Mail::to($email)->queue(new ResetPassword($shippingToken));
+                } catch (\Exception $e) {
+                }
             }
 
             return redirect()

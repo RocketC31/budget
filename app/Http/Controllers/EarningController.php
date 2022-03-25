@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Earning;
 use App\Models\Space;
 use App\Repositories\ConversionRateRepository;
 use App\Repositories\EarningRepository;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class EarningController extends Controller
 {
-    private $earningRepository;
-    private $conversionRateRepository;
+    private EarningRepository $earningRepository;
+    private ConversionRateRepository $conversionRateRepository;
 
     public function __construct(
         EarningRepository $earningRepository,
@@ -22,21 +25,16 @@ class EarningController extends Controller
         $this->conversionRateRepository = $conversionRateRepository;
     }
 
-    public function show(Request $request, Earning $earning)
+    public function show(Earning $earning): Response
     {
         $this->authorize('view', $earning);
 
-        return view('earnings.show', [
+        return Inertia::render('Earnings/Show', [
             'earning' => $earning
         ]);
     }
 
-    public function create()
-    {
-        return view('earnings.create');
-    }
-
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->earningRepository->getValidationRules());
 
@@ -59,14 +57,14 @@ class EarningController extends Controller
             $amount
         );
 
-        return redirect()->route('dashboard');
+        return redirect()->route('transactions.index');
     }
 
     public function edit(Earning $earning)
     {
         $this->authorize('edit', $earning);
 
-        return view('earnings.edit', compact('earning'));
+        return Inertia::render('Earnings/Edit', compact('earning'));
     }
 
     public function update(Request $request, Earning $earning)
@@ -84,19 +82,17 @@ class EarningController extends Controller
         return redirect()->route('transactions.index');
     }
 
-    public function destroy(Earning $earning)
+    public function destroy(Earning $earning): RedirectResponse
     {
         $this->authorize('delete', $earning);
-
-        $restorableEarning = $earning->id;
 
         $earning->delete();
 
         return redirect()
-            ->route('transactions.index');
+            ->back();
     }
 
-    public function restore($id)
+    public function restore($id): RedirectResponse
     {
         $earning = Earning::withTrashed()->find($id);
 

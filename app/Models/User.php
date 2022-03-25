@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Validation\Rules;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,8 @@ class User extends Authenticatable
         'verification_token',
         'last_verification_mail_sent_at',
         'stripe_customer_id',
-        'plan'
+        'plan',
+        'language'
     ];
 
     protected $hidden = [
@@ -35,7 +37,7 @@ class User extends Authenticatable
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'currency' => 'required|exists:currencies,id'
         ];
     }
@@ -62,6 +64,12 @@ class User extends Authenticatable
 
     public function widgets()
     {
-        return $this->hasMany(Widget::class);
+        $widgets = $this->hasMany(Widget::class)->orderBy('sorting_index')->get();
+        $result = [];
+        /** @var Widget $widget */
+        foreach ($widgets as $widget) {
+            $result[] = $widget->resolve();
+        }
+        return $result;
     }
 }

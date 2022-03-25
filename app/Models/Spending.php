@@ -26,6 +26,8 @@ class Spending extends Model
         'amount'
     ];
 
+    protected $appends = [ 'type', 'formatted_amount', 'tag' ];
+
     protected $dispatchesEvents = [
         'created' => TransactionCreated::class,
         'deleted' => TransactionDeleted::class
@@ -37,11 +39,24 @@ class Spending extends Model
         return Helper::formatNumber($this->amount / 100);
     }
 
-    public function getFormattedHappenedOnAttribute()
+    public function getFormattedHappenedOnAttribute(): string
     {
         $secondsDifference = strtotime(date('Y-m-d')) - strtotime($this->happened_on);
 
         return ($secondsDifference / 60 / 60 / 24) . ' days ago';
+    }
+
+    public function getTagAttribute()
+    {
+        if ($this->tag_id) {
+            return $this->tag()->first();
+        }
+        return null;
+    }
+
+    public function getTypeAttribute(): string
+    {
+        return 'spendings';
     }
 
     // Relations

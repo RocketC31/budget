@@ -29,7 +29,10 @@ class SendVerificationMailAction
             throw new VerificationMailRateLimitException();
         }
 
-        Mail::to($user->email)->queue(new VerifyRegistration($user));
+        try {
+            Mail::to($user->email)->queue(new VerifyRegistration($user));
+        } catch (\Exception $e) {
+        }
 
         $user->fill([
             'last_verification_mail_sent_at' => date('Y-m-d H:i:s')

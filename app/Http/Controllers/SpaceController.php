@@ -11,20 +11,23 @@ use App\Mail\InvitedToSpace;
 use App\Models\Currency;
 use App\Models\Space;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class SpaceController extends Controller
 {
-    public function create()
+    public function create(): Response
     {
         $currencies = Currency::all();
 
-        return view('spaces.create', ['currencies' => $currencies]);
+        return Inertia::render('Spaces/Create', ['currencies' => $currencies]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -42,7 +45,7 @@ class SpaceController extends Controller
         return redirect()->route('settings.spaces.index');
     }
 
-    public function show($id)
+    public function show($id): RedirectResponse
     {
         $space = Space::find($id);
 
@@ -53,16 +56,24 @@ class SpaceController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function edit(Space $space)
+    public function edit(Space $space): Response|RedirectResponse
     {
         if (Auth::user()->cant('edit', $space)) {
             return redirect()->route('settings.spaces.index');
         }
 
-        return view('spaces.edit', ['space' => $space]);
+        $space->load('currency');
+        $space->load('invites');
+        foreach ($space->invites as $invite) {
+            $invite->load('inviter');
+            $invite->load('invitee');
+        }
+        $space->load('users');
+
+        return Inertia::render('Spaces/Edit', ['space' => $space]);
     }
 
-    public function update(Request $request, Space $space)
+    public function update(Request $request, Space $space): RedirectResponse
     {
         if (Auth::user()->cant('edit', $space)) {
             return redirect()->route('settings.spaces.index');
@@ -76,10 +87,10 @@ class SpaceController extends Controller
             'name' => $request->name
         ])->save();
 
-        return redirect()->route('settings.spaces.index');
+        return back();
     }
 
-    public function invite(Request $request, Space $space)
+    public function invite(Request $request, Space $space): RedirectResponse
     {
         $authenticatedUser = Auth::user();
 
@@ -102,19 +113,21 @@ class SpaceController extends Controller
                 $request->role
             );
         } catch (SpaceInviteInviteeAlreadyPresentException $e) {
+            $request->session()->flash('inviteStatus', 'present');
             return redirect()
-                ->route('spaces.edit', ['space' => $space->id])
-                ->with('inviteStatus', 'present');
+                ->route('spaces.edit', ['space' => $space->id]);
         } catch (SpaceInviteAlreadyExistsException $e) {
+            $request->session()->flash('inviteStatus', 'exists');
             return redirect()
-                ->route('spaces.edit', ['space' => $space->id])
-                ->with('inviteStatus', 'exists');
+                ->route('spaces.edit', ['space' => $space->id]);
         }
 
-        Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite));
-
+        try {
+            Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite));
+        } catch (\Exception $e) {
+        }
+        $request->session()->flash('inviteStatus', 'success');
         return redirect()
-            ->route('spaces.edit', ['space' => $space->id])
-            ->with('inviteStatus', 'success');
+            ->route('spaces.edit', ['space' => $space->id]);
     }
 }

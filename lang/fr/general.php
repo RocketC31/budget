@@ -39,5 +39,13 @@ return [
     'or' => 'ou',
     'spent' => 'Dépensé',
     'properties' => 'Propriétés',
-    'other' => 'Other'
+    'other' => 'Other',
+    'will_convert' => 'sera converti vers',
+    'how_long_spending' => 'Combien de temps dureront ces dépenses ?',
+    'forever' => 'Toujours',
+    'until' => 'Jusqu\'au',
+    'active' => 'Actif',
+    'inactive' => 'Inactif',
+    'end' => 'Fin',
+    'cant_edit_currency' => 'Vous ne pouvez plus modifier la devise'
 ];
