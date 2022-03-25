@@ -8,6 +8,7 @@ import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
 import { trans } from 'matice';
 import { computed } from "vue";
 import Success from "@/Components/Partials/Alerts/Success";
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     status: String,
@@ -19,14 +20,22 @@ const props = defineProps({
 const form = useForm({
     email: null,
     password: null,
-    verify_password: null
+    password_confirmation: null
 });
 
 const submit = () => {
-    console.log(props.token);
-    if (props.token !== null)
-        form['token'] = props.token.value;
-    form.post(route('password.email'));
+    const data = {};
+    if (props.token !== null) {
+        data['token'] = props.token;
+        data['password'] = form.password;
+        data['password_confirmation'] = form.password_confirmation;
+    } else {
+        data['email'] = form.email;
+    }
+
+    console.log(data);
+
+    Inertia.post(route('password.email'), data);
 };
 
 const flash = computed(() => usePage().props.value.flash.message);
@@ -47,8 +56,8 @@ const flash = computed(() => usePage().props.value.flash.message);
                         <div v-if="token">
                             <BreezeLabel for="password" :value="trans('fields.password')" />
                             <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autofocus />
-                            <BreezeLabel for="verify_password" :value="trans('auth.verify_password')" />
-                            <BreezeInput id="verify_password" type="password" class="mt-1 block w-full" v-model="form.verify_password" required autofocus />
+                            <BreezeLabel for="password_confirmation" :value="trans('auth.verify_password')" />
+                            <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autofocus />
                         </div>
                         <div v-else>
                             <BreezeLabel for="email" value="Email" />

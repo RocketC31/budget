@@ -16,6 +16,7 @@ use App\Http\Controllers\SpaceInviteController;
 use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TranslationsController;
 use App\Http\Controllers\WidgetController;
 use Illuminate\Support\Facades\Route;
 
@@ -150,6 +151,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/spaces/{space}/invites/{invite}/accept', [SpaceInviteController::class, 'accept'])->name('accept');
         Route::post('/spaces/{space}/invites/{invite}/deny', [SpaceInviteController::class, 'deny'])->name('deny');
     });
+
+    Route::get('/translations', TranslationsController::class);
 });
 
 require __DIR__ . '/auth.php';
