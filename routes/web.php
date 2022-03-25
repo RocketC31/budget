@@ -12,6 +12,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SpaceController;
+use App\Http\Controllers\SpaceInviteController;
 use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
@@ -143,8 +144,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
         Route::post('/spaces/{space}/invite', [SpaceController::class, 'invite'])->name('invite');
     });
+
+    Route::name('space_invites.')->group(function () {
+        Route::get('/spaces/{space}/invites/{invite}', [SpaceInviteController::class, 'show'])->name('show');
+        Route::post('/spaces/{space}/invites/{invite}/accept', [SpaceInviteController::class, 'accept'])->name('accept');
+        Route::post('/spaces/{space}/invites/{invite}/deny', [SpaceInviteController::class, 'deny'])->name('deny');
+    });
 });
 
 require __DIR__ . '/auth.php';
-
-require __DIR__ . '/backup-web.php';

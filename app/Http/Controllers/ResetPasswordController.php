@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 /**
- * @deprecated Use NewPasswordController instead
+ * @deprecated Use PasswordResetLinkController instead
  */
 class ResetPasswordController extends Controller
 {
-    private $passwordResetRepository;
+    private PasswordResetRepository $passwordResetRepository;
 
     public function __construct(PasswordResetRepository $passwordResetRepository)
     {

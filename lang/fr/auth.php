@@ -15,5 +15,7 @@ return [
     'remember_me' => 'Se souvenir de moi',
     'verification_sent' => 'Un email a été envoyé',
     'verification_already_verified' => 'Vous avez déjà été vérifié',
-    'verification_wait_next_send' => 'Merci de patienter quelques minutes avant de redemander un autre email'
+    'verification_wait_next_send' => 'Merci de patienter quelques minutes avant de redemander un autre email',
+    'reset_password_sent' => 'Si vous vous êtes inscrit avec cette adresse, nous vous avons envoyé un e-mail',
+    'change_password_success' => 'Vous avez changé votre mot de passe avec succès'
 ];

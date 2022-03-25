@@ -5,8 +5,10 @@ import BreezeGuestLayout from '@/Layouts/Guest.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import {Head, Link, useForm, usePage} from '@inertiajs/inertia-vue3';
 import { trans } from 'matice'
+import { computed } from "vue";
+import Success from "@/Components/Partials/Alerts/Success";
 
 defineProps({
     canResetPassword: Boolean,
@@ -24,11 +26,16 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+const flash = computed(() => usePage().props.value.flash.message);
 </script>
 
 <template>
     <BreezeGuestLayout>
         <Head :title="trans('auth.login')" />
+
+        <div class="wrapper mt-3">
+            <Success v-if="flash === 'success'" :message="trans('auth.change_password_success')"></Success>
+        </div>
 
         <BreezeValidationErrors class="mb-4" />
 

@@ -1,13 +1,11 @@
 <script setup>
 import { trans } from 'matice';
 import { formattedAmount, rangeOfDays } from '@/tools';
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/inertia-vue3';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import Tag from '@/Components/Partials/Tag.vue';
 import Widget from "@/Components/Widget/Widget";
 import Chart from "@/Components/Partials/Chart";
-import { computed } from "vue";
-import { Inertia } from "@inertiajs/inertia";
 
 defineProps({
     month: Number,
