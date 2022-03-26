@@ -33,7 +33,7 @@ export default {
             form.patch(route('earnings.update', { earning: props.earning.id }))
         }
         function onDateUpdate(date) {
-            form.happened_on = date;
+            form.date = date;
         }
         return {
             trans,

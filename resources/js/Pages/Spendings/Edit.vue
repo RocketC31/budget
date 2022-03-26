@@ -34,7 +34,7 @@ export default {
             form.patch(route('spendings.update', { spending: props.spending.id }))
         }
         function onDateUpdate(date) {
-            form.happened_on = date;
+            form.date = date;
         }
         return {
             trans,
