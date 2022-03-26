@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/earnings/{earning}', [EarningController::class, 'show'])->name('show');
         Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
         Route::patch('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
+        Route::put('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
         Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
         Route::post('/earnings', [EarningController::class, 'store']);
         Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/spendings/{spending}', [SpendingController::class, 'show'])->name('show');
         Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
         Route::patch('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
+        Route::put('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
         Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
         Route::post('/spendings', [SpendingController::class, 'store']);
         Route::delete('/spendings/{id}', [SpendingController::class, 'destroy'])->name('delete');
@@ -90,6 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('edit');
         Route::post('/tags', [TagController::class, 'store'])->name('store');
         Route::patch('/tags/{tag}', [TagController::class, 'update'])->name('update');
+        Route::put('/tags/{tag}', [TagController::class, 'update'])->name('update');
         Route::delete('/tags/{tag}', [TagController::class, 'destroy'])->name('delete');
     });
 
@@ -143,6 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/spaces/{space}', [SpaceController::class, 'show'])->name('show');
         Route::get('/spaces/{space}/edit', [SpaceController::class, 'edit'])->name('edit');
         Route::patch('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
+        Route::put('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
         Route::post('/spaces/{space}/invite', [SpaceController::class, 'invite'])->name('invite');
     });
 

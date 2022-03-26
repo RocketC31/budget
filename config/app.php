@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'fr',
+    'locale' => env("LANG_DEFAULT", "en"),
 
     'locales' => [
         'en' => 'English',
@@ -227,4 +227,5 @@ return [
      */
 
     'disable_registration' => env('DISABLE_REGISTRATION', false),
+    'patch_method_available' => env("PATCH_METHOD_AVAILABLE", true)
 ];

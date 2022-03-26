@@ -20,7 +20,10 @@ const invite = ref({
 })
 
 function submitSpace() {
-    Inertia.patch(route('spaces.update', { space: space.value.id }), space.value);
+    if (patchMethodAvailable.value)
+        Inertia.patch(route('spaces.update', { space: space.value.id }), space.value);
+    else
+        Inertia.put(route('spaces.update', { space: space.value.id }), space.value);
 }
 
 function submitInvite() {
@@ -29,6 +32,7 @@ function submitInvite() {
 
 const errors = computed(() => usePage().props.value.errors);
 const flash = computed(() => usePage().props.value.flash.message);
+const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
 
 </script>
 

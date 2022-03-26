@@ -24,6 +24,7 @@ export default {
 
     setup(props) {
         const errors = computed(() => usePage().props.value.errors);
+        const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
         const form = useForm({
             tag_id: props.spending.tag_id,
             date: new Date(props.spending.happened_on).toISOString().slice(0, 10),
@@ -31,7 +32,10 @@ export default {
             amount: props.spending.formatted_amount
         });
         function submit() {
-            form.patch(route('spendings.update', { spending: props.spending.id }))
+            if (patchMethodAvailable.value)
+                form.patch(route('spendings.update', { spending: props.spending.id }));
+            else
+                form.put(route('spendings.update', { spending: props.spending.id }));
         }
         function onDateUpdate(date) {
             form.date = date;

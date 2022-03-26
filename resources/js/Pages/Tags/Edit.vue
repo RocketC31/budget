@@ -15,7 +15,10 @@ const tag = ref(props.tag);
 
 function submit() {
     tag.value.color = tag.value.color.replace("#", "");
-    Inertia.patch(route('tags.update', { tag: tag.value.id }), tag.value);
+    if (patchMethodAvailable.value)
+        Inertia.patch(route('tags.update', { tag: tag.value.id }), tag.value);
+    else
+        Inertia.put(route('tags.update', { tag: tag.value.id }), tag.value);
 }
 
 function onColorUpdate(color) {
@@ -23,6 +26,7 @@ function onColorUpdate(color) {
 }
 
 const errors = computed(() => usePage().props.value.errors);
+const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
 
 </script>
 

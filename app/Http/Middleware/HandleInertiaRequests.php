@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
             'current_space' => $space,
             'currency' => $space?->currency->symbol,
             'versionNumber' => $versionNumber,
+            'patchMethodAvailable' => config("app.patch_method_available"),
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
             ]
