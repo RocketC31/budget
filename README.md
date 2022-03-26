@@ -2,13 +2,23 @@
 
 ![GitHub latest release](https://img.shields.io/github/v/release/RocketC31/budget?include_prereleases)
 ![GitHub downloads](https://img.shields.io/github/downloads/RocketC31/budget/total)
-[![Build status](https://travis-ci.com/RocketC31/budget.svg?branch=master)](https://travis-ci.com/RocketC31/budget)
 [![codecov](https://codecov.io/gh/RocketC31/budget/branch/master/graph/badge.svg)](https://codecov.io/gh/RocketC31/budget)
 [![GitHub license](https://img.shields.io/github/license/RocketC31/budget.svg)](https://github.com/RocketC31/budget/blob/master/LICENSE)
 
+This project is a fork of original project created here : [Budget](https://github.com/range-of-motion/budget)
+
+More time pass, more this fork will be different. You can compare the two project and fork this one who is better for your.
+You can see issues github to know what is different in this fork. And where this project going.
+You can discuss with me on github's issues if you want more information or other features I wouldn't have thought of.
+I will check modifications of original project and merge them if they are usefull for this fork.
+
+Big thanks to [range_of_motion](https://github.com/range-of-motion) and his contributors for this original work that permit to me to have
+a good base for update the application on what i imagine.
+
+## Presentation
 Budget is an open-source web application that helps you keep track of your finances.
 
-You can use Budget by hosting it yourself, or using [the instance hosted by us](https://budgethq.com).
+You can use Budget by hosting it yourself.
 
 ![Product](https://user-images.githubusercontent.com/9268822/46098425-a8877300-c1c4-11e8-9293-f43ceb9d6f97.png)
 
@@ -82,7 +92,3 @@ If you want everything to be installed and set-up from start to finish, you shou
 It may take a few minutes before the process is completed and you're able to use Budget.
 
 `BUDGET_SETUP=1 docker-compose up -d`
-
-## Contact
-
-* [Discord](https://discord.gg/QFQdvy3)
