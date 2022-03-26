@@ -21,5 +21,14 @@ module.exports = {
     tolower(value) {
         value = value.toString();
         return value.toLowerCase();
+    },
+    changeTheme(theme) {
+        let bodyClass = document.getElementById("body").classList;
+        bodyClass.remove('theme-light', 'theme-dark');
+        bodyClass.add('theme-' + theme);
+
+        let htmlClass = document.getElementsByTagName("html")[0].classList;
+        htmlClass.remove('light', 'dark');
+        htmlClass.add(theme);
     }
 }

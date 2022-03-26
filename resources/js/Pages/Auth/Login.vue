@@ -9,6 +9,7 @@ import {Head, Link, useForm, usePage} from '@inertiajs/inertia-vue3';
 import { trans } from 'matice'
 import { computed } from "vue";
 import Success from "@/Components/Partials/Alerts/Success";
+import { changeTheme } from '@/tools';
 
 defineProps({
     canResetPassword: Boolean,
@@ -23,7 +24,10 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => {
+            form.reset('password');
+            changeTheme(usePage().props.value.auth.user.theme);
+        }
     });
 };
 const flash = computed(() => usePage().props.value.flash.message);

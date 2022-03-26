@@ -5,6 +5,7 @@ import Layout from '@/Pages/Settings/Layout.vue';
 import { computed, onMounted } from "vue";
 import ValidationError from "@/Components/ValidationError";
 import Searchable from "@/Components/Searchable";
+import { changeTheme } from '@/tools';
 
 defineProps({
     languages: Array
@@ -13,13 +14,7 @@ defineProps({
 function submit() {
     form.post(route('settings.preferences'), {
         onSuccess: function onSuccess() {
-            let bodyClass = document.getElementById("body").classList;
-            bodyClass.remove('theme-light', 'theme-dark');
-            bodyClass.add('theme-'+form.data().theme);
-
-            let htmlClass = document.getElementsByTagName("html")[0].classList;
-            htmlClass.remove('light', 'dark');
-            htmlClass.add(form.data().theme);
+            changeTheme(form.data().theme);
         }
     })
 }

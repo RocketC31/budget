@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { Link } from "@inertiajs/inertia-vue3";
 import { usePage } from '@inertiajs/inertia-vue3';
+import { changeTheme } from '@/tools';
 
 import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
@@ -12,6 +13,10 @@ const spaces = computed(() => usePage().props.value.spaces);
 const avatar = computed(() => usePage().props.value.auth.user.avatar);
 const currentSpace = computed(() => usePage().props.value.current_space);
 const openMobileMenu = ref(false);
+
+function resetTheme() {
+    changeTheme("light");
+}
 
 </script>
 
@@ -94,7 +99,7 @@ const openMobileMenu = ref(false);
                     <BreezeDropdownLink :href="route('settings.index')" method="get" as="button">
                         {{ trans('pages.settings') }}
                     </BreezeDropdownLink>
-                    <BreezeDropdownLink :href="route('logout')" method="post" as="button">
+                    <BreezeDropdownLink @click="resetTheme" :href="route('logout')" method="post" as="button">
                         {{ trans('pages.log_out') }}
                     </BreezeDropdownLink>
                     <BreezeDropdown :align="'left'" width="48" v-if="spaces.length > 1">
