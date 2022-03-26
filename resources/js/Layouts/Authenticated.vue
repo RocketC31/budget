@@ -5,7 +5,7 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/inertia-vue3";
 import Success from "@/Components/Partials/Alerts/Success";
 import Danger from "@/Components/Partials/Alerts/Danger";
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 
 const versionNumber = computed(() => usePage().props.value.versionNumber);
 

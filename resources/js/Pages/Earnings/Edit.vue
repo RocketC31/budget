@@ -24,13 +24,17 @@ export default {
 
     setup(props) {
         const errors = computed(() => usePage().props.value.errors);
+        const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
         const form = useForm({
             date: new Date(props.earning.happened_on).toISOString().slice(0, 10),
             description: props.earning.description,
             amount: props.earning.formatted_amount
         });
         function submit() {
-            form.patch(route('earnings.update', { earning: props.earning.id }))
+            if (patchMethodAvailable.value)
+                form.patch(route('earnings.update', { earning: props.earning.id }));
+            else
+                form.put(route('earnings.update', { earning: props.earning.id }));
         }
         function onDateUpdate(date) {
             form.date = date;
