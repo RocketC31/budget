@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
                 return true;
             }
             return false;
-        });
+        })->daily();
 
         $schedule->job(new SendWeeklyReports())->weekly()->fridays()->at('21:00');
     }
