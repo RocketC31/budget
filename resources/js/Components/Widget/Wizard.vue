@@ -39,7 +39,7 @@ function refreshProvidedProperties() {
     form.providedProperties = {};
     let count = countExpectedProperties.value;
     if (count !== null) {
-        for (const [key, value] of Object.entries(getExpectedProperties)) {
+        for (const [key, value] of Object.entries(getExpectedProperties.value)) {
             form.providedProperties[key] = null;
         }
     }
@@ -87,7 +87,7 @@ onMounted(() => {
                         </div>
                     </div>
                     <div class="row">
-                        <button class="button mr-1" @click="persist">{{ trans('actions.create') }}</button>
+                        <button class="button mr-1">{{ trans('actions.create') }}</button>
                         <button class="button button--secondary" @click="toggle">{{ trans('actions.cancel') }}</button>
                     </div>
                 </div>

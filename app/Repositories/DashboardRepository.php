@@ -14,6 +14,11 @@ class DashboardRepository
         return Space::find(session('space_id'))->monthlyBalance($year, $month);
     }
 
+    public function getBalanceGlobal(int $spaceId, ?\DateTime $endDate = null)
+    {
+        return Space::find($spaceId)->balanceGlobal($endDate);
+    }
+
     public function getRecurrings(string $year, string $month)
     {
         return Space::find(session('space_id'))->monthlyRecurrings($year, $month);
@@ -35,12 +40,14 @@ class DashboardRepository
             ->sum('amount');
     }
 
-    public function getDailyBalance(string $year, string $month): array
+    public function getDailyBalance(string $year, string $month, ?float $balanceTick = null): array
     {
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-        $balanceTick = 0;
         $dailyBalance = [];
+        if (is_null($balanceTick)) {
+            $balanceTick = 0;
+        }
 
         for ($i = 1; $i <= $daysInMonth; $i++) {
             $balanceTick -= Spending::ofSpace(session('space_id'))

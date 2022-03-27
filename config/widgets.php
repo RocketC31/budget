@@ -6,6 +6,10 @@ return [
             'properties' => []
         ],
 
+        'balance_global' => [
+            'properties' => []
+        ],
+
         'spent' => [
             'properties' => [
                 'period' => [

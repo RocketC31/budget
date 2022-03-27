@@ -4,11 +4,13 @@ namespace App\Console;
 
 use App\Helper;
 use App\Jobs\FetchConversionRates;
+use App\Jobs\GlobalBalanceRefresh;
 use App\Jobs\ProcessRecurrings;
 use App\Jobs\SendWeeklyReports;
 use App\Jobs\SyncStripeSubscriptions;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Redis;
 
 class Kernel extends ConsoleKernel
 {
@@ -36,6 +38,17 @@ class Kernel extends ConsoleKernel
         // Daily
         $schedule->job(new ProcessRecurrings())->daily();
         $schedule->job(new FetchConversionRates())->daily();
+        $schedule->job(new GlobalBalanceRefresh())->when(function () {
+            if (config("app.redis_available", true)) {
+                try {
+                    Redis::connection();
+                } catch (\Exception $e) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        });
 
         $schedule->job(new SendWeeklyReports())->weekly()->fridays()->at('21:00');
     }

@@ -75,6 +75,16 @@ And edit on `config/matice.php`
 'lang_directory' => lang_path(),
 ```
 
+## Additional configuration
+Because of some providers have not same configuration. Some configurations can be activate or disabled :
+
+```DOTENV
+# For use or not redis. Usefull for widget balance_global who store data into redis
+REDIS_AVAILABLE:true
+# For server who not have PATCH method available. If set to false, PUT method will be used
+PATCH_METHOD_AVAILABLE:true
+```
+
 ## Docker
 
 You can get set-up with Budget using Docker.

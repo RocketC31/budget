@@ -1,14 +1,36 @@
 <script setup>
 import { trans } from "matice";
+import { Inertia } from "@inertiajs/inertia";
 
-defineProps({
-    balance: String,
-    currencySymbol: String
-})
+const props = defineProps({
+    widget: Object
+});
+
+function refreshBalance() {
+    Inertia.get(route("widgets.refresh", { widget: props.widget.id }));
+}
+
 </script>
 <template>
     <div class="card card--blue">
-        <h2 style="font-size: 20px;"><span v-html="currencySymbol"></span> {{ balance }}</h2>
-        <div class="mt-1">{{ trans('general.balance') }}</div>
+        <h2 class="flex items-center">
+            <div v-html="widget.currency_symbol"></div>
+            <div class="balance">{{ widget.balance }}</div>
+            <template v-if="widget.can_refresh">
+                <button @click="refreshBalance" class="transition ease-in-out delay-50 hover:text-green-400"><i class="far fa-sync"></i></button>
+            </template>
+        </h2>
+        <div class="mt-1">{{ trans('configuration.widget.' + widget.type) }}</div>
     </div>
 </template>
+<style lang="scss" scoped>
+h2 {
+    font-size: 20px;
+    .balance {
+        margin: 0 5px;
+    }
+    button {
+        font-size: 14px;
+    }
+}
+</style>

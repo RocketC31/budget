@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Widget;
+use App\Widgets\BalanceGlobal;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Auth;
 
 class WidgetController extends Controller
 {
+    public function refresh(Widget $widget): RedirectResponse
+    {
+        if (config("app.redis_available") && $widget->type === "balance_global") {
+            $widget = $widget->resolve();
+            $widget->refreshRedisBalance();
+        }
+
+        return back();
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -72,7 +83,12 @@ class WidgetController extends Controller
 
     public function delete(Widget $widget): RedirectResponse
     {
+        $widgetResolve = $widget->resolve();
         $widget->delete();
+
+        if ($widgetResolve instanceof BalanceGlobal) {
+            $widgetResolve->removeRedisKeys();
+        }
 
         /**
          * Move widgets with out-of-sync sorting index up by 1

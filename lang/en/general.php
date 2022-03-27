@@ -3,7 +3,7 @@
 return [
     'dashboard' => 'Dashboard',
 
-    'balance' => 'Widget',
+    'balance' => 'Balance',
     'recurrings' => 'Recurrings',
     'left_to_spend' => 'Left to Spend',
     'total_earned' => 'Total Earned',
