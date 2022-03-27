@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::name('widgets.')->group(function () {
+        Route::get('/widgets/{widget}', [WidgetController::class, 'refresh'])->name('refresh');
         Route::post('/widgets', [WidgetController::class, 'store'])->name('store');
         Route::post('/widgets/{widget}/up', [WidgetController::class, 'up'])->name('up');
         Route::post('/widgets/{widget}/down', [WidgetController::class, 'down'])->name('down');

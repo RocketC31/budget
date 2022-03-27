@@ -93,6 +93,23 @@ class Space extends Model
         }
     }
 
+    public function balanceGlobal(?\Datetime $endDate = null)
+    {
+        if (is_null($endDate)) {
+            $endDate = new \DateTime("last day of previous month");
+        }
+
+        $earningsAmount = Earning::where('space_id', $this->id)
+            ->where("happened_on", "<=", $endDate->format("Y-m-d"))
+            ->sum('amount');
+
+        $spendingsAmount = Spending::where('space_id', $this->id)
+            ->where("happened_on", "<=", $endDate->format("Y-m-d"))
+            ->sum('amount');
+
+        return $earningsAmount - $spendingsAmount;
+    }
+
     public function monthlyRecurrings($year, $month)
     {
         $query = DB::selectOne('

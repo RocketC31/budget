@@ -10,6 +10,6 @@ defineProps({
 </script>
 
 <template>
-    <Balance v-if="widget.type === 'balance'" :currency-symbol="widget.currency_symbol" :balance="widget.balance"></Balance>
-    <Spent v-if="widget.type === 'spent'" :period="widget.period" :spent="widget.spent" :currency-symbol="widget.currency_symbol"></Spent>
+    <Balance v-if="widget.type === 'balance' || widget.type === 'balance_global'" :widget="widget"></Balance>
+    <Spent v-if="widget.type === 'spent'" :widget="widget"></Spent>
 </template>

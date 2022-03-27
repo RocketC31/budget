@@ -2,16 +2,14 @@
 import { trans } from 'matice';
 
 defineProps({
-    spent: String,
-    currencySymbol: String,
-    period: String
+    widget:Object
 
 });
 </script>
 
 <template>
     <div class="card card--red">
-        <h2 style="font-size: 20px;"><span v-html="currencySymbol"></span> {{ spent }}</h2>
-        <div class="mt-1">{{ trans('general.spent') }} {{ trans('calendar.' + period).toLowerCase() }}</div>
+        <h2 style="font-size: 20px;"><span v-html="widget.currency_symbol"></span> {{ widget.spent }}</h2>
+        <div class="mt-1">{{ trans('configuration.widget.' + widget.type) }} {{ trans('calendar.' + widget.period).toLowerCase() }}</div>
     </div>
 </template>

@@ -2,7 +2,8 @@
 
 return [
     "widget" => [
-        "balance" => "Widget",
+        "balance" => "Balance",
+        "balance_global" => "Balance (global)",
         "spent" => "Spent"
     ]
 ];

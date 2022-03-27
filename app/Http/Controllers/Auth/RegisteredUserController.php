@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Repositories\LoginAttemptRepository;
 use App\Repositories\SpaceRepository;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -60,8 +59,6 @@ class RegisteredUserController extends Controller
         $user = (new CreateUserAction())->execute($request->name, $request->email, $request->password);
         $space = $this->spaceRepository->create($request->currency, $user->name . '\'s Space');
         $user->spaces()->attach($space->id, ['role' => 'admin']);
-
-        event(new Registered($user));
 
         Auth::login($user);
 

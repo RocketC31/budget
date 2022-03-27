@@ -6,6 +6,7 @@ use App\Exceptions\WidgetInvalidPropertyValueException;
 use App\Exceptions\WidgetMissingPropertyException;
 use App\Exceptions\WidgetUnknownTypeException;
 use App\Widgets\Balance;
+use App\Widgets\BalanceGlobal;
 use App\Widgets\Spent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -74,6 +75,9 @@ class Widget extends Model
                 break;
             case "balance":
                 $model = new Balance();
+                break;
+            case "balance_global":
+                $model = new BalanceGlobal();
                 break;
         }
         if (is_null($model)) {
