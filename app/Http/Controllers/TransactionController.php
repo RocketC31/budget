@@ -43,6 +43,7 @@ class TransactionController extends Controller
         $currentMonthIndex = (int)$request->get("monthIndex", 0);
         $currentDate = new \DateTime();
         $interval = new \DateInterval(("P" . abs($currentMonthIndex) . "M"));
+        $currentDate->setDate($currentDate->format("Y"), $currentDate->format("m"), 15);
         if ($currentMonthIndex < 0) {
             $currentDate->sub($interval);
         } else {
