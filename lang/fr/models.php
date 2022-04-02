@@ -29,5 +29,6 @@ return [
 
     'attachment' => 'Pièce jointe',
     'attachments' => 'Pièces jointes',
-    'recurring_transaction' => 'Il s\'agit d\'une opération récurrente'
+    'recurring_transaction' => 'Il s\'agit d\'une opération récurrente',
+    'recurring_attached_confirm' => 'Une récurrence est lié. Appuyez sur OK pour le modifier également.'
 ];

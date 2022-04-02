@@ -65,6 +65,6 @@ class RecurringController extends Controller
 
         ProcessRecurrings::dispatch();
 
-        return redirect()->route('recurrings.show', ['recurring' => $recurring->id]);
+        return redirect()->route('transactions.index', ['recurring' => $recurring->id]);
     }
 }

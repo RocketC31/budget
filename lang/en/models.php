@@ -29,5 +29,6 @@ return [
 
     'attachment' => 'Attachment',
     'attachments' => 'Attachments',
-    'recurring_transaction' => 'This is a recurring transaction'
+    'recurring_transaction' => 'This is a recurring transaction',
+    'recurring_attached_confirm' => 'A recurrence is attached. Press OK to edit it too.'
 ];

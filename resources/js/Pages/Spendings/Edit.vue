@@ -32,10 +32,17 @@ export default {
             amount: props.spending.formatted_amount
         });
         function submit() {
-            if (patchMethodAvailable.value)
-                form.patch(route('spendings.update', { spending: props.spending.id }));
-            else
-                form.put(route('spendings.update', { spending: props.spending.id }));
+            let updateRecurring = false;
+            if (props.spending.recurring_id !== null) {
+                if (confirm(trans("models.recurring_attached_confirm"))) {
+                    updateRecurring = true;
+                }
+            }
+            if (patchMethodAvailable.value) {
+                form.patch(route('spendings.update', { spending: props.spending.id, recurring_update: updateRecurring }));
+            } else {
+                form.put(route('spendings.update', { spending: props.spending.id, recurring_update: updateRecurring }));
+            }
         }
         function onDateUpdate(date) {
             form.date = date;
