@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
+use App\Models\Recurring;
 use App\Models\Space;
 use App\Models\Spending;
 use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
+use App\Repositories\RecurringRepository;
 use App\Repositories\SpendingRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,13 +19,16 @@ class SpendingController extends Controller
 {
     private SpendingRepository $spendingRepository;
     private ConversionRateRepository $conversionRateRepository;
+    private RecurringRepository $recurringRepository;
 
     public function __construct(
         SpendingRepository $spendingRepository,
-        ConversionRateRepository $conversionRateRepository
+        ConversionRateRepository $conversionRateRepository,
+        RecurringRepository $recurringRepository
     ) {
         $this->spendingRepository = $spendingRepository;
         $this->conversionRateRepository = $conversionRateRepository;
+        $this->recurringRepository = $recurringRepository;
     }
 
     public function show(Spending $spending): Response
@@ -85,13 +90,25 @@ class SpendingController extends Controller
             'amount' => Helper::rawNumberToInteger($request->input('amount'))
         ]);
 
+        if ($request->query->get("recurring_update") && $spending->recurring_id) {
+            $this->recurringRepository->update($spending->recurring_id, [
+                'starts_on' => $request->input('date'),
+                'last_used_on' => $request->input('date'),
+            ]);
+        }
+
         return redirect()->route('transactions.index');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy($id, Request $request): RedirectResponse
     {
         $spending = Spending::find($id);
         $this->authorize('delete', $spending);
+
+        if ($request->query->get("recurring_remove") && $spending->recurring_id) {
+            $recurring = Recurring::find($spending->recurring_id);
+            $recurring->delete();
+        }
 
         $spending->delete();
 

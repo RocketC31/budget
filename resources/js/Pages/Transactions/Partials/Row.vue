@@ -18,8 +18,14 @@ export default {
 
     setup(props) {
         function remove() {
+            let url = `/${props.transaction.type}/${props.transaction.id}`;
+            if (props.transaction.recurring_id !== null) {
+                if (confirm(trans("models.recurring_attached_confirm"))) {
+                    url += `?recurring_remove=1`;
+                }
+            }
             if (confirm(trans('actions.confirm_action'))) {
-                Inertia.delete(`/${props.transaction.type}/${props.transaction.id}`);
+                Inertia.delete(url);
             }
         }
 
