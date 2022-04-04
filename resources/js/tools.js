@@ -30,5 +30,8 @@ module.exports = {
         let htmlClass = document.getElementsByTagName("html")[0].classList;
         htmlClass.remove('light', 'dark');
         htmlClass.add(theme);
+    },
+    contains(needle, string) {
+        return string.includes(needle);
     }
 }

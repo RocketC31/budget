@@ -7,15 +7,20 @@ import { changeTheme } from '@/tools';
 import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
 import { trans } from 'matice';
+import { contains } from '@/tools';
 
 const showingNavigationDropdown = ref(false);
 const spaces = computed(() => usePage().props.value.spaces);
 const avatar = computed(() => usePage().props.value.auth.user.avatar);
 const currentSpace = computed(() => usePage().props.value.current_space);
-const openMobileMenu = ref(false);
+let openMobileMenu = ref(false);
 
 function resetTheme() {
     changeTheme("light");
+}
+
+function isActiveMenu(key) {
+    return (route().current() && contains(key, route().current()));
 }
 
 </script>
@@ -25,19 +30,19 @@ function resetTheme() {
         <div class="wrapper items-center">
             <ul class="hidden w-full lg:flex">
                 <li class="flex w-1/5">
-                    <Link :class="{active :route().current('dashboard')}" class="m-auto flex items-center" :href="route('index')"><i class="fas fa-home fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('general.dashboard') }}</span></Link>
+                    <Link :class="{ active :isActiveMenu('dashboard') }" class="m-auto flex items-center" :href="route('index')"><i class="fas fa-home fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('general.dashboard') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <Link :class="{active :route().current('transactions')}" class="m-auto flex items-center" :href="route('transactions.index')"><i class="fas fa-exchange-alt fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('models.transactions') }}</span></Link>
+                    <Link :class="{ active :isActiveMenu('transactions') }" class="m-auto flex items-center" :href="route('transactions.index')"><i class="fas fa-exchange-alt fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('models.transactions') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <Link :class="{active :route().current('budgets')}" class="m-auto flex items-center" :href="route('budgets.index')"><i class="fas fa-wallet fa-sm color-red"></i> <span class="md:flex ml-05">{{ trans('models.budgets') }}</span></Link>
+                    <Link :class="{ active :isActiveMenu('budgets') }" class="m-auto flex items-center" :href="route('budgets.index')"><i class="fas fa-wallet fa-sm color-red"></i> <span class="md:flex ml-05">{{ trans('models.budgets') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <Link :class="{active :route().current('tags')}" class="m-auto flex items-center" :href="route('tags.index')"><i class="fas fa-tag fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('models.tags') }}</span></Link>
+                    <Link :class="{ active :isActiveMenu('tags') }" class="m-auto flex items-center" :href="route('tags.index')"><i class="fas fa-tag fa-sm color-blue"></i> <span class="md:flex ml-05">{{ trans('models.tags') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
-                    <Link :class="{active :route().current('reports')}" class="m-auto flex items-center" :href="route('reports.index')"><i class="fas fa-chart-line fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('pages.reports') }}</span></Link>
+                    <Link :class="{ active :isActiveMenu('reports') }" class="m-auto flex items-center" :href="route('reports.index')"><i class="fas fa-chart-line fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('pages.reports') }}</span></Link>
                 </li>
             </ul>
             <div class="flex lg:hidden cursor-pointer" id="menu__mobile-btn" @click.stop="openMobileMenu = true">
@@ -58,19 +63,19 @@ function resetTheme() {
                     <div>
                         <ul>
                             <li class="mb-1">
-                                <Link :class="{active: route().current('dashboard')}" class="block p-4 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('index')">{{ trans('general.dashboard') }}</Link>
+                                <Link :class="{ active :isActiveMenu('dashboard') }" class="block p-4 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('index')">{{ trans('general.dashboard') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <Link :class="{active: route().current('transactions')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('transactions.index')">{{ trans('models.transactions') }}</Link>
+                                <Link :class="{ active :isActiveMenu('transactions') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('transactions.index')">{{ trans('models.transactions') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <Link :class="{active: route().current('budgets')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('budgets.index')">{{ trans('models.budgets') }}</Link>
+                                <Link :class="{ active :isActiveMenu('budgets') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('budgets.index')">{{ trans('models.budgets') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <Link :class="{active: route().current('tags')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('tags.index')">{{ trans('models.tags') }}</Link>
+                                <Link :class="{ active :isActiveMenu('tags') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('tags.index')">{{ trans('models.tags') }}</Link>
                             </li>
                             <li class="mb-1">
-                                <Link :class="{active: route().current('reports')}" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('reports.index')">{{ trans('pages.reports') }}</Link>
+                                <Link :class="{ active :isActiveMenu('reports') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('reports.index')">{{ trans('pages.reports') }}</Link>
                             </li>
                         </ul>
                     </div>
