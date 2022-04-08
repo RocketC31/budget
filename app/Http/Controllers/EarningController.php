@@ -78,16 +78,20 @@ class EarningController extends Controller
 
         $request->validate($this->earningRepository->getValidationRules());
 
+        $amount = Helper::rawNumberToInteger($request->input('amount'));
+
         $this->earningRepository->update($earning->id, [
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
-            'amount' => Helper::rawNumberToInteger($request->input('amount'))
+            'amount' => $amount
         ]);
 
         if ($request->query->get("recurring_update") && $earning->recurring_id) {
             $this->recurringRepository->update($earning->recurring_id, [
                 'starts_on' => $request->input('date'),
                 'last_used_on' => $request->input('date'),
+                'description' => $request->input('description'),
+                'amount' => $amount
             ]);
         }
 

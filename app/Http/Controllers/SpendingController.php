@@ -83,17 +83,22 @@ class SpendingController extends Controller
 
         $request->validate($this->spendingRepository->getValidationRules());
 
+        $amount = Helper::rawNumberToInteger($request->input('amount'));
+
         $this->spendingRepository->update($spending->id, [
             'tag_id' => $request->input('tag_id'),
             'happened_on' => $request->input('date'),
             'description' => $request->input('description'),
-            'amount' => Helper::rawNumberToInteger($request->input('amount'))
+            'amount' => $amount
         ]);
 
         if ($request->query->get("recurring_update") && $spending->recurring_id) {
             $this->recurringRepository->update($spending->recurring_id, [
                 'starts_on' => $request->input('date'),
                 'last_used_on' => $request->input('date'),
+                'tag_id' => $request->input('tag_id'),
+                'description' => $request->input('description'),
+                'amount' => $amount
             ]);
         }
 
