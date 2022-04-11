@@ -13,6 +13,7 @@ use App\Repositories\ConversionRateRepository;
 use App\Repositories\EarningRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Intervention\Image\Exception\NotFoundException;
 
 class EarningController extends Controller
 {
@@ -118,13 +119,28 @@ class EarningController extends Controller
         $earning = Earning::withTrashed()->find($id);
 
         if (!$earning) {
-            // 404
+            throw new NotFoundException();
         }
 
         $this->authorize('restore', $earning);
 
         $earning->restore();
 
-        return redirect()->route('transactions.index');
+        return back();
+    }
+
+    public function purge($id): RedirectResponse
+    {
+        $earning = Earning::onlyTrashed()->find($id);
+
+        if (!$earning) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('delete', $earning);
+
+        $earning->forceDelete();
+
+        return back();
     }
 }

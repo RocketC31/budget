@@ -49,5 +49,6 @@ return [
     'active' => 'Active',
     'inactive' => 'Inactive',
     'end' => 'end',
-    'cant_edit_currency' => 'You cannot modify the currency anymore'
+    'cant_edit_currency' => 'You cannot modify the currency anymore',
+    'empty_trash' => 'Trash is empty'
 ];

@@ -42,5 +42,9 @@ return [
         "invite_sent" => "An invite has been sent",
         'already_present' => "User is already part of space",
         "already_sent" => "Invite has already been sent"
+    ],
+
+    'trashes' => [
+        'index' => 'Show trash'
     ]
 ];

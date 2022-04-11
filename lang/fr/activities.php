@@ -39,5 +39,9 @@ return [
 
     'invites' => [
         "no_invites" => "Il n'y a pas d'invitations"
+    ],
+
+    'trashes' => [
+        'index' => 'Afficher la corbeille'
     ]
 ];

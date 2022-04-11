@@ -76,4 +76,26 @@ class TransactionRepository
 
         return $transactions;
     }
+
+    public function getTransactionsRemoved(): array
+    {
+        $transactions = [];
+        $earnings = Earning::ofSpace(session('space_id'))->onlyTrashed();
+        $spendings = Spending::ofSpace(session('space_id'))->onlyTrashed();
+
+        foreach ($earnings->get() as $transaction) {
+            $transactions[] = $transaction;
+        }
+
+        foreach ($spendings->get() as $transaction) {
+            $transactions[] = $transaction;
+        }
+
+        // Sort transactions
+        usort($transactions, function ($a, $b) {
+            return $a->happened_on < $b->happened_on;
+        });
+
+        return $transactions;
+    }
 }

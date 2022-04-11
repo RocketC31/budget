@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::name('transactions.')->group(function () {
         Route::get('/transactions', [TransactionController::class, 'index'])->name('index');
         Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
+        Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
+        Route::delete('/transactions/trash', [TransactionController::class, 'destroy'])->name('delete_all');
     });
 
     //Earnings
@@ -50,7 +52,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
         Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
         Route::post('/earnings', [EarningController::class, 'store']);
+        Route::post('/earnings/{earning}/restore', [EarningController::class, 'restore'])->name('restore');
         Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
+        Route::delete('/earnings/{earning}/purge', [EarningController::class, 'purge'])->name('purge');
     });
 
     //Spendings
@@ -61,7 +65,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
         Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
         Route::post('/spendings', [SpendingController::class, 'store']);
+        Route::post('/spendings/{spending}/restore', [SpendingController::class, 'restore'])->name('restore');
         Route::delete('/spendings/{id}', [SpendingController::class, 'destroy'])->name('delete');
+        Route::delete('/spendings/{id}/purge', [SpendingController::class, 'purge'])->name('purge');
     });
 
     //Attachments

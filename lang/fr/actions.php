@@ -27,5 +27,6 @@ return [
     'complete' => 'Complète',
     'prepare' => 'Préparer',
     'select_all' => 'Tout sélectionner',
-    'deselect_all' => 'Tout désélectionner'
+    'deselect_all' => 'Tout désélectionner',
+    'remove_all' => 'Tout supprimer'
 ];
