@@ -82,8 +82,10 @@ class RecurringController extends Controller
             'amount' => 'required|regex:/^\d*(\.\d{2})?$/',
         ]);
         $amount = Helper::rawNumberToInteger($request->input('amount'));
+        $date = new \DateTime($request->input('date'));
         $this->recurringRepository->update($id, [
             'last_used_on' => $request->input('date'),
+            'day' => $date->format('j'),
             'description' => $request->input('description'),
             'amount' => $amount
         ]);
@@ -131,7 +133,7 @@ class RecurringController extends Controller
         return back();
     }
 
-    public function destroyAll(): RedirectResponse
+    public function purgeAll(): RedirectResponse
     {
         //NO need check because if it's in trash, check already ok. And it's linked to space_id
         $recurringsIds = Recurring::ofSpace(session('space_id'))->onlyTrashed()->pluck('id')->toArray();

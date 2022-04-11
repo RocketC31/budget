@@ -39,6 +39,7 @@ function restore(recurring) {
             <div class="row mb-3">
                 <div class="row__column row__column--middle">
                     <h2>{{ trans('pages.trash') }} {{ trans('models.recurrings') }}</h2>
+                    <Link :href="route('recurrings.index')"><i class="fa fa-chevron-left"></i> {{ trans('actions.back') }}</Link>
                 </div>
                 <div class="row__column row__column--compact row__column--middle">
                     <div @click.stop="removeAll()" v-if="recurrings.length > 0" class="m-0 sm:m-3 cursor-pointer">{{ trans('actions.remove_all') }}</div>

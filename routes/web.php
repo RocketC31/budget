@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions', [TransactionController::class, 'index'])->name('index');
         Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
         Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
-        Route::delete('/transactions/purge_all', [TransactionController::class, 'destroy'])->name('purge_all');
+        Route::delete('/transactions/purge_all', [TransactionController::class, 'purgeAll'])->name('purge_all');
     });
 
     //Earnings
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/recurrings/{recurring}', [RecurringController::class, 'update'])->name('update');
         Route::post('/recurrings', [RecurringController::class, 'store'])->name('store');
         Route::post('/recurrings/{recurring}/restore', [RecurringController::class, 'restore'])->name('restore');
-        Route::delete('/recurrings/purge_all', [RecurringController::class, 'destroyAll'])->name('purge_all');
+        Route::delete('/recurrings/purge_all', [RecurringController::class, 'purgeAll'])->name('purge_all');
         Route::delete('/recurrings/{recurring}', [RecurringController::class, 'destroy'])->name('delete');
         Route::delete('/recurrings/{recurring}/purge', [RecurringController::class, 'purge'])->name('purge');
     });
@@ -103,10 +103,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/tags', [TagController::class, 'index'])->name('index');
         Route::get('/tags/create', [TagController::class, 'create'])->name('create');
         Route::get('/tags/{tag}/edit', [TagController::class, 'edit'])->name('edit');
+        Route::get('/tags/trash', [TagController::class, 'trash'])->name('trash');
         Route::post('/tags', [TagController::class, 'store'])->name('store');
         Route::patch('/tags/{tag}', [TagController::class, 'update'])->name('update');
         Route::put('/tags/{tag}', [TagController::class, 'update'])->name('update');
+        Route::post('/tags/{tag}/restore', [TagController::class, 'restore'])->name('restore');
+        Route::delete('/tags/purge_all', [TagController::class, 'purgeAll'])->name('purge_all');
         Route::delete('/tags/{tag}', [TagController::class, 'destroy'])->name('delete');
+        Route::delete('/tags/{tag}/purge', [TagController::class, 'purge'])->name('purge');
     });
 
     //Reports

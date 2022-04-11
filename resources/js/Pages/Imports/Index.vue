@@ -30,7 +30,7 @@ function remove(id) {
                     <Link :href="route('imports.create')" class="button">{{ trans('actions.create') }} {{ trans('models.import') }}</Link>
                 </div>
             </div>
-            <div class="box" v-if="imports" >
+            <div class="box" v-if="imports.length > 0" >
                 <div class="box__section box__section--header row">
                     <div class="row__column">{{ trans('fields.name') }}</div>
                     <div class="row__column">{{ trans('fields.status') }}</div>

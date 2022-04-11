@@ -104,7 +104,7 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function destroy(): RedirectResponse
+    public function purgeAll(): RedirectResponse
     {
         //NO need check because if it's in trash, check already ok. And it's linked to space_id
         Earning::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();

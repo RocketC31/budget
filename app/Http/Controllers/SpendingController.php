@@ -55,7 +55,7 @@ class SpendingController extends Controller
             session('space_id'),
             null,
             null,
-            $request->input('tag_id'),
+            $request->input('tag'),
             $request->input('date'),
             $request->input('description'),
             $amount
