@@ -9,13 +9,13 @@ module.exports = {
         const app = document.getElementsByTagName("html")[0];
         return app.classList.contains('dark');
     },
-    formatDate(dateString) {
+    formatDate(dateString, opt) {
+        const options = opt || { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const date = new Date(dateString);
-        return date.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        return date.toLocaleString(undefined, options);
     },
     capitalize(value) {
         value = value.toString();
-
         return value.charAt(0).toUpperCase() + value.slice(1);
     },
     tolower(value) {

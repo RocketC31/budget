@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions', [TransactionController::class, 'index'])->name('index');
         Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
         Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
-        Route::delete('/transactions/trash', [TransactionController::class, 'destroy'])->name('delete_all');
+        Route::delete('/transactions/purge_all', [TransactionController::class, 'destroy'])->name('purge_all');
     });
 
     //Earnings
@@ -84,12 +84,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/budgets', [BudgetController::class, 'store'])->name('store');
     });
 
-    Route::resource('/recurrings', RecurringController::class)->only([
-        'index',
-        'create',
-        'store',
-        'show'
-    ]);
+    // Recurrings
+    Route::name('recurrings.')->group(function () {
+        Route::get('/recurrings', [RecurringController::class, 'index'])->name('index');
+        Route::get('/recurrings/{recurring}/edit', [RecurringController::class, 'edit'])->name('edit');
+        Route::get('/recurrings/trash', [RecurringController::class, 'trash'])->name('trash');
+        Route::put('/recurrings/{recurring}', [RecurringController::class, 'update'])->name('update');
+        Route::patch('/recurrings/{recurring}', [RecurringController::class, 'update'])->name('update');
+        Route::post('/recurrings', [RecurringController::class, 'store'])->name('store');
+        Route::post('/recurrings/{recurring}/restore', [RecurringController::class, 'restore'])->name('restore');
+        Route::delete('/recurrings/purge_all', [RecurringController::class, 'destroyAll'])->name('purge_all');
+        Route::delete('/recurrings/{recurring}', [RecurringController::class, 'destroy'])->name('delete');
+        Route::delete('/recurrings/{recurring}/purge', [RecurringController::class, 'purge'])->name('purge');
+    });
 
     // Tags
     Route::name('tags.')->group(function () {

@@ -36,6 +36,9 @@ function isActiveMenu(key) {
                     <Link :class="{ active :isActiveMenu('transactions') }" class="m-auto flex items-center" :href="route('transactions.index')"><i class="fas fa-exchange-alt fa-sm color-green"></i> <span class="md:flex ml-05">{{ trans('models.transactions') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
+                    <Link :class="{ active :isActiveMenu('recurrings') }" class="m-auto flex items-center" :href="route('recurrings.index')"><i class="fas fa-recycle fa-sm color-magenta"></i> <span class="md:flex ml-05">{{ trans('models.recurrings') }}</span></Link>
+                </li>
+                <li class="flex w-1/5">
                     <Link :class="{ active :isActiveMenu('budgets') }" class="m-auto flex items-center" :href="route('budgets.index')"><i class="fas fa-wallet fa-sm color-red"></i> <span class="md:flex ml-05">{{ trans('models.budgets') }}</span></Link>
                 </li>
                 <li class="flex w-1/5">
@@ -67,6 +70,9 @@ function isActiveMenu(key) {
                             </li>
                             <li class="mb-1">
                                 <Link :class="{ active :isActiveMenu('transactions') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('transactions.index')">{{ trans('models.transactions') }}</Link>
+                            </li>
+                            <li class="mb-1">
+                                <Link :class="{ active :isActiveMenu('recurrings') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('recurrings.index')">{{ trans('models.recurrings') }}</Link>
                             </li>
                             <li class="mb-1">
                                 <Link :class="{ active :isActiveMenu('budgets') }" class="block p-4 text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 rounded" :href="route('budgets.index')">{{ trans('models.budgets') }}</Link>

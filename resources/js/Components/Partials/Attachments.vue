@@ -61,7 +61,7 @@ export default {
         </form>
     </div>
     <div class="box">
-        <div v-if="!element.attachments" class="box__section text-center">{{ trans('general.empty_attachments', { resource: trans('models.transaction').toLowerCase() } ) }} </div>
+        <div v-if="!element.attachments" class="box__section text-center">{{ trans('general.empty_attachments', { args: { resource: trans('models.transaction').toLowerCase() } }) }} </div>
         <template v-else>
             <div v-for="attachment in element.attachments" class="box__section row">
                 <div>

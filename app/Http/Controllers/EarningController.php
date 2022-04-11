@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
-use App\Models\Recurring;
-use App\Repositories\RecurringRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Earning;
@@ -19,16 +17,13 @@ class EarningController extends Controller
 {
     private EarningRepository $earningRepository;
     private ConversionRateRepository $conversionRateRepository;
-    private RecurringRepository $recurringRepository;
 
     public function __construct(
         EarningRepository $earningRepository,
-        ConversionRateRepository $conversionRateRepository,
-        RecurringRepository $recurringRepository
+        ConversionRateRepository $conversionRateRepository
     ) {
         $this->earningRepository = $earningRepository;
         $this->conversionRateRepository = $conversionRateRepository;
-        $this->recurringRepository = $recurringRepository;
     }
 
     public function show(Earning $earning): Response
@@ -87,26 +82,12 @@ class EarningController extends Controller
             'amount' => $amount
         ]);
 
-        if ($request->query->get("recurring_update") && $earning->recurring_id) {
-            $this->recurringRepository->update($earning->recurring_id, [
-                'starts_on' => $request->input('date'),
-                'last_used_on' => $request->input('date'),
-                'description' => $request->input('description'),
-                'amount' => $amount
-            ]);
-        }
-
         return redirect()->route('transactions.index');
     }
 
-    public function destroy(Earning $earning, Request $request): RedirectResponse
+    public function destroy(Earning $earning): RedirectResponse
     {
         $this->authorize('delete', $earning);
-
-        if ($request->query->get("recurring_remove") && $earning->recurring_id) {
-            $recurring = Recurring::find($earning->recurring_id);
-            $recurring->delete();
-        }
 
         $earning->delete();
 

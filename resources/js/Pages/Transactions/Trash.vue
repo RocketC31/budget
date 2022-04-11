@@ -24,7 +24,7 @@ function remove(transaction) {
 
 function removeAll() {
     if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('transactions.delete_all'))
+        Inertia.delete(route('transactions.purge_all'))
     }
 }
 
