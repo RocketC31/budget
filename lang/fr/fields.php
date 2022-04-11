@@ -21,4 +21,5 @@ return [
     'chart' => 'Graphique',
     'status' => 'Statut',
     'date_format' => 'Format de date',
+    'deletion_date' => 'Date de suppression'
 ];

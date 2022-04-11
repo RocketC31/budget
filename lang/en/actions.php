@@ -32,5 +32,7 @@ return [
     'complete' => 'Complete',
     'prepare' => 'Prepare',
     'select_all' => 'Select all',
-    'deselect_all' => 'Deselect all'
+    'deselect_all' => 'Deselect all',
+    'remove_all' => 'Remove all',
+    'back' => 'Back'
 ];

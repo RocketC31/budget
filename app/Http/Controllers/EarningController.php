@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
-use App\Models\Recurring;
-use App\Repositories\RecurringRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Earning;
@@ -13,21 +11,19 @@ use App\Repositories\ConversionRateRepository;
 use App\Repositories\EarningRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Intervention\Image\Exception\NotFoundException;
 
 class EarningController extends Controller
 {
     private EarningRepository $earningRepository;
     private ConversionRateRepository $conversionRateRepository;
-    private RecurringRepository $recurringRepository;
 
     public function __construct(
         EarningRepository $earningRepository,
-        ConversionRateRepository $conversionRateRepository,
-        RecurringRepository $recurringRepository
+        ConversionRateRepository $conversionRateRepository
     ) {
         $this->earningRepository = $earningRepository;
         $this->conversionRateRepository = $conversionRateRepository;
-        $this->recurringRepository = $recurringRepository;
     }
 
     public function show(Earning $earning): Response
@@ -86,26 +82,12 @@ class EarningController extends Controller
             'amount' => $amount
         ]);
 
-        if ($request->query->get("recurring_update") && $earning->recurring_id) {
-            $this->recurringRepository->update($earning->recurring_id, [
-                'starts_on' => $request->input('date'),
-                'last_used_on' => $request->input('date'),
-                'description' => $request->input('description'),
-                'amount' => $amount
-            ]);
-        }
-
         return redirect()->route('transactions.index');
     }
 
-    public function destroy(Earning $earning, Request $request): RedirectResponse
+    public function destroy(Earning $earning): RedirectResponse
     {
         $this->authorize('delete', $earning);
-
-        if ($request->query->get("recurring_remove") && $earning->recurring_id) {
-            $recurring = Recurring::find($earning->recurring_id);
-            $recurring->delete();
-        }
 
         $earning->delete();
 
@@ -118,13 +100,28 @@ class EarningController extends Controller
         $earning = Earning::withTrashed()->find($id);
 
         if (!$earning) {
-            // 404
+            throw new NotFoundException();
         }
 
         $this->authorize('restore', $earning);
 
         $earning->restore();
 
-        return redirect()->route('transactions.index');
+        return back();
+    }
+
+    public function purge($id): RedirectResponse
+    {
+        $earning = Earning::onlyTrashed()->find($id);
+
+        if (!$earning) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('delete', $earning);
+
+        $earning->forceDelete();
+
+        return back();
     }
 }

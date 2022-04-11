@@ -31,16 +31,10 @@ export default {
             amount: props.earning.formatted_amount
         });
         function submit() {
-            let updateRecurring = false;
-            if (props.earning.recurring_id !== null) {
-                if (confirm(trans("models.recurring_attached_confirm"))) {
-                    updateRecurring = true;
-                }
-            }
             if (patchMethodAvailable.value) {
-                form.patch(route('earnings.update', { earning: props.earning.id, recurring_update: updateRecurring }));
+                form.patch(route('earnings.update', { earning: props.earning.id }));
             } else {
-                form.put(route('earnings.update', { earning: props.earning.id, recurring_update: updateRecurring }));
+                form.put(route('earnings.update', { earning: props.earning.id }));
             }
         }
         function onDateUpdate(date) {

@@ -1,38 +1,20 @@
-<script>
+<script setup>
 import { formatDate } from '@/tools';
 import { trans } from "matice";
 import { Link } from "@inertiajs/inertia-vue3";
-import BreezeButton from '@/Components/Button.vue';
 import { Inertia } from '@inertiajs/inertia'
 
-export default {
-    components: {
-        Link,
-        BreezeButton
-    },
+const props = defineProps({
+    transaction: Object,
+    currency: String
+});
 
-    props: {
-        transaction: Object,
-        currency: String
-    },
-
-    setup(props) {
-        function remove() {
-            let url = `/${props.transaction.type}/${props.transaction.id}`;
-            if (props.transaction.recurring_id !== null) {
-                if (confirm(trans("models.recurring_attached_confirm"))) {
-                    url += `?recurring_remove=1`;
-                }
-            }
-            if (confirm(trans('actions.confirm_action'))) {
-                Inertia.delete(url);
-            }
-        }
-
-        return { remove, formatDate }
+function remove() {
+    let url = `/${props.transaction.type}/${props.transaction.id}`;
+    if (confirm(trans('actions.confirm_action'))) {
+        Inertia.delete(url);
     }
 }
-
 </script>
 
 <template>

@@ -25,7 +25,7 @@ defineProps({
                 </div>
             </div>
             <div class="box mt-3">
-                <div v-if="budgets.length < 1" class="box__section text-center">{{ trans('general.empty_state', { resource: trans('models.budgets').toLowerCase() } ) }}</div>
+                <div v-if="budgets.length < 1" class="box__section text-center">{{ trans('general.empty_state', { args: { resource: trans('models.budgets').toLowerCase() } }) }}</div>
                 <div v-for="budget in budgets" class="box__section">
                     <div>{{ budget.tag.name }}</div>
                     <progress class="mt-2 mb-1" :value="budget.spent" :max="budget.amount"></progress>

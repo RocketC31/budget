@@ -102,7 +102,7 @@ export default {
                     }
 
                     if (this.tag) {
-                        body["tag_id"] = this.tag
+                        body["tag"] = this.tag
                     }
 
                     Inertia.post('/recurrings', body, {
@@ -112,7 +112,7 @@ export default {
                     body["date"] = this.date;
 
                     if (this.type === 'spending' && this.tag) {
-                        body["tag_id"] = this.tag;
+                        body["tag"] = this.tag;
                     }
 
                     Inertia.post('/' + this.type + 's', body, {

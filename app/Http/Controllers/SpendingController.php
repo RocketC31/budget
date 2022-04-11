@@ -3,32 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
-use App\Models\Recurring;
 use App\Models\Space;
 use App\Models\Spending;
 use App\Models\Tag;
 use App\Repositories\ConversionRateRepository;
-use App\Repositories\RecurringRepository;
 use App\Repositories\SpendingRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Intervention\Image\Exception\NotFoundException;
 
 class SpendingController extends Controller
 {
     private SpendingRepository $spendingRepository;
     private ConversionRateRepository $conversionRateRepository;
-    private RecurringRepository $recurringRepository;
 
     public function __construct(
         SpendingRepository $spendingRepository,
-        ConversionRateRepository $conversionRateRepository,
-        RecurringRepository $recurringRepository
+        ConversionRateRepository $conversionRateRepository
     ) {
         $this->spendingRepository = $spendingRepository;
         $this->conversionRateRepository = $conversionRateRepository;
-        $this->recurringRepository = $recurringRepository;
     }
 
     public function show(Spending $spending): Response
@@ -59,7 +55,7 @@ class SpendingController extends Controller
             session('space_id'),
             null,
             null,
-            $request->input('tag_id'),
+            $request->input('tag'),
             $request->input('date'),
             $request->input('description'),
             $amount
@@ -92,47 +88,46 @@ class SpendingController extends Controller
             'amount' => $amount
         ]);
 
-        if ($request->query->get("recurring_update") && $spending->recurring_id) {
-            $this->recurringRepository->update($spending->recurring_id, [
-                'starts_on' => $request->input('date'),
-                'last_used_on' => $request->input('date'),
-                'tag_id' => $request->input('tag_id'),
-                'description' => $request->input('description'),
-                'amount' => $amount
-            ]);
-        }
-
         return redirect()->route('transactions.index');
     }
 
-    public function destroy($id, Request $request): RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         $spending = Spending::find($id);
         $this->authorize('delete', $spending);
 
-        if ($request->query->get("recurring_remove") && $spending->recurring_id) {
-            $recurring = Recurring::find($spending->recurring_id);
-            $recurring->delete();
-        }
-
         $spending->delete();
 
-        return redirect()
-            ->back();
+        return redirect()->route('transactions.index');
     }
 
-    public function restore($id)
+    public function restore($id): RedirectResponse
     {
         $spending = Spending::withTrashed()->find($id);
 
         if (!$spending) {
-            // 404
+            throw new NotFoundException();
         }
 
         $this->authorize('restore', $spending);
 
         $spending->restore();
 
-        return redirect()->route('transactions.index');
+        return back();
+    }
+
+    public function purge($id): RedirectResponse
+    {
+        $spending = Spending::withTrashed()->find($id);
+
+        if (!$spending) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('delete', $spending);
+
+        $spending->forceDelete();
+
+        return back();
     }
 }

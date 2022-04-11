@@ -28,5 +28,6 @@ return [
     'type' => 'Type',
     'list' => 'List',
     'chart' => 'Chart',
-    'status' => 'Status'
+    'status' => 'Status',
+    'deletion_date' => 'Deletion date'
 ];

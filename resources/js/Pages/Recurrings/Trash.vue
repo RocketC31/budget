@@ -2,7 +2,8 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Link, Head } from "@inertiajs/inertia-vue3";
 import { trans } from 'matice';
-import { formatDate } from '@/tools';
+import { formattedAmount, formatDate } from '@/tools';
+import Tag from "@/Components/Partials/Tag";
 import EmptyState from "@/Components/Partials/EmptyState";
 import {Inertia} from "@inertiajs/inertia";
 
@@ -13,22 +14,35 @@ defineProps({
 
 function remove(recurring) {
     if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('recurrings.delete', { recurring: recurring }));
+        Inertia.delete(route('recurrings.purge', { recurring : recurring }));
+    }
+}
+
+function removeAll() {
+    if (confirm(trans('actions.confirm_action'))) {
+        Inertia.delete(route('recurrings.purge_all'))
+    }
+}
+
+function restore(recurring) {
+    if (confirm(trans('actions.confirm_action'))) {
+        Inertia.post(route('recurrings.restore', { recurring: recurring }));
     }
 }
 
 </script>
 <template>
-    <Head :title="trans('models.recurrings')" />
+    <Head :title="trans('pages.trash') + ' ' + trans('models.recurrings')" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
             <div class="row mb-3">
                 <div class="row__column row__column--middle">
-                    <h2>{{ trans('models.recurrings') }}</h2>
+                    <h2>{{ trans('pages.trash') }} {{ trans('models.recurrings') }}</h2>
+                    <Link :href="route('recurrings.index')"><i class="fa fa-chevron-left"></i> {{ trans('actions.back') }}</Link>
                 </div>
                 <div class="row__column row__column--compact row__column--middle">
-                    <Link :href="route('recurrings.trash')" class="m-0 sm:m-3">{{ trans('activities.trashes.index') }}</Link>
+                    <div @click.stop="removeAll()" v-if="recurrings.length > 0" class="m-0 sm:m-3 cursor-pointer">{{ trans('actions.remove_all') }}</div>
                 </div>
             </div>
             <div class="box mt-3">
@@ -43,7 +57,7 @@ function remove(recurring) {
                                             <div class="flex items-center pl-5">
                                                 <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2">
                                                     {{ recurring.description }}
-                                                    <br> <span class="text-sm text-gray-400">{{ formatDate(recurring.last_used_on) }}</span>
+                                                    <br> <span class="text-sm text-gray-400">{{ trans('fields.deletion_date') }} : {{ formatDate(recurring.deleted_at) }}</span>
                                                 </p>
                                             </div>
                                         </td>
@@ -72,9 +86,9 @@ function remove(recurring) {
                                         </td>
                                         <td class="px-3 text-center">
                                             <div class="flex items-center justify-around focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 dark:text-gray-200 dark:bg-gray-600 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
-                                                <Link class="p-3" :href="route('recurrings.edit', { id: recurring.id })">
-                                                    <i class="fas fa-pencil fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
-                                                </Link>
+                                                <div class="p-3 cursor-pointer" @click.stop="restore(recurring)">
+                                                    <i class="fas fa-trash-undo fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
+                                                </div>
                                                 <div class="p-3 cursor-pointer" @click.stop="remove(recurring)">
                                                     <i class="fas fa-trash fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
                                                 </div>
@@ -86,7 +100,9 @@ function remove(recurring) {
                             </table>
                         </div>
                     </template>
-                    <EmptyState v-if="recurrings.length < 1" :payload="'recurrings'"></EmptyState>
+                    <div v-else class="box__section text-center">
+                        <div class="mb-1">{{ trans('general.empty_trash') }}</div>
+                    </div>
                 </div>
             </div>
         </div>

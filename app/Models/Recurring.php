@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\RecurringCreated;
 use App\Events\RecurringDeleted;
+use App\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -34,7 +35,22 @@ class Recurring extends Model
         'deleted' => RecurringDeleted::class
     ];
 
+    protected $appends = ['formatted_amount', 'tag'];
+
     // Accessors
+    public function getFormattedAmountAttribute()
+    {
+        return Helper::formatNumber($this->amount / 100);
+    }
+
+    public function getTagAttribute()
+    {
+        if ($this->tag_id) {
+            return $this->tag()->first();
+        }
+        return null;
+    }
+
     public function getDueDaysAttribute()
     {
         if ($this->starts_on <= date('Y-m-d') && ($this->ends_on >= date('Y-m-d') || !$this->ends_on)) {

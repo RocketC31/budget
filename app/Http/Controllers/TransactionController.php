@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Earning;
 use App\Models\Space;
 use App\Models\Spending;
 use App\Models\Tag;
@@ -9,9 +10,11 @@ use App\Repositories\CurrencyRepository;
 use App\Repositories\RecurringRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class TransactionController extends Controller
 {
@@ -32,7 +35,7 @@ class TransactionController extends Controller
         $this->tagRepository = $tagRepository;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $filterBy = [];
 
@@ -73,7 +76,7 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         $tags = [];
 
@@ -92,6 +95,22 @@ class TransactionController extends Controller
             'defaultCurrencyId' => Space::find(session('space_id'))->currency_id,
             'recurringsIntervals' => $this->recurringRepository->getSupportedIntervals()
         ]);
+    }
+
+    public function trash(): Response
+    {
+        return Inertia::render('Transactions/Trash', [
+            'transactions' => $this->repository->getTransactionsRemoved()
+        ]);
+    }
+
+    public function purgeAll(): RedirectResponse
+    {
+        //NO need check because if it's in trash, check already ok. And it's linked to space_id
+        Earning::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
+        Spending::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
+
+        return back();
     }
 
     private function getTransactionsForChart(array $transactions): array

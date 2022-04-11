@@ -28,11 +28,12 @@ const dataType = ref('list');
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3" id="transactions-page">
-            <div class="row mb-3">
+            <div class="row mb-3 flex-wrap sm:flex-nowrap">
                 <div class="row__column row__column--middle">
                     <h2>{{ trans('models.transactions') }}</h2>
                 </div>
-                <div class="row__column row__column--compact row__column--middle">
+                <div class="row__column row__column--compact row__column--middle w-full sm:w-auto flex items-center justify-between">
+                    <Link :href="route('transactions.trash')" class="m-0 sm:m-3">{{ trans('activities.trashes.index') }}</Link>
                     <Link :href="route('transactions.create')" class="button">{{ trans('actions.create') }} {{ trans('models.transactions') }}</Link>
                 </div>
             </div>

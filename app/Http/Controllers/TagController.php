@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
+use App\Models\Spending;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Intervention\Image\Exception\NotFoundException;
 
 class TagController extends Controller
 {
@@ -28,7 +32,14 @@ class TagController extends Controller
         return Inertia::render('Tags/Create');
     }
 
-    public function store(Request $request)
+    public function trash(): Response
+    {
+        return Inertia::render('Tags/Trash', [
+            'tags' => Tag::ofSpace(session("space_id"))->onlyTrashed()->get()
+        ]);
+    }
+
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->tagRepository->getValidationRules());
 
@@ -44,7 +55,7 @@ class TagController extends Controller
         return Inertia::render('Tags/Edit', compact('tag'));
     }
 
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Tag $tag): RedirectResponse
     {
         $this->authorize('update', $tag);
 
@@ -59,14 +70,58 @@ class TagController extends Controller
         return redirect()->route('tags.index');
     }
 
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): RedirectResponse
     {
         $this->authorize('delete', $tag);
 
-        if (!$tag->spendings->count()) {
-            $tag->delete();
-        }
+        $tag->delete();
 
         return redirect()->route('tags.index');
+    }
+
+    public function restore($id): RedirectResponse
+    {
+        $tag = Tag::ofSpace(session('space_id'))->onlyTrashed()->find($id);
+        if (!$tag) {
+            throw new NotFoundException();
+        }
+
+        $tag->restore();
+
+        return back();
+    }
+
+    public function purge($id): RedirectResponse
+    {
+        $tag = Tag::onlyTrashed()->find($id);
+        if (!$tag) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('delete', $tag);
+
+        //Unlink spendings
+        Spending::withTrashed()->where('tag_id', "=", $tag->id)->update(['tag_id' => null]);
+
+        //Remove budget because without tag it's not usefull (definitively delete)
+        Budget::withTrashed()->where('tag_id', "=", $tag->id)->forceDelete();
+
+        $tag->forceDelete();
+
+        return back();
+    }
+
+    public function purgeAll(): RedirectResponse
+    {
+        $tagsIds = Tag::ofSpace(session('space_id'))->onlyTrashed()->pluck('id')->toArray();
+
+        //Unlink for recurring who will be purged
+        Spending::withTrashed()->whereIn('tag_id', $tagsIds)->update(['tag_id' => null]);
+        Budget::withTrashed()->whereIn('tag_id', $tagsIds)->forceDelete();
+
+        //Then remove recurrings
+        Tag::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
+
+        return back();
     }
 }
