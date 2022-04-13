@@ -1,9 +1,3 @@
-<script setup>
-import { Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-</script>
-
 <template>
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
@@ -29,3 +23,9 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+</script>

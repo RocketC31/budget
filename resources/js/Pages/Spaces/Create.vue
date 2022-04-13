@@ -1,29 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import ColorPicker from "@/Components/ColorPicker";
-import { Inertia } from "@inertiajs/inertia";
-
-defineProps({
-    currencies: Array
-})
-
-const space = ref({
-    name: null,
-    currency_id: 1,
-});
-
-function submit() {
-    Inertia.post(route('spaces.store'), space.value);
-}
-
-const errors = computed(() => usePage().props.value.errors);
-
-</script>
-
 <template>
     <Head :title=" trans('actions.create') + ' ' + trans('models.space')" />
 
@@ -59,3 +33,28 @@ const errors = computed(() => usePage().props.value.errors);
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import ColorPicker from "@/Components/ColorPicker";
+    import { Inertia } from "@inertiajs/inertia";
+
+    defineProps({
+        currencies: Array
+    });
+
+    const space = ref({
+        name: null,
+        currency_id: 1,
+    });
+
+    function submit() {
+        Inertia.post(route('spaces.store'), space.value);
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+</script>

@@ -12,10 +12,14 @@ class PasswordChanged extends Mailable
     use SerializesModels;
 
     protected $updated_at;
+    protected string $lang;
 
-    public function __construct($updated_at)
+    public function __construct($updated_at, string $lang = "en")
     {
         $this->updated_at = $updated_at;
+        $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.password_changed', [], $this->lang));
     }
 
     public function build()

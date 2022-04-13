@@ -1,15 +1,3 @@
-<script setup>
-defineProps({
-    classes: {
-        type: String,
-        default: ''
-    },
-    message: {
-        type: String,
-        default: ''
-    }
-});
-</script>
 <template>
     <div class="row" :class="classes" style="
     padding: 15px;
@@ -23,3 +11,16 @@ defineProps({
         <div class="row__column text-center" style="font-weight: 600;">{{ message }}</div>
     </div>
 </template>
+
+<script setup>
+    defineProps({
+        classes: {
+            type: String,
+            default: ''
+        },
+        message: {
+            type: String,
+            default: ''
+        }
+    });
+</script>

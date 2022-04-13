@@ -1,5 +1,5 @@
 @extends('emails.template')
 
 @section('content')
-    Heads up! Your password has been changed ({{ $updated_at }} CEST).
+    {{ trans('email.password_changed', ['at' => $updated_at]) }}
 @endsection

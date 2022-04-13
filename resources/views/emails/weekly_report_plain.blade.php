@@ -1,9 +1,13 @@
-Here's your weekly report for {{ $space->name }}.
+{{ trans('email.here_weekly_report', ['space' => $space->name]) }}
 
-This week (#{{ $week }}) you've
-- Spent {!! $space->currency->symbol !!} {{ \App\Helper::formatNumber($totalSpent / 100) }}
-@if (count($largestSpendingWithTag))- Most of which you've spent on {{ $largestSpendingWithTag[0]->tag_name }} ({!! $space->currency->symbol !!} {{ \App\Helper::formatNumber($largestSpendingWithTag[0]->amount / 100) }})@endif
+{{ trans('email.this_week_you_have_spent', ['week' => $week]) }} {!! $space->currency->symbol !!} {{ \App\Helper::formatNumber($totalSpent / 100) }}
 
-Tired of these reports? Use the link below to change your preferences.
+@if (count($largestSpendingWithTag))
+    @foreach($largestSpendingWithTag as $spendingTag)
+        {{ $spendingTag->tag_name }} : {!! $space->currency->symbol !!} {{ \App\Helper::formatNumber($spendingTag->amount / 100) }}
+    @endforeach
+@endif
+
+{{ trans('reports.tired_report') }}
 
 {{ config('app.url') . '/settings/preferences' }}

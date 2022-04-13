@@ -1,41 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import { Inertia } from "@inertiajs/inertia";
-import { capitalize } from '@/tools';
-import Danger from "@/Components/Partials/Alerts/Danger";
-import Success from "@/Components/Partials/Alerts/Success";
-
-const props = defineProps({
-    space: Object
-})
-
-const space = ref(props.space);
-const invite = ref({
-    email: null,
-    role: 'admin'
-})
-
-function submitSpace() {
-    if (patchMethodAvailable.value)
-        Inertia.patch(route('spaces.update', { space: space.value.id }), space.value);
-    else
-        Inertia.put(route('spaces.update', { space: space.value.id }), space.value);
-}
-
-function submitInvite() {
-    Inertia.post(route('spaces.invite', { space: space.value.id }), invite.value);
-}
-
-const errors = computed(() => usePage().props.value.errors);
-const flash = computed(() => usePage().props.value.flash.message);
-const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
-
-</script>
-
 <template>
     <Head :title=" trans('actions.edit') + ' ' + trans('models.space')" />
 
@@ -126,3 +88,40 @@ const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAva
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import { Inertia } from "@inertiajs/inertia";
+    import { capitalize } from '@/tools';
+    import Danger from "@/Components/Partials/Alerts/Danger";
+    import Success from "@/Components/Partials/Alerts/Success";
+
+    const props = defineProps({
+        space: Object
+    });
+
+    const space = ref(props.space);
+    const invite = ref({
+        email: null,
+        role: 'admin'
+    });
+
+    function submitSpace() {
+        if (patchMethodAvailable.value)
+            Inertia.patch(route('spaces.update', { space: space.value.id }), space.value);
+        else
+            Inertia.put(route('spaces.update', { space: space.value.id }), space.value);
+    }
+
+    function submitInvite() {
+        Inertia.post(route('spaces.invite', { space: space.value.id }), invite.value);
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+    const flash = computed(() => usePage().props.value.flash.message);
+    const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+</script>

@@ -1,30 +1,3 @@
-<script setup>
-import { ref, computed } from 'vue';
-import { Link } from "@inertiajs/inertia-vue3";
-import { usePage } from '@inertiajs/inertia-vue3';
-import { changeTheme } from '@/tools';
-
-import BreezeDropdown from '@/Components/Dropdown.vue';
-import BreezeDropdownLink from '@/Components/DropdownLink.vue';
-import { trans } from 'matice';
-import { contains } from '@/tools';
-
-const showingNavigationDropdown = ref(false);
-const spaces = computed(() => usePage().props.value.spaces);
-const avatar = computed(() => usePage().props.value.auth.user.avatar);
-const currentSpace = computed(() => usePage().props.value.current_space);
-let openMobileMenu = ref(false);
-
-function resetTheme() {
-    changeTheme("light");
-}
-
-function isActiveMenu(key) {
-    return (route().current() && contains(key, route().current()));
-}
-
-</script>
-
 <template>
     <div class="navigation">
         <div class="wrapper items-center">
@@ -136,3 +109,29 @@ function isActiveMenu(key) {
         </div>
     </div>
 </template>
+
+<script setup>
+    import { ref, computed } from 'vue';
+    import { Link } from "@inertiajs/inertia-vue3";
+    import { usePage } from '@inertiajs/inertia-vue3';
+    import { changeTheme } from '@/tools';
+
+    import BreezeDropdown from '@/Components/Dropdown.vue';
+    import BreezeDropdownLink from '@/Components/DropdownLink.vue';
+    import { trans } from 'matice';
+    import { contains } from '@/tools';
+
+    const showingNavigationDropdown = ref(false);
+    const spaces = computed(() => usePage().props.value.spaces);
+    const avatar = computed(() => usePage().props.value.auth.user.avatar);
+    const currentSpace = computed(() => usePage().props.value.current_space);
+    let openMobileMenu = ref(false);
+
+    function resetTheme() {
+        changeTheme("light");
+    }
+
+    function isActiveMenu(key) {
+        return (route().current() && contains(key, route().current()));
+    }
+</script>

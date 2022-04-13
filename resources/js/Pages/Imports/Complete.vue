@@ -1,54 +1,3 @@
-<script setup>
-import { Head, useForm, usePage} from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { computed } from "vue";
-import ValidationError from "@/Components/ValidationError";
-
-const props = defineProps({
-    tags: Array,
-    rows: Array,
-    import: Object,
-});
-
-function submit() {
-    form.post(route('imports.complete.store', { import: props.import.id } ))
-}
-
-function constructRowsFromProps() {
-    const rows = [];
-    props.rows.forEach((row) => {
-       let r = row;
-       r['selected'] = false;
-       rows.push(r);
-    });
-
-    return rows;
-}
-
-const form = useForm({
-    rows: constructRowsFromProps(),
-    column_description: null,
-    column_amount: null,
-    date_format: 'Y-m-d'
-});
-
-const errors = computed(() => usePage().props.value.errors);
-
-function selectAll() {
-    form.rows.forEach((row) => {
-        row.selected = true;
-    })
-}
-
-function deselectAll() {
-    form.rows.forEach((row) => {
-        row.selected = false;
-    })
-}
-
-</script>
-
 <template>
     <Head :title="trans('actions.complete') + ' ' + trans('models.imports')" />
 
@@ -113,3 +62,53 @@ function deselectAll() {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Head, useForm, usePage} from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { computed } from "vue";
+    import ValidationError from "@/Components/ValidationError";
+
+    const props = defineProps({
+        tags: Array,
+        rows: Array,
+        import: Object,
+    });
+
+    function submit() {
+        form.post(route('imports.complete.store', { import: props.import.id } ))
+    }
+
+    function constructRowsFromProps() {
+        const rows = [];
+        props.rows.forEach((row) => {
+           let r = row;
+           r['selected'] = false;
+           rows.push(r);
+        });
+
+        return rows;
+    }
+
+    const form = useForm({
+        rows: constructRowsFromProps(),
+        column_description: null,
+        column_amount: null,
+        date_format: 'Y-m-d'
+    });
+
+    const errors = computed(() => usePage().props.value.errors);
+
+    function selectAll() {
+        form.rows.forEach((row) => {
+            row.selected = true;
+        })
+    }
+
+    function deselectAll() {
+        form.rows.forEach((row) => {
+            row.selected = false;
+        })
+    }
+</script>

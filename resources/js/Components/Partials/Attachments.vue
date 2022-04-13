@@ -1,58 +1,3 @@
-<script>
-import { Head } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import { Inertia } from "@inertiajs/inertia";
-import { Link, useForm } from "@inertiajs/inertia-vue3";
-
-export default {
-    components: {
-        Link,
-        Head
-    },
-    props: {
-        element: {
-            type: Object,
-            default: null
-        },
-        type: {
-            type: String,
-            default: ''
-        }
-    },
-
-    data: function() {
-       return {
-           file: null
-       }
-    },
-
-    setup(props) {
-        const form = useForm({
-            transaction_type: props.type,
-            transaction_id: props.element.id,
-            file: null
-        })
-
-        function submitFile() {
-            form.post(route('attachments.create'), {
-                _method: 'put',
-                file: form.file,
-                forceFormData: true,
-                onSuccess: () => form.reset('file'),
-            })
-        }
-
-        return { form, submitFile, trans }
-    },
-
-    methods: {
-        removeFile(id) {
-            Inertia.delete(route('attachments.delete', { id: id }));
-        }
-    }
-}
-
-</script>
 <template>
     <div class="row row--separate row--bottom mt-3 mb-1">
         <h3>{{ trans('models.attachments') }}</h3>
@@ -82,3 +27,58 @@ export default {
         </template>
     </div>
 </template>
+
+<script>
+    import { Head } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import { Inertia } from "@inertiajs/inertia";
+    import { Link, useForm } from "@inertiajs/inertia-vue3";
+
+    export default {
+        components: {
+            Link,
+            Head
+        },
+        props: {
+            element: {
+                type: Object,
+                default: null
+            },
+            type: {
+                type: String,
+                default: ''
+            }
+        },
+
+        data: function() {
+           return {
+               file: null
+           }
+        },
+
+        setup(props) {
+            const form = useForm({
+                transaction_type: props.type,
+                transaction_id: props.element.id,
+                file: null
+            })
+
+            function submitFile() {
+                form.post(route('attachments.create'), {
+                    _method: 'put',
+                    file: form.file,
+                    forceFormData: true,
+                    onSuccess: () => form.reset('file'),
+                })
+            }
+
+            return { form, submitFile, trans }
+        },
+
+        methods: {
+            removeFile(id) {
+                Inertia.delete(route('attachments.delete', { id: id }));
+            }
+        }
+    }
+</script>

@@ -1,31 +1,3 @@
-<script setup>
-import { Head, usePage, useForm } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import Layout from '@/Pages/Settings/Layout.vue';
-import { computed, onMounted } from "vue";
-import ValidationError from "@/Components/ValidationError";
-
-function submit() {
-    form.post(route('settings.profile'), {
-        _method: 'put',
-        file: form.avatar,
-        forceFormData: true
-    })
-}
-
-const user = computed(() => usePage().props.value.auth.user);
-const errors = computed(() => usePage().props.value.errors);
-
-const form = useForm({
-    name: null,
-    avatar: null
-})
-
-onMounted(() => {
-    form.name = user.value.name;
-})
-</script>
-
 <template>
     <Head :title="trans('general.profile')" />
 
@@ -49,3 +21,31 @@ onMounted(() => {
         </form>
     </Layout>
 </template>
+
+<script setup>
+    import { Head, usePage, useForm } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import Layout from '@/Pages/Settings/Layout.vue';
+    import { computed, onMounted } from "vue";
+    import ValidationError from "@/Components/ValidationError";
+
+    function submit() {
+        form.post(route('settings.profile'), {
+            _method: 'put',
+            file: form.avatar,
+            forceFormData: true
+        })
+    }
+
+    const user = computed(() => usePage().props.value.auth.user);
+    const errors = computed(() => usePage().props.value.errors);
+
+    const form = useForm({
+        name: null,
+        avatar: null
+    });
+
+    onMounted(() => {
+        form.name = user.value.name;
+    });
+</script>

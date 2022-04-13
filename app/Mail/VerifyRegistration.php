@@ -12,11 +12,13 @@ class VerifyRegistration extends Mailable
     use Queueable;
     use SerializesModels;
 
-    protected $user;
+    protected User $user;
 
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->locale($this->user->language)
+            ->subject(__('email.subject.verify_registration', [], $this->user->language));
     }
 
     public function build()

@@ -1,16 +1,3 @@
-<script setup>
-import { Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import { Head } from '@inertiajs/inertia-vue3';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-
-defineProps({
-    budgets: Array,
-    currency: String
-});
-
-</script>
-
 <template>
     <Head :title="trans('models.budgets')" />
 
@@ -35,3 +22,15 @@ defineProps({
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import { Head } from '@inertiajs/inertia-vue3';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+
+    defineProps({
+        budgets: Array,
+        currency: String
+    });
+</script>

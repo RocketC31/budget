@@ -1,55 +1,3 @@
-<script>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import DatePicker from "@/Components/DatePicker";
-import ValidationError from "@/Components/ValidationError";
-import Searchable from "@/Components/Searchable";
-import { computed } from "vue";
-
-export default {
-    components: {
-        DatePicker,
-        Link,
-        BreezeAuthenticatedLayout,
-        ValidationError,
-        Head,
-        Searchable
-    },
-
-    props: {
-        earning: Object,
-        tags: Array
-    },
-
-    setup(props) {
-        const errors = computed(() => usePage().props.value.errors);
-        const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
-        const form = useForm({
-            date: new Date(props.earning.happened_on).toISOString().slice(0, 10),
-            description: props.earning.description,
-            amount: props.earning.formatted_amount
-        });
-        function submit() {
-            if (patchMethodAvailable.value) {
-                form.patch(route('earnings.update', { earning: props.earning.id }));
-            } else {
-                form.put(route('earnings.update', { earning: props.earning.id }));
-            }
-        }
-        function onDateUpdate(date) {
-            form.date = date;
-        }
-        return {
-            trans,
-            errors,
-            form,
-            submit,
-            onDateUpdate
-        }
-    },
-}
-</script>
 <template>
     <Head :title="trans('models.earning')" />
 
@@ -88,3 +36,56 @@ export default {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script>
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import DatePicker from "@/Components/DatePicker";
+    import ValidationError from "@/Components/ValidationError";
+    import Searchable from "@/Components/Searchable";
+    import { computed } from "vue";
+
+    export default {
+        components: {
+            DatePicker,
+            Link,
+            BreezeAuthenticatedLayout,
+            ValidationError,
+            Head,
+            Searchable
+        },
+
+        props: {
+            earning: Object,
+            tags: Array
+        },
+
+        setup(props) {
+            const errors = computed(() => usePage().props.value.errors);
+            const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+            const form = useForm({
+                date: new Date(props.earning.happened_on).toISOString().slice(0, 10),
+                description: props.earning.description,
+                amount: props.earning.formatted_amount
+            });
+            function submit() {
+                if (patchMethodAvailable.value) {
+                    form.patch(route('earnings.update', { earning: props.earning.id }));
+                } else {
+                    form.put(route('earnings.update', { earning: props.earning.id }));
+                }
+            }
+            function onDateUpdate(date) {
+                form.date = date;
+            }
+            return {
+                trans,
+                errors,
+                form,
+                submit,
+                onDateUpdate
+            }
+        },
+    }
+</script>

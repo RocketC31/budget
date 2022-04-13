@@ -1,42 +1,3 @@
-<script setup>
-import { trans } from "matice";
-import { formatDate } from '@/tools';
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Inertia } from "@inertiajs/inertia";
-import { onMounted, ref, computed } from "vue";
-
-const props = defineProps({
-    activities: Object
-});
-
-const loadMoreIntersect = ref(null);
-const allActivities = ref(props.activities.data);
-
-function loadMore()
-{
-    if (props.activities.next_page_url === null) {
-        return
-    }
-    Inertia.get(props.activities.next_page_url, {}, {
-        preserveState: true,
-        preserveScroll: true,
-        only: ['activities'],
-        onSuccess: () => {
-            allActivities.value = [...allActivities.value, ...props.activities.data];
-        }
-    });
-}
-
-onMounted(() => {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && loadMore(), {
-        rootMargin: "-150px 0px 0px 0px"
-    }));
-
-    observer.observe(loadMoreIntersect.value);
-})
-
-</script>
 <template>
     <Head :title="trans('pages.activities')" />
 
@@ -59,3 +20,42 @@ onMounted(() => {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from "matice";
+    import { formatDate } from '@/tools';
+    import { Head, Link } from "@inertiajs/inertia-vue3";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Inertia } from "@inertiajs/inertia";
+    import { onMounted, ref, computed } from "vue";
+
+    const props = defineProps({
+        activities: Object
+    });
+
+    const loadMoreIntersect = ref(null);
+    const allActivities = ref(props.activities.data);
+
+    function loadMore()
+    {
+        if (props.activities.next_page_url === null) {
+            return
+        }
+        Inertia.get(props.activities.next_page_url, {}, {
+            preserveState: true,
+            preserveScroll: true,
+            only: ['activities'],
+            onSuccess: () => {
+                allActivities.value = [...allActivities.value, ...props.activities.data];
+            }
+        });
+    }
+
+    onMounted(() => {
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && loadMore(), {
+            rootMargin: "-150px 0px 0px 0px"
+        }));
+
+        observer.observe(loadMoreIntersect.value);
+    });
+</script>

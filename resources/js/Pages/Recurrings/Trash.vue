@@ -1,36 +1,3 @@
-<script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import { formattedAmount, formatDate } from '@/tools';
-import Tag from "@/Components/Partials/Tag";
-import EmptyState from "@/Components/Partials/EmptyState";
-import {Inertia} from "@inertiajs/inertia";
-
-defineProps({
-    recurrings: Array,
-    currency: String
-});
-
-function remove(recurring) {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('recurrings.purge', { recurring : recurring }));
-    }
-}
-
-function removeAll() {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('recurrings.purge_all'))
-    }
-}
-
-function restore(recurring) {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.post(route('recurrings.restore', { recurring: recurring }));
-    }
-}
-
-</script>
 <template>
     <Head :title="trans('pages.trash') + ' ' + trans('models.recurrings')" />
 
@@ -108,3 +75,36 @@ function restore(recurring) {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import { formattedAmount, formatDate } from '@/tools';
+    import Tag from "@/Components/Partials/Tag";
+    import EmptyState from "@/Components/Partials/EmptyState";
+    import {Inertia} from "@inertiajs/inertia";
+
+    defineProps({
+        recurrings: Array,
+        currency: String
+    });
+
+    function remove(recurring) {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(route('recurrings.purge', { recurring : recurring }));
+        }
+    }
+
+    function removeAll() {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(route('recurrings.purge_all'))
+        }
+    }
+
+    function restore(recurring) {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.post(route('recurrings.restore', { recurring: recurring }));
+        }
+    }
+</script>

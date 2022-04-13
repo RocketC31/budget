@@ -12,11 +12,15 @@ class InvitedToSpace extends Mailable
     use Queueable;
     use SerializesModels;
 
-    protected $invite;
+    protected SpaceInvite $invite;
+    protected string $lang;
 
-    public function __construct(SpaceInvite $invite)
+    public function __construct(SpaceInvite $invite, string $lang = "en")
     {
         $this->invite = $invite;
+        $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.invited_to_space', [], $this->lang));
     }
 
     public function build()

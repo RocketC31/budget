@@ -1,28 +1,3 @@
-<script setup>
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import List from "@/Pages/Transactions/Partials/List";
-import { ref } from "vue";
-import Chart from "@/Pages/Transactions/Partials/Chart";
-import ResumeTags from "@/Pages/Transactions/Partials/ResumeTags";
-import EmptyState from "@/Components/Partials/EmptyState";
-
-defineProps({
-    tags: Array,
-    currentMonthIndex: Number,
-    month: String,
-    year: String,
-    transactions: Array,
-    tagsPrice: Array,
-    transactionsChart: Object,
-    currency: String
-});
-
-const dataType = ref('list');
-
-</script>
-
 <template>
     <Head :title="trans('models.transactions')" />
 
@@ -85,3 +60,27 @@ const dataType = ref('list');
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import List from "@/Pages/Transactions/Partials/List";
+    import { ref } from "vue";
+    import Chart from "@/Pages/Transactions/Partials/Chart";
+    import ResumeTags from "@/Pages/Transactions/Partials/ResumeTags";
+    import EmptyState from "@/Components/Partials/EmptyState";
+
+    defineProps({
+        tags: Array,
+        currentMonthIndex: Number,
+        month: String,
+        year: String,
+        transactions: Array,
+        tagsPrice: Array,
+        transactionsChart: Object,
+        currency: String
+    });
+
+    const dataType = ref('list');
+</script>

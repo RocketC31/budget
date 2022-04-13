@@ -1,35 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import ColorPicker from "@/Components/ColorPicker";
-import { Inertia } from "@inertiajs/inertia";
-
-const props = defineProps({
-    tag: Object,
-});
-
-const tag = ref(props.tag);
-
-function submit() {
-    tag.value.color = tag.value.color.replace("#", "");
-    if (patchMethodAvailable.value)
-        Inertia.patch(route('tags.update', { tag: tag.value.id }), tag.value);
-    else
-        Inertia.put(route('tags.update', { tag: tag.value.id }), tag.value);
-}
-
-function onColorUpdate(color) {
-    tag.value.color = color;
-}
-
-const errors = computed(() => usePage().props.value.errors);
-const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
-
-</script>
-
 <template>
     <Head :title="trans('models.transactions')" />
 
@@ -63,3 +31,34 @@ const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAva
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import ColorPicker from "@/Components/ColorPicker";
+    import { Inertia } from "@inertiajs/inertia";
+
+    const props = defineProps({
+        tag: Object,
+    });
+
+    const tag = ref(props.tag);
+
+    function submit() {
+        tag.value.color = tag.value.color.replace("#", "");
+        if (patchMethodAvailable.value)
+            Inertia.patch(route('tags.update', { tag: tag.value.id }), tag.value);
+        else
+            Inertia.put(route('tags.update', { tag: tag.value.id }), tag.value);
+    }
+
+    function onColorUpdate(color) {
+        tag.value.color = color;
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+    const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+</script>

@@ -1,32 +1,3 @@
-<script setup>
-import BreezeButton from '@/Components/Button.vue';
-import BreezeGuestLayout from '@/Layouts/Guest.vue';
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { trans } from 'matice';
-
-defineProps({
-    currencies: Array,
-})
-
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    currency: 1, //€
-    terms: false,
-});
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
-</script>
-
 <template>
     <BreezeGuestLayout>
         <Head :title="trans('auth.register')" />
@@ -73,3 +44,32 @@ const submit = () => {
         </form>
     </BreezeGuestLayout>
 </template>
+
+<script setup>
+    import BreezeButton from '@/Components/Button.vue';
+    import BreezeGuestLayout from '@/Layouts/Guest.vue';
+    import BreezeInput from '@/Components/Input.vue';
+    import BreezeLabel from '@/Components/Label.vue';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+    import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+    import { trans } from 'matice';
+
+    defineProps({
+        currencies: Array,
+    })
+
+    const form = useForm({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        currency: 1, //€
+        terms: false,
+    });
+
+    const submit = () => {
+        form.post(route('register'), {
+            onFinish: () => form.reset('password', 'password_confirmation'),
+        });
+    };
+</script>

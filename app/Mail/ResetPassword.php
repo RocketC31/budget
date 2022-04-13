@@ -11,11 +11,15 @@ class ResetPassword extends Mailable
     use Queueable;
     use SerializesModels;
 
-    protected $token;
+    protected string $token;
+    protected string $lang;
 
-    public function __construct($token)
+    public function __construct(string $token, string $lang = "en")
     {
         $this->token = $token;
+        $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.reset_password', [], $this->lang));
     }
 
     public function build()

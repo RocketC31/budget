@@ -76,7 +76,7 @@ class SettingsController extends Controller
         // Notify upon changing of password
         if ($request->has('password')) {
             try {
-                Mail::to($user->email)->queue(new PasswordChanged($user->updated_at));
+                Mail::to($user->email)->queue(new PasswordChanged($user->updated_at, $user->language));
             } catch (\Exception $e) {
             }
         }

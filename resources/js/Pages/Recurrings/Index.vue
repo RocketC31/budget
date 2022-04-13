@@ -1,23 +1,3 @@
-<script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import { formatDate } from '@/tools';
-import EmptyState from "@/Components/Partials/EmptyState";
-import {Inertia} from "@inertiajs/inertia";
-
-defineProps({
-    recurrings: Array,
-    currency: String
-});
-
-function remove(recurring) {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('recurrings.delete', { recurring: recurring }));
-    }
-}
-
-</script>
 <template>
     <Head :title="trans('models.recurrings')" />
 
@@ -92,3 +72,23 @@ function remove(recurring) {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import { formatDate } from '@/tools';
+    import EmptyState from "@/Components/Partials/EmptyState";
+    import {Inertia} from "@inertiajs/inertia";
+
+    defineProps({
+        recurrings: Array,
+        currency: String
+    });
+
+    function remove(recurring) {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(route('recurrings.delete', { recurring: recurring }));
+        }
+    }
+</script>

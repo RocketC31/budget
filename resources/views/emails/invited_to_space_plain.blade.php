@@ -1,5 +1,5 @@
-{{ $invite->inviter->name }} has invited you to "{{ $invite->space->name }}"
+{{ trans('email.invited_to_space', ['name' => $invite->inviter->name, 'space' => $invite->space->name]) }}
 
-Use the link below to check out your invite.
+{{ trans('email.use_link_below') }}
 
 {{ route('space_invites.show', ['space' => $invite->space->id, 'invite' => $invite->id]) }}

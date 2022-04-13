@@ -1,22 +1,3 @@
-<script setup>
-import Menu from '@/Components/Menu.vue';
-import { trans } from 'matice';
-import { computed } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
-import Success from "@/Components/Partials/Alerts/Success";
-import Danger from "@/Components/Partials/Alerts/Danger";
-import { Inertia } from "@inertiajs/inertia";
-
-const versionNumber = computed(() => usePage().props.value.versionNumber);
-
-const user = computed(() => usePage().props.value.auth.user);
-const flash = computed(() => usePage().props.value.flash.message);
-
-function submit() {
-    Inertia.post(route('resend_verification_mail'));
-}
-</script>
-
 <template>
     <div>
         <Menu></Menu>
@@ -42,3 +23,22 @@ function submit() {
         </div>
     </div>
 </template>
+
+<script setup>
+    import Menu from '@/Components/Menu.vue';
+    import { trans } from 'matice';
+    import { computed } from "vue";
+    import { usePage } from "@inertiajs/inertia-vue3";
+    import Success from "@/Components/Partials/Alerts/Success";
+    import Danger from "@/Components/Partials/Alerts/Danger";
+    import { Inertia } from "@inertiajs/inertia";
+
+    const versionNumber = computed(() => usePage().props.value.versionNumber);
+
+    const user = computed(() => usePage().props.value.auth.user);
+    const flash = computed(() => usePage().props.value.flash.message);
+
+    function submit() {
+        Inertia.post(route('resend_verification_mail'));
+    }
+</script>

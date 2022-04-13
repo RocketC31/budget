@@ -123,7 +123,7 @@ class SpaceController extends Controller
         }
 
         try {
-            Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite));
+            Mail::to($inviteeUser->email)->send(new InvitedToSpace($invite, $inviteeUser->language));
         } catch (\Exception $e) {
         }
         $request->session()->flash('inviteStatus', 'success');

@@ -1,30 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { formattedAmount, rangeOfDays } from '@/tools';
-import { Head } from '@inertiajs/inertia-vue3';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import Tag from '@/Components/Partials/Tag.vue';
-import Widget from "@/Components/Widget/Widget";
-import Chart from "@/Components/Partials/Chart";
-
-defineProps({
-    month: Number,
-    year: {
-        type: Number,
-        default: new Date().getFullYear()
-    },
-    widgets: Array,
-    mostExpensiveTags: Array,
-    daysInMonth: Number,
-    dailyBalance: Object,
-    totalSpent: {
-        default: 0
-    },
-    currency: String
-});
-
-</script>
-
 <template>
     <Head :title="trans('general.dashboard')" />
 
@@ -34,7 +7,7 @@ defineProps({
             <p class="mt-1">{{ trans('calendar.months.' + month) }} {{ year }}</p>
             <div class="row row--gutter row--responsive my-3">
                 <div v-for="widget in widgets" class="row__column">
-                   <Widget :widget="widget"></Widget>
+                    <Widget :widget="widget"></Widget>
                 </div>
             </div>
             <div v-if="mostExpensiveTags.length > 0" class="box mt-3">
@@ -56,3 +29,29 @@ defineProps({
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { formattedAmount, rangeOfDays } from '@/tools';
+    import { Head } from '@inertiajs/inertia-vue3';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import Tag from '@/Components/Partials/Tag.vue';
+    import Widget from "@/Components/Widget/Widget";
+    import Chart from "@/Components/Partials/Chart";
+
+    defineProps({
+        month: Number,
+        year: {
+            type: Number,
+            default: new Date().getFullYear()
+        },
+        widgets: Array,
+        mostExpensiveTags: Array,
+        daysInMonth: Number,
+        dailyBalance: Object,
+        totalSpent: {
+            default: 0
+        },
+        currency: String
+    });
+</script>

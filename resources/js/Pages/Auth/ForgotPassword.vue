@@ -1,46 +1,3 @@
-<script setup>
-import BreezeButton from '@/Components/Button.vue';
-import BreezeGuestLayout from '@/Layouts/Guest.vue';
-import BreezeInput from '@/Components/Input.vue';
-import BreezeLabel from '@/Components/Label.vue';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
-import { trans } from 'matice';
-import { computed } from "vue";
-import Success from "@/Components/Partials/Alerts/Success";
-import {Inertia} from "@inertiajs/inertia";
-
-const props = defineProps({
-    status: String,
-    token: {
-        default: null
-    }
-});
-
-const form = useForm({
-    email: null,
-    password: null,
-    password_confirmation: null
-});
-
-const submit = () => {
-    const data = {};
-    if (props.token !== null) {
-        data['token'] = props.token;
-        data['password'] = form.password;
-        data['password_confirmation'] = form.password_confirmation;
-    } else {
-        data['email'] = form.email;
-    }
-
-    console.log(data);
-
-    Inertia.post(route('password.email'), data);
-};
-
-const flash = computed(() => usePage().props.value.flash.message);
-</script>
-
 <template>
     <BreezeGuestLayout>
         <Head :title="trans('auth.forgot_your_password')" />
@@ -82,3 +39,46 @@ const flash = computed(() => usePage().props.value.flash.message);
 
     </BreezeGuestLayout>
 </template>
+
+<script setup>
+    import BreezeButton from '@/Components/Button.vue';
+    import BreezeGuestLayout from '@/Layouts/Guest.vue';
+    import BreezeInput from '@/Components/Input.vue';
+    import BreezeLabel from '@/Components/Label.vue';
+    import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+    import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
+    import { trans } from 'matice';
+    import { computed } from "vue";
+    import Success from "@/Components/Partials/Alerts/Success";
+    import {Inertia} from "@inertiajs/inertia";
+
+    const props = defineProps({
+        status: String,
+        token: {
+            default: null
+        }
+    });
+
+    const form = useForm({
+        email: null,
+        password: null,
+        password_confirmation: null
+    });
+
+    const submit = () => {
+        const data = {};
+        if (props.token !== null) {
+            data['token'] = props.token;
+            data['password'] = form.password;
+            data['password_confirmation'] = form.password_confirmation;
+        } else {
+            data['email'] = form.email;
+        }
+
+        console.log(data);
+
+        Inertia.post(route('password.email'), data);
+    };
+
+    const flash = computed(() => usePage().props.value.flash.message);
+</script>
