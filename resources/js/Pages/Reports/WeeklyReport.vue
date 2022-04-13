@@ -1,20 +1,3 @@
-<script setup>
-import { trans } from "matice";
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import Chart from "@/Components/Partials/Chart";
-
-const props = defineProps({
-    year: String,
-    weeks: Object
-});
-
-const data = {
-    labels: Object.keys(props.weeks),
-    series: props.weeks
-};
-
-</script>
 <template>
     <Head :title="trans('pages.reports')" />
 
@@ -34,3 +17,20 @@ const data = {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from "matice";
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import Chart from "@/Components/Partials/Chart";
+
+    const props = defineProps({
+        year: String,
+        weeks: Object
+    });
+
+    const data = {
+        labels: Object.keys(props.weeks),
+        series: props.weeks
+    };
+</script>

@@ -12,7 +12,7 @@ class VerifyRegistration extends Mailable
     use Queueable;
     use SerializesModels;
 
-    protected $user;
+    protected User $user;
 
     public function __construct(User $user)
     {
@@ -26,7 +26,8 @@ class VerifyRegistration extends Mailable
             ->text('emails.verify_registration_plain')
             ->with([
                 'name' => $this->user->name,
-                'verification_token' => $this->user->verification_token
+                'verification_token' => $this->user->verification_token,
+                'lang' => $this->user->language
             ]);
     }
 }

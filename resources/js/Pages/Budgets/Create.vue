@@ -1,29 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import { Inertia } from "@inertiajs/inertia";
-
-defineProps({
-    tags: Array,
-});
-
-const budget = ref({
-    tag_id: null,
-    period: "monthly",
-    amount: null,
-});
-
-const errors = computed(() => usePage().props.value.errors);
-const flash = computed(() => usePage().props.value.flash);
-
-function submit() {
-    Inertia.post(route('budgets.store'), budget.value);
-}
-</script>
-
 <template>
     <Head :title="trans('models.budget')" />
 
@@ -70,3 +44,29 @@ function submit() {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import { Inertia } from "@inertiajs/inertia";
+
+    defineProps({
+        tags: Array,
+    });
+
+    const budget = ref({
+        tag_id: null,
+        period: "monthly",
+        amount: null,
+    });
+
+    const errors = computed(() => usePage().props.value.errors);
+    const flash = computed(() => usePage().props.value.flash);
+
+    function submit() {
+        Inertia.post(route('budgets.store'), budget.value);
+    }
+</script>

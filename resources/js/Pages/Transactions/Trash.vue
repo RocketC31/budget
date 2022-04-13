@@ -1,42 +1,3 @@
-<script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { ref } from "vue";
-import { formatDate } from '@/tools';
-import { Inertia } from "@inertiajs/inertia";
-
-defineProps({
-    transactions: Array,
-    tagsPrice: Array,
-    transactionsChart: Object,
-    currency: String
-});
-
-const dataType = ref('list');
-
-function remove(transaction) {
-    let url = `/${transaction.type}/${transaction.id}/purge`;
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(url);
-    }
-}
-
-function removeAll() {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('transactions.purge_all'))
-    }
-}
-
-function restore(transaction) {
-    let url = `/${transaction.type}/${transaction.id}/restore`;
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.post(url);
-    }
-}
-
-</script>
-
 <template>
     <Head :title="trans('pages.trash') + ' ' + trans('models.transactions')" />
 
@@ -110,3 +71,41 @@ function restore(transaction) {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Head, Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { ref } from "vue";
+    import { formatDate } from '@/tools';
+    import { Inertia } from "@inertiajs/inertia";
+
+    defineProps({
+        transactions: Array,
+        tagsPrice: Array,
+        transactionsChart: Object,
+        currency: String
+    });
+
+    const dataType = ref('list');
+
+    function remove(transaction) {
+        let url = `/${transaction.type}/${transaction.id}/purge`;
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(url);
+        }
+    }
+
+    function removeAll() {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(route('transactions.purge_all'))
+        }
+    }
+
+    function restore(transaction) {
+        let url = `/${transaction.type}/${transaction.id}/restore`;
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.post(url);
+        }
+    }
+</script>

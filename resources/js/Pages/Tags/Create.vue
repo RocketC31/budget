@@ -1,30 +1,3 @@
-<script setup>
-import { trans } from 'matice';
-import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import ColorPicker from "@/Components/ColorPicker";
-import { Inertia } from "@inertiajs/inertia";
-
-const tag = ref({
-    name: "",
-    color: "",
-});
-
-function submit() {
-    tag.value.color = tag.value.color.replace("#", "");
-    Inertia.post(route('tags.store'), tag.value);
-}
-
-function onColorUpdate(color) {
-    tag.value.color = color;
-}
-
-const errors = computed(() => usePage().props.value.errors);
-
-</script>
-
 <template>
     <Head :title="trans('models.transactions')" />
 
@@ -58,3 +31,29 @@ const errors = computed(() => usePage().props.value.errors);
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from 'matice';
+    import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import ColorPicker from "@/Components/ColorPicker";
+    import { Inertia } from "@inertiajs/inertia";
+
+    const tag = ref({
+        name: "",
+        color: "",
+    });
+
+    function submit() {
+        tag.value.color = tag.value.color.replace("#", "");
+        Inertia.post(route('tags.store'), tag.value);
+    }
+
+    function onColorUpdate(color) {
+        tag.value.color = color;
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+</script>

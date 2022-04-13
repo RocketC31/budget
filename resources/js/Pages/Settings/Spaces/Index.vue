@@ -1,17 +1,3 @@
-<script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import Layout from '@/Pages/Settings/Layout.vue';
-import { capitalize } from '@/tools';
-
-defineProps({
-    spaces: {
-        type: Array,
-        default: []
-    }
-});
-</script>
-
 <template>
     <Head :title="trans('general.spaces_explanation')" />
 
@@ -29,3 +15,17 @@ defineProps({
         </div>
     </Layout>
 </template>
+
+<script setup>
+    import { Head, Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import Layout from '@/Pages/Settings/Layout.vue';
+    import { capitalize } from '@/tools';
+
+    defineProps({
+        spaces: {
+            type: Array,
+            default: []
+        }
+    });
+</script>

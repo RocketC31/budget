@@ -1,131 +1,3 @@
-<script>
-import { trans } from 'matice';
-import { Head, usePage } from '@inertiajs/inertia-vue3';
-import { ref, computed } from "vue";
-import { capitalize } from "@/tools";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import Searchable from "@/Components/Searchable";
-import ValidationError from "@/Components/ValidationError";
-import DatePicker from "@/Components/DatePicker";
-import { Inertia } from "@inertiajs/inertia";
-
-export default {
-    components: {
-        Head,
-        BreezeAuthenticatedLayout,
-        Searchable,
-        ValidationError,
-        DatePicker,
-        Inertia
-    },
-
-    props: {
-        tags: Array,
-        currencies: Array,
-        defaultTransactionType: String,
-        firstDayOfWeek: String,
-        defaultCurrencyId: Number,
-        recurringsIntervals: Array
-    },
-
-    data() {
-        return {
-            tag: null,
-            date: this.getTodaysDate(),
-            description: '',
-            amount: '10.00',
-            isRecurring: false,
-            recurringInterval: 'monthly',
-            recurringEnd: 'forever',
-            recurringEndDate: this.get100DaysFutureDate(),
-            success: false,
-            loading: false
-        }
-    },
-
-    setup(props) {
-        let type = ref(props.defaultTransactionType);
-        let selectedCurrencyId = ref(props.defaultCurrencyId);
-        const errors = computed(() => usePage().props.value.errors)
-        return { type, selectedCurrencyId, trans, capitalize, errors }
-    },
-
-    methods: {
-        onDateUpdate(date) {
-            this.date = date
-        },
-
-        onEndUpdate(date) {
-            this.recurringEndDate = date
-        },
-
-        switchType(type) {
-            this.type = type;
-            this.success = false
-        },
-
-        tagUpdated(payload) {
-            this.tag = payload.key
-        },
-
-        getTodaysDate() {
-            return new Date().toISOString().slice(0, 10)
-        },
-
-        get100DaysFutureDate() {
-            let now = new Date()
-
-            return (now.getFullYear() + 1) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
-        },
-
-        switchRecurringInterval(interval) {
-            this.recurringInterval = interval;
-        },
-
-        createEarning() {
-            if (!this.loading) {
-                this.loading = true
-
-                let body = {
-                    amount: this.amount,
-                    currency_id: this.selectedCurrencyId,
-                    description: this.description
-                }
-                if (this.isRecurring) { // It's a recurring
-                    body["type"] = this.type;
-                    body["interval"] = this.recurringInterval;
-                    body["day"] = this.date.slice(-2);
-                    body["start"] = this.date;
-
-                    if (this.recurringEnd === 'fixed') {
-                        body["end"] = this.recurringEndDate
-                    }
-
-                    if (this.tag) {
-                        body["tag"] = this.tag
-                    }
-
-                    Inertia.post('/recurrings', body, {
-                        onFinish: () => this.loading = false
-                    });
-                } else {
-                    body["date"] = this.date;
-
-                    if (this.type === 'spending' && this.tag) {
-                        body["tag"] = this.tag;
-                    }
-
-                    Inertia.post('/' + this.type + 's', body, {
-                        onFinish: () => this.loading = false
-                    });
-                }
-            }
-        }
-    }
-}
-
-</script>
-
 <template>
     <Head :title="trans('models.transactions')" />
 
@@ -243,3 +115,130 @@ export default {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script>
+    import { trans } from 'matice';
+    import { Head, usePage } from '@inertiajs/inertia-vue3';
+    import { ref, computed } from "vue";
+    import { capitalize } from "@/tools";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import Searchable from "@/Components/Searchable";
+    import ValidationError from "@/Components/ValidationError";
+    import DatePicker from "@/Components/DatePicker";
+    import { Inertia } from "@inertiajs/inertia";
+
+    export default {
+        components: {
+            Head,
+            BreezeAuthenticatedLayout,
+            Searchable,
+            ValidationError,
+            DatePicker,
+            Inertia
+        },
+
+        props: {
+            tags: Array,
+            currencies: Array,
+            defaultTransactionType: String,
+            firstDayOfWeek: String,
+            defaultCurrencyId: Number,
+            recurringsIntervals: Array
+        },
+
+        data() {
+            return {
+                tag: null,
+                date: this.getTodaysDate(),
+                description: '',
+                amount: '10.00',
+                isRecurring: false,
+                recurringInterval: 'monthly',
+                recurringEnd: 'forever',
+                recurringEndDate: this.get100DaysFutureDate(),
+                success: false,
+                loading: false
+            }
+        },
+
+        setup(props) {
+            let type = ref(props.defaultTransactionType);
+            let selectedCurrencyId = ref(props.defaultCurrencyId);
+            const errors = computed(() => usePage().props.value.errors)
+            return { type, selectedCurrencyId, trans, capitalize, errors }
+        },
+
+        methods: {
+            onDateUpdate(date) {
+                this.date = date
+            },
+
+            onEndUpdate(date) {
+                this.recurringEndDate = date
+            },
+
+            switchType(type) {
+                this.type = type;
+                this.success = false
+            },
+
+            tagUpdated(payload) {
+                this.tag = payload.key
+            },
+
+            getTodaysDate() {
+                return new Date().toISOString().slice(0, 10)
+            },
+
+            get100DaysFutureDate() {
+                let now = new Date()
+
+                return (now.getFullYear() + 1) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
+            },
+
+            switchRecurringInterval(interval) {
+                this.recurringInterval = interval;
+            },
+
+            createEarning() {
+                if (!this.loading) {
+                    this.loading = true
+
+                    let body = {
+                        amount: this.amount,
+                        currency_id: this.selectedCurrencyId,
+                        description: this.description
+                    }
+                    if (this.isRecurring) { // It's a recurring
+                        body["type"] = this.type;
+                        body["interval"] = this.recurringInterval;
+                        body["day"] = this.date.slice(-2);
+                        body["start"] = this.date;
+
+                        if (this.recurringEnd === 'fixed') {
+                            body["end"] = this.recurringEndDate
+                        }
+
+                        if (this.tag) {
+                            body["tag"] = this.tag
+                        }
+
+                        Inertia.post('/recurrings', body, {
+                            onFinish: () => this.loading = false
+                        });
+                    } else {
+                        body["date"] = this.date;
+
+                        if (this.type === 'spending' && this.tag) {
+                            body["tag"] = this.tag;
+                        }
+
+                        Inertia.post('/' + this.type + 's', body, {
+                            onFinish: () => this.loading = false
+                        });
+                    }
+                }
+            }
+        }
+    }
+</script>

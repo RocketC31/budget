@@ -12,10 +12,12 @@ class PasswordChanged extends Mailable
     use SerializesModels;
 
     protected $updated_at;
+    protected string $lang;
 
-    public function __construct($updated_at)
+    public function __construct($updated_at, string $lang = "en")
     {
         $this->updated_at = $updated_at;
+        $this->lang = $lang;
     }
 
     public function build()
@@ -24,7 +26,8 @@ class PasswordChanged extends Mailable
             ->view('emails.password_changed')
             ->text('emails.password_changed_plain')
             ->with([
-                'updated_at' => $this->updated_at
+                'updated_at' => $this->updated_at,
+                'lang' => $this->lang
             ]);
     }
 }

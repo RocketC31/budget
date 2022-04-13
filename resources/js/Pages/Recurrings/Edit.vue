@@ -1,38 +1,3 @@
-<script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import {Head, useForm, usePage} from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import ValidationError from "@/Components/ValidationError";
-import DatePicker from "@/Components/DatePicker";
-import { computed } from "vue";
-
-const props = defineProps({
-    recurring: Object
-});
-
-const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
-
-function submit() {
-    if (patchMethodAvailable.value) {
-        form.patch(route('recurrings.update', { recurring: props.recurring.id }));
-    } else {
-        form.put(route('recurrings.update', { recurring: props.recurring.id }));
-    }
-}
-
-const form = useForm({
-    date: new Date(props.recurring.last_used_on).toISOString().slice(0, 10),
-    description: props.recurring.description,
-    amount: props.recurring.formatted_amount
-});
-
-function onDateUpdate(date) {
-    form.date = date;
-}
-
-const errors = computed(() => usePage().props.value.errors);
-
-</script>
 <template>
     <Head :title="trans('actions.edit') + ' ' + trans('models.recurring')" />
 
@@ -64,3 +29,38 @@ const errors = computed(() => usePage().props.value.errors);
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import {Head, useForm, usePage} from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import ValidationError from "@/Components/ValidationError";
+    import DatePicker from "@/Components/DatePicker";
+    import { computed } from "vue";
+
+    const props = defineProps({
+        recurring: Object
+    });
+
+    const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+
+    function submit() {
+        if (patchMethodAvailable.value) {
+            form.patch(route('recurrings.update', { recurring: props.recurring.id }));
+        } else {
+            form.put(route('recurrings.update', { recurring: props.recurring.id }));
+        }
+    }
+
+    const form = useForm({
+        date: new Date(props.recurring.last_used_on).toISOString().slice(0, 10),
+        description: props.recurring.description,
+        amount: props.recurring.formatted_amount
+    });
+
+    function onDateUpdate(date) {
+        form.date = date;
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+</script>

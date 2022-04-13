@@ -1,56 +1,3 @@
-<script>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import DatePicker from "@/Components/DatePicker";
-import ValidationError from "@/Components/ValidationError";
-import Searchable from "@/Components/Searchable";
-import { computed } from "vue";
-
-export default {
-    components: {
-        DatePicker,
-        Link,
-        BreezeAuthenticatedLayout,
-        ValidationError,
-        Head,
-        Searchable
-    },
-
-    props: {
-        spending: Object,
-        tags: Array
-    },
-
-    setup(props) {
-        const errors = computed(() => usePage().props.value.errors);
-        const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
-        const form = useForm({
-            tag_id: props.spending.tag_id,
-            date: new Date(props.spending.happened_on).toISOString().slice(0, 10),
-            description: props.spending.description,
-            amount: props.spending.formatted_amount
-        });
-        function submit() {
-            if (patchMethodAvailable.value) {
-                form.patch(route('spendings.update', { spending: props.spending.id }));
-            } else {
-                form.put(route('spendings.update', { spending: props.spending.id }));
-            }
-        }
-        function onDateUpdate(date) {
-            form.date = date;
-        }
-        return {
-            trans,
-            errors,
-            form,
-            submit,
-            onDateUpdate
-        }
-    },
-}
-</script>
 <template>
     <Head :title="trans('models.spending')" />
 
@@ -97,3 +44,57 @@ export default {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script>
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import DatePicker from "@/Components/DatePicker";
+    import ValidationError from "@/Components/ValidationError";
+    import Searchable from "@/Components/Searchable";
+    import { computed } from "vue";
+
+    export default {
+        components: {
+            DatePicker,
+            Link,
+            BreezeAuthenticatedLayout,
+            ValidationError,
+            Head,
+            Searchable
+        },
+
+        props: {
+            spending: Object,
+            tags: Array
+        },
+
+        setup(props) {
+            const errors = computed(() => usePage().props.value.errors);
+            const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+            const form = useForm({
+                tag_id: props.spending.tag_id,
+                date: new Date(props.spending.happened_on).toISOString().slice(0, 10),
+                description: props.spending.description,
+                amount: props.spending.formatted_amount
+            });
+            function submit() {
+                if (patchMethodAvailable.value) {
+                    form.patch(route('spendings.update', { spending: props.spending.id }));
+                } else {
+                    form.put(route('spendings.update', { spending: props.spending.id }));
+                }
+            }
+            function onDateUpdate(date) {
+                form.date = date;
+            }
+            return {
+                trans,
+                errors,
+                form,
+                submit,
+                onDateUpdate
+            }
+        },
+    }
+</script>

@@ -1,28 +1,3 @@
-<script setup>
-import { Head, useForm, usePage } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { computed } from "vue";
-
-const props = defineProps({
-    headers: Array,
-    import: Object
-});
-
-const form = useForm({
-    column_happened_on: null,
-    column_description: null,
-    column_amount: null
-});
-
-function submit() {
-    form.post(route('imports.prepare.store', { import: props.import.id}))
-}
-
-const errors = computed(() => usePage().props.value.errors);
-
-</script>
-
 <template>
     <Head :title="trans('actions.prepare') + ' ' + trans('models.imports')" />
 
@@ -67,3 +42,27 @@ const errors = computed(() => usePage().props.value.errors);
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Head, useForm, usePage } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { computed } from "vue";
+
+    const props = defineProps({
+        headers: Array,
+        import: Object
+    });
+
+    const form = useForm({
+        column_happened_on: null,
+        column_description: null,
+        column_amount: null
+    });
+
+    function submit() {
+        form.post(route('imports.prepare.store', { import: props.import.id}))
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+</script>

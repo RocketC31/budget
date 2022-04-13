@@ -62,7 +62,8 @@ class SendWeeklyReports implements ShouldQueue
                             $space,
                             $week,
                             $totalSpent,
-                            $largestSpendingWithTag
+                            $largestSpendingWithTag,
+                            $user->language
                         ));
                     } catch (\Exception $e) {
                     }

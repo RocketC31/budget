@@ -1,26 +1,3 @@
-<script setup>
-import {Link, Head, useForm, usePage} from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import ValidationError from "@/Components/ValidationError";
-import { computed } from "vue";
-
-const form = useForm({
-    name: null,
-    file: null
-});
-
-function submit() {
-    form.post(route('imports.store'), {
-        file: form.file,
-        forceFormData: true
-    })
-}
-
-const errors = computed(() => usePage().props.value.errors);
-
-</script>
-
 <template>
     <Head :title="trans('actions.create') + ' ' + trans('models.imports')" />
 
@@ -55,3 +32,25 @@ const errors = computed(() => usePage().props.value.errors);
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import {Link, Head, useForm, usePage} from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import ValidationError from "@/Components/ValidationError";
+    import { computed } from "vue";
+
+    const form = useForm({
+        name: null,
+        file: null
+    });
+
+    function submit() {
+        form.post(route('imports.store'), {
+            file: form.file,
+            forceFormData: true
+        })
+    }
+
+    const errors = computed(() => usePage().props.value.errors);
+</script>

@@ -1,22 +1,3 @@
-<script setup>
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import EmptyState from "@/Components/Partials/EmptyState";
-import { Inertia } from "@inertiajs/inertia";
-
-defineProps({
-    imports: Array
-});
-
-function remove(id) {
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(route('imports.delete', { import : id }));
-    }
-}
-
-</script>
-
 <template>
     <Head :title="trans('models.imports')" />
 
@@ -57,3 +38,21 @@ function remove(id) {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import EmptyState from "@/Components/Partials/EmptyState";
+    import { Inertia } from "@inertiajs/inertia";
+
+    defineProps({
+        imports: Array
+    });
+
+    function remove(id) {
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(route('imports.delete', { import : id }));
+        }
+    }
+</script>

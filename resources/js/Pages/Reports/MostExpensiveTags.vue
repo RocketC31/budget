@@ -1,15 +1,3 @@
-<script setup>
-import { trans } from "matice";
-import { Head } from "@inertiajs/inertia-vue3";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import TagPrice from "@/Components/Partials/TagPrice";
-
-const props = defineProps({
-    totalSpent: String,
-    mostExpensiveTags: Array
-});
-
-</script>
 <template>
     <Head :title="trans('pages.reports')" />
 
@@ -20,3 +8,14 @@ const props = defineProps({
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+<script setup>
+    import { trans } from "matice";
+    import { Head } from "@inertiajs/inertia-vue3";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import TagPrice from "@/Components/Partials/TagPrice";
+
+    const props = defineProps({
+        totalSpent: String,
+        mostExpensiveTags: Array
+    });
+</script>

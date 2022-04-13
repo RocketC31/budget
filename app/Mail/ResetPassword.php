@@ -11,11 +11,13 @@ class ResetPassword extends Mailable
     use Queueable;
     use SerializesModels;
 
-    protected $token;
+    protected string $token;
+    protected string $lang;
 
-    public function __construct($token)
+    public function __construct(string $token, string $lang = "en")
     {
         $this->token = $token;
+        $this->lang = $lang;
     }
 
     public function build()
@@ -24,7 +26,8 @@ class ResetPassword extends Mailable
             ->view('emails.reset_password')
             ->text('emails.reset_password_plain')
             ->with([
-                'token' => $this->token
+                'token' => $this->token,
+                'lang' => $this->lang
             ]);
     }
 }

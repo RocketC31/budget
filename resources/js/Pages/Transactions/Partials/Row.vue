@@ -1,22 +1,3 @@
-<script setup>
-import { formatDate } from '@/tools';
-import { trans } from "matice";
-import { Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from '@inertiajs/inertia'
-
-const props = defineProps({
-    transaction: Object,
-    currency: String
-});
-
-function remove() {
-    let url = `/${props.transaction.type}/${props.transaction.id}`;
-    if (confirm(trans('actions.confirm_action'))) {
-        Inertia.delete(url);
-    }
-}
-</script>
-
 <template>
     <tr tabindex="0" class="focus:outline-none h-16 border-y border-gray-100 dark:border-gray-700 rounded">
         <td class="px-1">
@@ -61,3 +42,22 @@ function remove() {
         </td>
     </tr>
 </template>
+
+<script setup>
+    import { formatDate } from '@/tools';
+    import { trans } from "matice";
+    import { Link } from "@inertiajs/inertia-vue3";
+    import { Inertia } from '@inertiajs/inertia'
+
+    const props = defineProps({
+        transaction: Object,
+        currency: String
+    });
+
+    function remove() {
+        let url = `/${props.transaction.type}/${props.transaction.id}`;
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(url);
+        }
+    }
+</script>

@@ -63,7 +63,7 @@ class PasswordResetLinkController extends Controller
                 }
 
                 try {
-                    Mail::to($email)->queue(new ResetPassword($shippingToken));
+                    Mail::to($email)->queue(new ResetPassword($shippingToken, $existingUser->language));
                 } catch (\Exception $e) {
                 }
             }

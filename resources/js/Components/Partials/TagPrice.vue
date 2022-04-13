@@ -1,16 +1,3 @@
-<script setup>
-import { formattedAmount } from '@/tools';
-import Tag from "@/Components/Partials/Tag";
-
-defineProps({
-    tagsPrice: Array,
-    totalSpent: {
-        type: String,
-        default: null
-    },
-    currency: String
-})
-</script>
 <template>
     <div class="box mt-3">
         <div v-for="tag in tagsPrice" class="box__section row row--seperate">
@@ -29,3 +16,17 @@ defineProps({
         </div>
     </div>
 </template>
+
+<script setup>
+    import { formattedAmount } from '@/tools';
+    import Tag from "@/Components/Partials/Tag";
+
+    defineProps({
+        tagsPrice: Array,
+        totalSpent: {
+            type: String,
+            default: null
+        },
+        currency: String
+    });
+</script>

@@ -1,22 +1,3 @@
-<script setup>
-import { Head } from '@inertiajs/inertia-vue3';
-import { trans } from 'matice';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Inertia } from "@inertiajs/inertia";
-
-const props = defineProps({
-    invite: Object
-})
-
-function accept() {
-    Inertia.post(route('space_invites.accept', { space: props.invite.space.id, invite: props.invite.id }));
-}
-
-function deny() {
-    Inertia.post(route('space_invites.deny', { space: props.invite.space.id, invite: props.invite.id }));
-}
-</script>
-
 <template>
     <Head :title="trans('general.invite')" />
 
@@ -36,3 +17,22 @@ function deny() {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { Head } from '@inertiajs/inertia-vue3';
+    import { trans } from 'matice';
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+    import { Inertia } from "@inertiajs/inertia";
+
+    const props = defineProps({
+        invite: Object
+    });
+
+    function accept() {
+        Inertia.post(route('space_invites.accept', { space: props.invite.space.id, invite: props.invite.id }));
+    }
+
+    function deny() {
+        Inertia.post(route('space_invites.deny', { space: props.invite.space.id, invite: props.invite.id }));
+    }
+</script>

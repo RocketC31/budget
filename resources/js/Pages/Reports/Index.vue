@@ -1,9 +1,3 @@
-<script setup>
-import { trans } from "matice";
-import { Link, Head } from "@inertiajs/inertia-vue3";
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-
-</script>
 <template>
     <Head :title="trans('pages.reports')" />
 
@@ -28,3 +22,9 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
+<script setup>
+    import { trans } from "matice";
+    import { Link, Head } from "@inertiajs/inertia-vue3";
+    import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+</script>

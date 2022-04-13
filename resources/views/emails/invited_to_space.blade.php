@@ -1,7 +1,7 @@
 @extends('emails.template')
 
 @section('content')
-    {{ $invite->inviter->name }} has invited you to "{{ $invite->space->name }}".
+    {{ trans('email.invited_to_space', ['name' => $invite->inviter->name, 'space' => $invite->space->name], $lang) }}
 
-    <a href="{{ route('space_invites.show', ['space' => $invite->space->id, 'invite' => $invite->id]) }}">Check out your invite</a>
+    <a class="button" href="{{ route('space_invites.show', ['space' => $invite->space->id, 'invite' => $invite->id]) }}">{{ trans('email.check_invite', [], $lang) }}</a>
 @endsection

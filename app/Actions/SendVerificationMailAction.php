@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Mail;
 
 class SendVerificationMailAction
 {
+    /**
+     * @throws UserAlreadyVerifiedException
+     * @throws UserNotFoundException
+     * @throws VerificationMailRateLimitException
+     */
     public function execute(int $userId): void
     {
         $user = User::find($userId);

@@ -1,49 +1,3 @@
-<script setup>
-import { Head, usePage, useForm } from "@inertiajs/inertia-vue3";
-import { trans } from 'matice';
-import Layout from '@/Pages/Settings/Layout.vue';
-import { computed, onMounted } from "vue";
-import ValidationError from "@/Components/ValidationError";
-import Searchable from "@/Components/Searchable";
-import { changeTheme } from '@/tools';
-
-defineProps({
-    languages: Array
-});
-
-function submit() {
-    form.post(route('settings.preferences'), {
-        onSuccess: function onSuccess() {
-            changeTheme(form.data().theme);
-        }
-    })
-}
-
-const user = computed(() => usePage().props.value.auth.user);
-const errors = computed(() => usePage().props.value.errors);
-
-const form = useForm({
-    theme: null,
-    language: null,
-    weekly_report: null,
-    default_transaction_type: null,
-    first_day_of_week: null
-})
-
-function languageUpdated(payload) {
-    form.language = payload.key
-}
-
-onMounted(() => {
-    form.theme = user.value.theme;
-    form.language = user.value.language;
-    form.weekly_report = user.value.weekly_report;
-    form.default_transaction_type = user.value.default_transaction_type;
-    form.first_day_of_week = user.value.first_day_of_week;
-})
-
-</script>
-
 <template>
     <Head :title="trans('general.preferences')" />
 
@@ -100,3 +54,48 @@ onMounted(() => {
         </form>
     </Layout>
 </template>
+
+<script setup>
+    import { Head, usePage, useForm } from "@inertiajs/inertia-vue3";
+    import { trans } from 'matice';
+    import Layout from '@/Pages/Settings/Layout.vue';
+    import { computed, onMounted } from "vue";
+    import ValidationError from "@/Components/ValidationError";
+    import Searchable from "@/Components/Searchable";
+    import { changeTheme } from '@/tools';
+
+    defineProps({
+        languages: Array
+    });
+
+    function submit() {
+        form.post(route('settings.preferences'), {
+            onSuccess: function onSuccess() {
+                changeTheme(form.data().theme);
+            }
+        })
+    }
+
+    const user = computed(() => usePage().props.value.auth.user);
+    const errors = computed(() => usePage().props.value.errors);
+
+    const form = useForm({
+        theme: null,
+        language: null,
+        weekly_report: null,
+        default_transaction_type: null,
+        first_day_of_week: null
+    });
+
+    function languageUpdated(payload) {
+        form.language = payload.key
+    }
+
+    onMounted(() => {
+        form.theme = user.value.theme;
+        form.language = user.value.language;
+        form.weekly_report = user.value.weekly_report;
+        form.default_transaction_type = user.value.default_transaction_type;
+        form.first_day_of_week = user.value.first_day_of_week;
+    });
+</script>
