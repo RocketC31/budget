@@ -48,5 +48,6 @@ return [
     'inactive' => 'Inactif',
     'end' => 'Fin',
     'cant_edit_currency' => 'Vous ne pouvez plus modifier la devise',
-    'empty_trash' => 'La corbeille est vide'
+    'empty_trash' => 'La corbeille est vide',
+    'change_your_preference' => 'Changez vos préférences'
 ];

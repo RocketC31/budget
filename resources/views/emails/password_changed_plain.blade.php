@@ -1,1 +1,1 @@
-{{ trans('email.password_changed', ['at' => $updated_at], $lang) }}
+{{ trans('email.password_changed', ['at' => $updated_at]) }}

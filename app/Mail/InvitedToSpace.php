@@ -19,6 +19,8 @@ class InvitedToSpace extends Mailable
     {
         $this->invite = $invite;
         $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.invited_to_space', [], $this->lang));
     }
 
     public function build()
@@ -26,6 +28,6 @@ class InvitedToSpace extends Mailable
         return $this
             ->view('emails.invited_to_space')
             ->text('emails.invited_to_space_plain')
-            ->with(['invite' => $this->invite, 'lang' => $this->lang]);
+            ->with(['invite' => $this->invite]);
     }
 }

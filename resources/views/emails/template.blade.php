@@ -33,6 +33,29 @@
             color: #FFF;
             background-color: #4299E1;
         }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px;
+        }
+
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4299E1;
+            color: white;
+        }
     </style>
     <body>
         <img id="logo" src="{{ config('app.url') }}/logo.svg" />

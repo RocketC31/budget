@@ -25,6 +25,8 @@ class WeeklyReport extends Mailable
         $this->totalSpent = $totalSpent;
         $this->largestSpendingWithTag = $largestSpendingWithTag;
         $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.weekly_report', [], $this->lang));
     }
 
     public function build()

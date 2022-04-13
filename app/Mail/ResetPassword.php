@@ -18,6 +18,8 @@ class ResetPassword extends Mailable
     {
         $this->token = $token;
         $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.reset_password', [], $this->lang));
     }
 
     public function build()
@@ -26,8 +28,7 @@ class ResetPassword extends Mailable
             ->view('emails.reset_password')
             ->text('emails.reset_password_plain')
             ->with([
-                'token' => $this->token,
-                'lang' => $this->lang
+                'token' => $this->token
             ]);
     }
 }

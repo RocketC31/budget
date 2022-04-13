@@ -1,5 +1,5 @@
-{!! nl2br(trans('email.welcome', ['name' => $name ], $lang)) !!}
+{!! nl2br(trans('email.welcome', ['name' => $name ])) !!}
 
-{{ trans('email.use_link_below', [], $lang) }}
+{{ trans('email.use_link_below') }}
 
 {{ config('app.url') . '/verify/' . $verification_token }}

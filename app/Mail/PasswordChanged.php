@@ -18,6 +18,8 @@ class PasswordChanged extends Mailable
     {
         $this->updated_at = $updated_at;
         $this->lang = $lang;
+        $this->locale($this->lang)
+            ->subject(__('email.subject.password_changed', [], $this->lang));
     }
 
     public function build()
@@ -26,8 +28,7 @@ class PasswordChanged extends Mailable
             ->view('emails.password_changed')
             ->text('emails.password_changed_plain')
             ->with([
-                'updated_at' => $this->updated_at,
-                'lang' => $this->lang
+                'updated_at' => $this->updated_at
             ]);
     }
 }

@@ -9,5 +9,6 @@ return [
     'most_expensive_tags' => [
         'title' => 'Étiquettes les plus chères',
         'description' => 'Étiquettes les plus chères de tous les temps&mdash;découvrez celles qui coûtent le plus cher.'
-    ]
+    ],
+    'tired_report' => 'Fatigué de ces rapports?',
 ];
