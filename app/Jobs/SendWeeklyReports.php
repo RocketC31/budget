@@ -40,14 +40,14 @@ class SendWeeklyReports implements ShouldQueue
             ', [$space->id, $lastWeekDate, $currentDate])[0]->foo;
 
             $largestSpendingWithTag = DB::select('
-                SELECT spendings.amount AS amount, tags.name AS tag_name
+                SELECT SUM(spendings.amount) AS amount, tags.name AS tag_name
                 FROM spendings
                 INNER JOIN tags ON spendings.tag_id = tags.id
                 WHERE spendings.space_id = ?
                     AND spendings.happened_on >= ?
                     AND spendings.happened_on <= ?
                     AND spendings.tag_id IS NOT NULL
-                ORDER BY spendings.amount DESC LIMIT 1', [$space->id, $lastWeekDate, $currentDate]);
+                GROUP BY tag_name', [$space->id, $lastWeekDate, $currentDate]);
 
             foreach ($space->users as $user) {
                 // If plans are enabled, weekly reports can only be sent to users with a premium plan
