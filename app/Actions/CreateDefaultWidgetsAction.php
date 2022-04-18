@@ -18,7 +18,7 @@ class CreateDefaultWidgetsAction
 
         Widget::create([
             'user_id' => $user->id,
-            'type' => 'balance',
+            'type' => 'balance_global',
             'sorting_index' => 0,
             'properties' => []
         ]);

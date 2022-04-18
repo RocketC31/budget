@@ -66,7 +66,9 @@
                             </table>
                         </div>
                     </template>
-                    <EmptyState v-if="recurrings.length < 1" :payload="'recurrings'"></EmptyState>
+                    <div v-else class="box__section text-center">
+                        <div class="mb-1">{{ trans('general.empty_state', { args: { resource: trans('models.recurrings').toLowerCase() } }) }}</div>
+                    </div>
                 </div>
             </div>
         </div>
