@@ -228,5 +228,6 @@ return [
 
     'disable_registration' => env('DISABLE_REGISTRATION', false),
     'patch_method_available' => env("PATCH_METHOD_AVAILABLE", true),
-    'redis_available' => env("REDIS_AVAILABLE", true)
+    'redis_available' => env("REDIS_AVAILABLE", true),
+    'demo_mode' => env("DEMO_MODE", false)
 ];

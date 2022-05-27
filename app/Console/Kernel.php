@@ -6,6 +6,7 @@ use App\Helper;
 use App\Jobs\FetchConversionRates;
 use App\Jobs\GlobalBalanceRefresh;
 use App\Jobs\ProcessRecurrings;
+use App\Jobs\ResetDatabaseDemoMode;
 use App\Jobs\SendWeeklyReports;
 use App\Jobs\SyncStripeSubscriptions;
 use Illuminate\Console\Scheduling\Schedule;
@@ -49,6 +50,9 @@ class Kernel extends ConsoleKernel
             }
             return false;
         })->daily();
+        $schedule->job(new ResetDatabaseDemoMode())->everyMinute()->when(function () {
+            return config("app.demo_mode");
+        });
 
         $schedule->job(new SendWeeklyReports())->weekly()->fridays()->at('21:00');
     }
