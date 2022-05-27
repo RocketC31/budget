@@ -43,6 +43,7 @@
                 <Link :href="route('register')">{{ trans('auth.first_time_here') }} {{ trans('auth.register') }}</Link>
             </div>
         </form>
+        <p class="mt-2 text-xs text-center" v-if="demoMode">{{ trans("general.demo_mode") }}</p>
     </BreezeGuestLayout>
 </template>
 
@@ -59,14 +60,15 @@
     import Success from "@/Components/Partials/Alerts/Success";
     import { changeTheme } from '@/tools';
 
-    defineProps({
+    const props = defineProps({
         canResetPassword: Boolean,
+        demoMode: Boolean,
         status: String,
     });
 
     const form = useForm({
-        email: '',
-        password: '',
+        email: props.demoMode ? 'demo@demo.com' : '',
+        password: props.demoMode ? 'demo' : '',
         remember: false
     });
 
