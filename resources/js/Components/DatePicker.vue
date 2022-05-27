@@ -62,9 +62,12 @@
 
             firstDayOffset: function () {
                 let offset = new Date(this.displayYear, this.displayMonth - 1, 1).getDay();
-
                 if (this.firstDayOfWeek === 'monday') {
                     offset -= 1;
+                }
+
+                if (offset < 0) {
+                    offset = 0;
                 }
 
                 return offset;
@@ -81,11 +84,7 @@
             },
 
             isActive: function (index) {
-                if (this.year == this.displayYear && this.month == this.displayMonth && this.date == index) {
-                    return true
-                }
-
-                return false
+                return this.year == this.displayYear && this.month == this.displayMonth && this.date == index;
             },
 
             addPotentialDigit(x) {

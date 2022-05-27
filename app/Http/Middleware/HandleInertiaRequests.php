@@ -53,7 +53,8 @@ class HandleInertiaRequests extends Middleware
             'patchMethodAvailable' => config("app.patch_method_available"),
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
-            ]
+            ],
+            'registrationDisable' => config('app.disable_registration')
         ]);
     }
 }

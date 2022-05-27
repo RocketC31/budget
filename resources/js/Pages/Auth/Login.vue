@@ -39,7 +39,7 @@
                     {{ trans('auth.login') }}
                 </BreezeButton>
             </div>
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-4" v-if="!registrationDisable">
                 <Link :href="route('register')">{{ trans('auth.first_time_here') }} {{ trans('auth.register') }}</Link>
             </div>
         </form>
@@ -79,4 +79,5 @@
         });
     };
     const flash = computed(() => usePage().props.value.flash.message);
+    const registrationDisable = computed(() => usePage().props.value.registrationDisable);
 </script>
