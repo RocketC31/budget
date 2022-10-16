@@ -1,5 +1,9 @@
 const mix = require('laravel-mix');
-
+mix.webpackConfig({
+    stats: {
+        children: true,
+    },
+});
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,9 +18,9 @@ mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .postCss('resources/css/app.css', 'public/css', [
+        require('autoprefixer'),
         require('postcss-import'),
         require('tailwindcss'),
-        require('autoprefixer'),
     ])
     .webpackConfig(require('./webpack.config'));
 

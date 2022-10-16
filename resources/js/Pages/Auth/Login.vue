@@ -74,7 +74,7 @@
 
     const submit = () => {
         form.post(route('login'), {
-            onFinish: () => {
+            onSuccess: () => {
                 form.reset('password');
                 changeTheme(usePage().props.value.auth.user.theme);
             }

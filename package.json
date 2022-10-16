@@ -15,7 +15,7 @@
         "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.4.0",
         "@vue/compiler-sfc": "^3.2.30",
-        "autoprefixer": "^10.4.4",
+        "autoprefixer": "^10.4.5",
         "cross-env": "^5.0.1",
         "laravel-mix": "^6.0.43",
         "lodash": "^4.17.21",
@@ -24,7 +24,7 @@
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.7",
         "sass-loader": "^13.0.0",
-        "tailwindcss": "^3.0.18",
+        "tailwindcss": "^3.1.0",
         "vue": "^3.2.30",
         "vue-loader": "^16.1.2",
         "vue-template-compiler": "^2.6.10"
@@ -33,7 +33,7 @@
         "@ckpack/vue-color": "^1.1.8",
         "axios": "^0.26.1",
         "chart.js": "^3.7.1",
-        "matice": "^1.1.4",
+        "matice": "git://github.com/RocketC31/matice",
         "uuid": "^8.3.2"
     }
 }
