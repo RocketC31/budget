@@ -3,7 +3,7 @@
 return [
     'dashboard' => 'Tableau de bord',
     'balance' => 'Solde',
-    'type' => 'Taper',
+    'type' => 'Type',
     'earnings' => 'Gains',
     'earning' => 'Gain',
     'spendings' => 'Depenses',
