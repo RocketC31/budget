@@ -7,7 +7,7 @@
                     <button @click="previous">
                         <i class="fa fa-arrow-left"></i>
                     </button>
-                    <div>{{ displayYear }}, {{ displayMonth }}</div>
+                    <div>{{ trans('calendar.months.' + displayMonth) }} {{ displayYear }}</div>
                     <button @click="next">
                         <i class="fa fa-arrow-right"></i>
                     </button>
@@ -143,4 +143,8 @@
             }
         }
     }
+</script>
+
+<script setup>
+    import { trans } from 'matice';
 </script>

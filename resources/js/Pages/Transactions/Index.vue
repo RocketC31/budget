@@ -29,7 +29,7 @@
                 <div class="row__column w-full">
                     <h2 class="mb-2">
                         <Link :href="route('transactions.index', { monthIndex: (currentMonthIndex - 1) })"><i class="fa fa-chevron-left"></i></Link>
-                        {{ trans('calendar.months.' + month) }}, {{ year }}
+                        {{ trans('calendar.months.' + month) }} {{ year }}
                         <Link :href="route('transactions.index', { monthIndex: (currentMonthIndex + 1) })"><i class="fa fa-chevron-right"></i></Link>
                     </h2>
                     <template v-if="transactions.length > 0">
