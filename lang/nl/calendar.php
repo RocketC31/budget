@@ -30,5 +30,9 @@ return [
         'biweekly' => 'Tweewekelijks',
         'weekly' => 'Wekelijks',
         'daily' => 'Dagelijks'
-    ]
+    ],
+    'today' => 'Vandaag',
+    'this_week' => 'Deze week',
+    'this_month' => 'Deze maand',
+    'day' => 'Dag'
 ];

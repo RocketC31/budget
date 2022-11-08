@@ -26,6 +26,7 @@ return [
     'invite_someone' => 'Nodig iemand uit',
 
     'empty_state' => 'Er zijn nog geen :resource',
+    'empty_attachments' => 'Geen bijlages voor deze :resource',
 
     'verify_account' => 'Je moet je account nog verifiëren&mdash;check je e-mail',
     'spaces_explanation' => 'Spaces kunnen worden gebruikt om je financiën op sorteren in Budget. Bijvoorbeeld—je kan een space hebben voor jou persoonlijk en een andere voor je bedrijf.',
@@ -35,5 +36,20 @@ return [
     'invited_to' => 'Je bent uitgenodigd voor',
     'sent_by' => 'Verstuurd door',
 
-    'of' => 'van'
+    'of' => 'van',
+    'or' => 'of',
+    'spent' => 'Uitgegeven',
+    'properties' => 'Eigenschappen',
+    'other' => 'Andere',
+    'will_convert' => 'zal geconverteerd worden in',
+    'how_long_spending' => 'Hoe lang gaat deze uitgave door?',
+    'forever' => 'Voor altijd',
+    'until' => 'Tot',
+    'active' => 'Actief',
+    'inactive' => 'Inactief',
+    'end' => 'einde',
+    'cant_edit_currency' => 'Je kan de valuate niet meer aanpassen',
+    'empty_trash' => 'Prullenbak is leeg',
+    'change_your_preference' => 'Verander je voorkeur',
+    'demo_mode' => "[DEMO_MODE] De database wordt iedere dag gereset."
 ];
