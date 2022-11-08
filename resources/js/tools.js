@@ -1,6 +1,8 @@
+const { getLocale } = require("matice");
+
 module.exports = {
     formattedAmount(amount) {
-        return (amount / 100).toLocaleString(undefined, { minimumFractionDigits: 2});
+        return (amount / 100).toLocaleString(getLocale(), { minimumFractionDigits: 2});
     },
     rangeOfDays(days) {
         return [...Array(days).keys()]
@@ -12,7 +14,7 @@ module.exports = {
     formatDate(dateString, opt) {
         const options = opt || { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const date = new Date(dateString);
-        return date.toLocaleString(undefined, options);
+        return date.toLocaleString(getLocale(), options);
     },
     capitalize(value) {
         value = value.toString();
