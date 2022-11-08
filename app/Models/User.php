@@ -53,7 +53,9 @@ class User extends Authenticatable
     // Accessors
     public function getAvatarAttribute($avatar)
     {
-        return $avatar ? '/storage/avatars/' . $avatar : 'https://ui-avatars.com/api/?size=512&background=0D8ABC&color=fff&name=' . $this->name;
+        return $avatar ?
+            '/storage/avatars/' . $avatar
+            : 'https://ui-avatars.com/api/?size=512&background=0D8ABC&color=fff&name=' . $this->name;
     }
 
     // Relations

@@ -26,6 +26,7 @@ return [
     ],
     'intervals' => [
         'yearly' => 'Annuel',
+        'quarterly' => 'Trimestriel',
         'monthly' => 'Mensuel',
         'biweekly' => 'Bihebdomadaire',
         'weekly' => 'Hebdomadaire',
