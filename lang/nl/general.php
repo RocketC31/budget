@@ -11,6 +11,8 @@ return [
     'most_expensive_tag' => 'Duurste Etiket',
     'most_expensive_day' => 'Duurste Dag',
 
+    'type' => 'Type',
+
     'analysis' => 'Analyse',
 
     'recent' => 'Recente',

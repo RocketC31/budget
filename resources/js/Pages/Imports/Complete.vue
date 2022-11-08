@@ -23,6 +23,7 @@
                     <div class="box__section box__section--header">
                         <div class="row row--gutter">
                             <div class="row__column row__column--compact" style="width: 100px;">{{ trans('models.imports') }}</div>
+                            <div class="row__column">{{ trans('general.type') }}</div>
                             <div class="row__column">{{ trans('models.tag') }}</div>
                             <div class="row__column">{{ trans('fields.date') }}</div>
                             <div class="row__column row__column--triple">{{ trans('fields.description') }}</div>
@@ -34,7 +35,14 @@
                             <div class="row__column row__column--compact row__column--middle" style="width: 100px;">
                                 <input type="checkbox" :name="row['import']" v-model="form.rows[index]['selected']"/></div>
                             <div class="row__column">
-                                <select :name="'rows['+index+'][tag_id]'" v-model="form.rows[index]['tag_id']">
+                                <select :name="'rows['+index+'][type]'" v-model="form.rows[index]['type']">
+                                    <option value="spending">{{ trans('models.spending') }}</option>
+                                    <option value="earning">{{ trans('models.earning') }}</option>
+                                </select>
+                                <ValidationError v-if="errors['rows.'+index+'.type']" :message="errors['rows.'+index+'.type']" ></ValidationError>
+                            </div>                             
+                            <div class="row__column">
+                                <select :name="'rows['+index+'][tag_id]'" v-model="form.rows[index]['tag_id']" :disabled="rows[index]['type'] === 'earning'">
                                     <option value="">-</option>
                                     <option v-for="tag in tags" :value="tag.id">{{ tag.name }}</option>
                                 </select>
