@@ -9,5 +9,6 @@ return [
     'most_expensive_tags' => [
         'title' => 'Duurste Etiketten',
         'description' => 'De duurste etiketten&mdash;kom erachter wat het meest kost.'
-    ]
+    ],
+    'tired_report' => 'Moe van deze rapporten?',
 ];

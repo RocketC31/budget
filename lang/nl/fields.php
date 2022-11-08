@@ -23,5 +23,10 @@ return [
 
     'color' => 'Kleur',
 
-    'role' => 'Rol'
+    'role' => 'Rol',
+    'type' => 'Type',
+    'list' => 'Lijst',
+    'chart' => 'Grafiek',
+    'status' => 'Status',
+    'deletion_date' => 'Verwijder datum'
 ];
