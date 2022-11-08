@@ -26,6 +26,7 @@ return [
     ],
     'intervals' => [
         'yearly' => 'Yearly',
+        'quarterly' => 'Quarterly',
         'monthly' => 'Monthly',
         'biweekly' => 'Biweekly',
         'weekly' => 'Weekly',
