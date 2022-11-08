@@ -11,6 +11,8 @@ return [
     'most_expensive_tag' => 'Most Expensive Tag',
     'most_expensive_day' => 'Most Expensive Day',
 
+    'type' => 'Type',
+
     'analysis' => 'Analysis',
 
     'recent' => 'Recent',

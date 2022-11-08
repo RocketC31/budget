@@ -6,6 +6,7 @@ use App\Helper;
 use App\Models\Import;
 use App\Models\Tag;
 use App\Repositories\SpendingRepository;
+use App\Repositories\EarningRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,10 +16,12 @@ use Inertia\Response;
 class ImportController extends Controller
 {
     private SpendingRepository $spendingRepository;
+    private EarningRepository $earningRepository;
 
-    public function __construct(SpendingRepository $spendingRepository)
+    public function __construct(SpendingRepository $spendingRepository, EarningRepository $earningRepository)
     {
         $this->spendingRepository = $spendingRepository;
+        $this->earningRepository = $earningRepository;
     }
 
     public function index(): Response
@@ -116,6 +119,7 @@ class ImportController extends Controller
                 'description' => $row[$import->column_description],
                 'amount' => $row[$import->column_amount],
                 'tag_id' => null,
+                'type' => 'spending'
             ];
         }
 
@@ -161,16 +165,28 @@ class ImportController extends Controller
             if (isset($row['selected']) && $row['selected'] == true) {
                 // TODO CHECK HOW THIS WORKS WITH 1k+ AMOUNTS
                 $amount = str_replace(',', '.', $row['amount']);
+                $date = date("d-m-Y", strtotime($row['happened_on']));
 
-                $this->spendingRepository->create(
-                    session('space_id'),
-                    $import->id,
-                    null,
-                    $row['tag_id'],
-                    $row['happened_on'],
-                    $row['description'],
-                    $amount
-                );
+                if ($row['type'] === 'spending') {
+                    $this->spendingRepository->create(
+                        session('space_id'),
+                        $import->id,
+                        null,
+                        $row['tag_id'],
+                        $date,
+                        $row['description'],
+                        $amount
+                    );
+                } elseif ($row['type'] === 'earning') {
+                    $this->earningRepository->create(
+                        session('space_id'),
+                        $import->id,
+                        null,
+                        $date,
+                        $row['description'],
+                        $amount
+                    );
+                }
             }
         }
 

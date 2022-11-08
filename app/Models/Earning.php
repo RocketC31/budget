@@ -18,6 +18,7 @@ class Earning extends Model
 
     protected $fillable = [
         'space_id',
+        'import_id',
         'recurring_id',
         'happened_on',
         'description',

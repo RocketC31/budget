@@ -53,6 +53,7 @@ class EarningController extends Controller
         $this->earningRepository->create(
             session('space_id'),
             null,
+            null,
             $request->input('date'),
             $request->input('description'),
             $amount

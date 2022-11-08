@@ -139,6 +139,7 @@ class ProcessRecurrings implements ShouldQueue
                 if ($recurring->type === 'earning') {
                     $this->earningRepository->create(
                         $recurring->space_id,
+                        null,
                         $recurring->id,
                         $occuranceDate,
                         $recurring->description,
