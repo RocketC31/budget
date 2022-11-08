@@ -164,6 +164,62 @@ class RecurringRepositoryTest extends TestCase
         $this->assertFalse($contains);
     }
 
+    public function testDueQuarterly(): void
+    {
+        // Assert that recurring (that has never been used before) is due
+        $neverUsedRecurring = Recurring::factory()->create([
+            'space_id' => $this->space->id,
+            'type' => 'earning',
+            'interval' => 'quarterly',
+            'starts_on' => date('Y-m-d', strtotime('-3 months'))
+        ]);
+
+        $contains = false;
+        foreach ($this->recurringRepository->getDueQuarterly() as $recurring) {
+            if ($recurring->id === $neverUsedRecurring->id) {
+                $contains = true;
+            }
+        }
+
+        $this->assertTrue($contains);
+
+        // Assert that recurring (that was last used a month ago, on the same day of the month) is due
+        $usedThreeMonthsAgoRecurring = Recurring::factory()->create([
+            'space_id' => $this->space->id,
+            'type' => 'earning',
+            'interval' => 'quarterly',
+            'starts_on' => date('Y-m-d', strtotime('-3 months')),
+            'last_used_on' => date('Y-m-d', strtotime('-3 months'))
+        ]);
+
+        $contains = false;
+        foreach ($this->recurringRepository->getDueQuarterly() as $recurring) {
+            if ($recurring->id === $usedThreeMonthsAgoRecurring->id) {
+                $contains = true;
+            }
+        }
+
+        $this->assertTrue($contains);
+
+        // Assert that recurring (that was last used less than a month ago) is not due
+        $usedLessThanThreeMonthsAgoRecurring = Recurring::factory()->create([
+            'space_id' => $this->space->id,
+            'type' => 'earning',
+            'interval' => 'quarterly',
+            'starts_on' => date('Y-m-d', strtotime('-3 months', strtotime('+ 1 day'))),
+            'last_used_on' => date('Y-m-d', strtotime('-3 months', strtotime('+ 1 day')))
+        ]);
+
+        $contains = false;
+        foreach ($this->recurringRepository->getDueQuarterly() as $recurring) {
+            if ($recurring->id === $usedLessThanThreeMonthsAgoRecurring->id) {
+                $contains = true;
+            }
+        }
+
+        $this->assertFalse($contains);
+    }
+
     public function testDueBiweekly(): void
     {
         // Assert that recurring (that has never been used before) is due

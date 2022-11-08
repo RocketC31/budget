@@ -29,6 +29,7 @@ class RecurringRepository
     {
         return [
             'yearly',
+            'quarterly',
             'monthly',
             'biweekly',
             'weekly',
@@ -89,6 +90,40 @@ class RecurringRepository
             $query->where(function ($query) use ($dateMonthAgo) {
                 $query
                     ->where('last_used_on', '<=', $dateMonthAgo)
+                    ->orWhere('last_used_on', null);
+            });
+        }
+
+        return $query->get();
+    }
+
+    public function getDueQuarterly(): Collection
+    {
+        $dateToday = date('Y-m-d');
+        $dateToday = date('Y-m-d');
+        $lastDateCurrentMonth = date('Y-m-d', strtotime('last day of this month'));
+
+        $dateThreeMonthsAgo = date('Y-m-d', strtotime('-3 months'));
+        $lastDateThreeMonthsAgo = date('Y-m-d', strtotime('last day of 3 months ago'));
+
+        $query = Recurring::where('interval', 'quarterly')
+            ->where('starts_on', '<=', $dateToday)
+            ->where(function ($query) use ($dateToday) {
+                $query
+                    ->where('ends_on', '>=', $dateToday)
+                    ->orWhere('ends_on', null);
+            });
+
+        if ($dateToday === $lastDateCurrentMonth) {
+            $query->where(function ($query) use ($lastDateThreeMonthsAgo) {
+                $query
+                    ->where('last_used_on', '<=', $lastDateThreeMonthsAgo)
+                    ->orWhere('last_used_on', null);
+            });
+        } else {
+            $query->where(function ($query) use ($dateThreeMonthsAgo) {
+                $query
+                    ->where('last_used_on', '<=', $dateThreeMonthsAgo)
                     ->orWhere('last_used_on', null);
             });
         }

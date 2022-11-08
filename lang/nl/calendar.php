@@ -26,6 +26,7 @@ return [
     ],
     'intervals' => [
         'yearly' => 'Jaarlijks',
+        'quarterly' => 'Per kwartaal',
         'monthly' => 'Maandelijks',
         'biweekly' => 'Tweewekelijks',
         'weekly' => 'Wekelijks',

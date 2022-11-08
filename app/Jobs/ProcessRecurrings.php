@@ -42,6 +42,7 @@ class ProcessRecurrings implements ShouldQueue
         $this->spendingRepository = $spendingRepository;
 
         $yearlyRecurrings = $this->recurringRepository->getDueYearly();
+        $quarterlyRecurrings = $this->recurringRepository->getDueQuarterly();
         $monthtlyRecurrings = $this->recurringRepository->getDueMonthly();
         $biweeklyRecurrings = $this->recurringRepository->getDueBiweekly();
         $weeklyRecurrings = $this->recurringRepository->getDueWeekly();
@@ -49,6 +50,7 @@ class ProcessRecurrings implements ShouldQueue
 
         $recurrings = $yearlyRecurrings
             ->merge($monthtlyRecurrings)
+            ->merge($quarterlyRecurrings)
             ->merge($biweeklyRecurrings)
             ->merge($weeklyRecurrings)
             ->merge($dailyRecurrings);
@@ -114,7 +116,7 @@ class ProcessRecurrings implements ShouldQueue
                  *
                  * Hence why this next piece of code exists :shrug:
                  */
-                if ($recurring->interval === 'monthly') {
+                if ($recurring->interval === 'monthly' || $recurring->interval === 'quarterly') {
                     $year = date('Y', strtotime($cursorDate));
                     $month = date('n', strtotime($cursorDate));
                     $day = date('j', strtotime($startingDate));
