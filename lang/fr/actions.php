@@ -12,6 +12,11 @@ return [
     'yes' => 'Oui',
     'no' => 'Non',
 
+    'invite' => 'Inviter',
+
+    'accept' => 'Accepter',
+    'deny' => 'Refuser',
+
     'reset' => 'Réinitialiser',
     'download' => 'Télécharger',
     'resent' => 'Renvoyer',
