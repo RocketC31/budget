@@ -16,5 +16,5 @@ return [
     'verification_wait_next_send' => 'Wacht een paar minuten voordat je een e-mail aanvraagt',
     'reset_password_sent' => 'Als je je hebt geregistreerd met dat e-mail adres, hebben we je een e-mail gestuurd',
     'change_password_success' => 'Je hebt succesvol je wachtwoord aangepast',
-    'failed' => 'Authenticatie Gefaald'
+    'failed' => 'Deze gegevens komen niet overeen met onze gegevens.',
 ];
