@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Actions;
 
 use App\Actions\SendVerificationMailAction;
 use App\Exceptions\UserAlreadyVerifiedException;
