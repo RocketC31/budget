@@ -164,7 +164,7 @@ class ImportController extends Controller
         foreach ($request->input('rows') as $row) {
             if (isset($row['selected']) && $row['selected'] == true) {
                 // TODO CHECK HOW THIS WORKS WITH 1k+ AMOUNTS
-                $amount = str_replace(',', '.', $row['amount']);
+                $amount = str_replace(',', '.', $row['amount']) * 100;
                 $date = date("d-m-Y", strtotime($row['happened_on']));
 
                 if ($row['type'] === 'spending') {
