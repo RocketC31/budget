@@ -38,17 +38,17 @@
                     <ValidationError v-if="errors.description" :message="errors.description"></ValidationError>
                 </div>
                 <div class="input">
-                    <label>{{ trans('fields.amount') }}</label>
+                    <label>{{ trans('fields.amount') }} (<span v-html="currencies.find(c => c.id === defaultCurrencyId).symbol"></span>)</label>
                     <div class="row">
-                        <div class="row__column row__column--double">
-                            <input type="text" v-model="amount" />
-                        </div>
-                        <div class="row__column ml-2">
+                        <div class="row__column row__column--compact mr-1" v-if="currencies.length > 1">
                             <select v-model="selectedCurrencyId">
                                 <option v-for="currency in currencies" :key="'currencies-' + currency.id" :value="currency.id">
                                     <span v-html="currency.symbol"></span>
                                 </option>
                             </select>
+                        </div>
+                        <div class="row__column row__column--double">
+                            <input type="text" v-model="amount" />
                         </div>
                     </div>
                     <div class="hint mt-05" v-if="selectedCurrencyId !== defaultCurrencyId">{{ currencies.find(c => c.id === selectedCurrencyId).name }} {{ trans('general.will_convert' )}} {{ currencies.find(c => c.id === defaultCurrencyId).name }}</div>
