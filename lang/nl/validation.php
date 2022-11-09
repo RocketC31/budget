@@ -10,5 +10,6 @@ return [
     'forbidden' => 'Niet toegestaan om deze resource te gebruiken',
     'budget_like_this_exist' => 'Een budget zaosl deze bestaat al',
     'please_upload_csv' => 'Upload alsjeblieft een CSV',
-    'exists' => 'Deze gebruiker bestaat niet'
+    'exists' => 'Deze gebruiker bestaat niet',
+    'date_format' => 'Datum komt niet overeen met het formaat :format',
 ];
