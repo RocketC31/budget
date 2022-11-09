@@ -38,7 +38,10 @@ return [
     ],
 
     'invites' => [
-        "no_invites" => "Il n'y a pas d'invitations"
+        "no_invites" => "Il n'y a pas d'invitations",
+        "invite_sent" => "Une invitation a été envoyée",
+        'already_present' => "L'utilisateur fait déjà partie de l'espace",
+        "already_sent" => "L'invitation a déjà été envoyée"
     ],
 
     'trashes' => [
