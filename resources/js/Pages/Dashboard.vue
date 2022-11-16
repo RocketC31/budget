@@ -13,7 +13,7 @@
             <div v-if="mostExpensiveTags.length > 0" class="box mt-3">
                 <div class="box__section box__section--header">{{ trans('activities.tag.most_expensive') }}</div>
                 <div v-for="(tag) in mostExpensiveTags" class="box__section row row--seperate">
-                    <div class="row__column row__column--middle color-dark">
+                    <div class="row__column row__column--middle">
                         <Tag :tag="tag"></Tag>
                     </div>
                     <div class="row__column row__column--middle">
