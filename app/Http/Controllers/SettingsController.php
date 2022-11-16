@@ -91,13 +91,7 @@ class SettingsController extends Controller
         $languages = [];
 
         foreach (config('app.locales') as $key => $value) {
-            $flag = $key;
-
-            if ($key == 'en') {
-                $flag = 'us';
-            }
-
-            $languages[] = ['key' => $key, 'label' => '<i class="twf twf-s twf-' . $flag . '"></i> ' . $value];
+            $languages[] = ['key' => $key, 'label' => trans('locales.' . $value)];
         }
 
         return Inertia::render('Settings/Preferences', compact('languages'));

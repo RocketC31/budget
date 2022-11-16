@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/twemoji-flags.css" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <title inertia>{{ View::hasSection('title') ? View::getSection('title') . ' - ' . config('app.name') : config('app.name') }}</title>
         <!-- Fonts -->
