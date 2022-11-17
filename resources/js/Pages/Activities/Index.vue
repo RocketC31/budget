@@ -13,7 +13,7 @@
                         {{ trans('activities.' + activity.action) }}
                         <Link :href="'/'+activity.entity_type+'s/'+ activity.entity_id">#{{ activity.entity_id }}</Link>
                     </div>
-                    <div class="row__column row__column--middle row__column--compact">{{ formatDate(activity.created_at) }}</div>
+                    <div class="row__column row__column--middle row__column--compact">{{ formatDateTime(activity.created_at) }}</div>
                 </div>
                 <span ref="loadMoreIntersect"/>
             </div>
@@ -23,7 +23,7 @@
 
 <script setup>
     import { trans } from "matice";
-    import { formatDate } from '@/tools';
+    import { formatDateTime } from '@/tools';
     import { Head, Link } from "@inertiajs/inertia-vue3";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { Inertia } from "@inertiajs/inertia";
