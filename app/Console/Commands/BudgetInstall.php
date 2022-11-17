@@ -49,7 +49,7 @@ class BudgetInstall extends Command
             $nodePackageManager = $this->choice('Which package manager would you like to use for Node.js?', [
                 'npm',
                 'yarn',
-            ]);
+            ], 0);
         }
 
         if (!$this->programExists($nodePackageManager)) {
@@ -57,6 +57,10 @@ class BudgetInstall extends Command
         } else {
             $this->info('Installing Node.js packages');
             $this->executeCommand([$nodePackageManager, 'install']);
+
+            if ($nodePackageManager === 'npm') {
+                $this->executeCommand(['git', 'restore', 'yarn.lock']);
+            }
 
             $this->info('Compiling front-end assets');
             $this->executeCommand([$nodePackageManager, 'run', 'production']);
