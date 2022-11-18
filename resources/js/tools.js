@@ -12,8 +12,13 @@ module.exports = {
         return app.classList.contains('dark');
     },
     formatDate(dateString, opt) {
-        const options = opt || { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = opt || { dateStyle: 'full' };
         const date = new Date(dateString);
+        return date.toLocaleString(getLocale(), options);
+    },
+    formatDateTime(dateTimeString, opt) {
+        const options = opt || { dateStyle: 'full', timeStyle: 'short' };
+        const date = new Date(dateTimeString);
         return date.toLocaleString(getLocale(), options);
     },
     capitalize(value) {
