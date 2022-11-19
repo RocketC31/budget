@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MoveCurrencyIdColumnToSpacesTable extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         // Create
         Schema::table('spaces', function (Blueprint $table) {
             $table->unsignedInteger('currency_id')->after('id');
-
         });
 
         // Move
@@ -31,7 +32,8 @@ class MoveCurrencyIdColumnToSpacesTable extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         //
     }
-}
+};

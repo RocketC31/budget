@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-class InsertSouthAmericanCurrencies extends Migration
+return new class extends Migration
 {
-    public function up() {
+    public function up()
+    {
         DB::table('currencies')->insert([
             [
                 'name' => 'Argentine Peso',
@@ -39,7 +39,8 @@ class InsertSouthAmericanCurrencies extends Migration
         ]);
     }
 
-    public function down() {
+    public function down()
+    {
         //
     }
-}
+};

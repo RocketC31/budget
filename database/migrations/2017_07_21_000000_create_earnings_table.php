@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEarningsTable extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         Schema::create('earnings', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('space_id');
@@ -17,7 +19,8 @@ class CreateEarningsTable extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('earnings');
     }
-}
+};

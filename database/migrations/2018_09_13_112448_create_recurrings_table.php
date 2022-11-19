@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecurringsTable extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         Schema::create('recurrings', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('space_id');
@@ -22,7 +24,8 @@ class CreateRecurringsTable extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('recurrings');
     }
-}
+};

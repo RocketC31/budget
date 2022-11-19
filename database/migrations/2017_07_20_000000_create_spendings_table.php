@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpendingsTable extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         Schema::create('spendings', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('space_id');
@@ -19,7 +21,8 @@ class CreateSpendingsTable extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('spendings');
     }
-}
+};
