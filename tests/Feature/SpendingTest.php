@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Space;
-use App\Models\Spending;
+use App\Models\Transaction;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -15,13 +15,14 @@ class SpendingTest extends TestCase
 
         $space = Space::factory()->create();
 
-        $spending = Spending::factory()->create([
+        $spending = Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $space->id
         ]);
 
         $this->actingAs($user);
 
-        $response = $this->delete('/spendings/' . $spending->id);
+        $response = $this->delete('/transactions/' . $spending->id);
 
         $response->assertStatus(403);
     }

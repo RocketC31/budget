@@ -31,7 +31,12 @@ class Tag extends Model
 
     public function spendings(): HasMany
     {
-        return $this->hasMany(Spending::class);
+        return $this->hasMany(Transaction::class)->where("type", "spending");
+    }
+
+    public function earnings(): HasMany
+    {
+        return $this->hasMany(Transaction::class)->where("type", "earning");
     }
 
     // Custom

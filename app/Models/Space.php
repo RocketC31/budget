@@ -44,12 +44,12 @@ class Space extends Model
 
     public function earnings()
     {
-        return $this->hasMany(Earning::class);
+        return $this->hasMany(Transaction::class)->where('type', 'earning');
     }
 
     public function spendings()
     {
-        return $this->hasMany(Spending::class);
+        return $this->hasMany(Transaction::class)->where('type', 'spending');
     }
 
     public function recurrings()
@@ -76,12 +76,14 @@ class Space extends Model
     //
     public function monthlyBalance($year, $month)
     {
-        $earningsAmount = Earning::where('space_id', $this->id)
+        $earningsAmount = Transaction::where('space_id', $this->id)
+            ->where('type', 'earning')
             ->whereYear('happened_on', $year)
             ->whereMonth('happened_on', $month)
             ->sum('amount');
 
-        $spendingsAmount = Spending::where('space_id', $this->id)
+        $spendingsAmount = Transaction::where('space_id', $this->id)
+            ->where('type', 'spending')
             ->whereYear('happened_on', $year)
             ->whereMonth('happened_on', $month)
             ->sum('amount');
@@ -99,11 +101,13 @@ class Space extends Model
             $endDate = new \DateTime("last day of previous month");
         }
 
-        $earningsAmount = Earning::where('space_id', $this->id)
+        $earningsAmount = Transaction::where('space_id', $this->id)
+            ->where('type', 'earning')
             ->where("happened_on", "<=", $endDate->format("Y-m-d"))
             ->sum('amount');
 
-        $spendingsAmount = Spending::where('space_id', $this->id)
+        $spendingsAmount = Transaction::where('space_id', $this->id)
+            ->where('type', 'spending')
             ->where("happened_on", "<=", $endDate->format("Y-m-d"))
             ->sum('amount');
 

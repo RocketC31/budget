@@ -15,7 +15,7 @@
                         :class="{ 'bg__button--active': type === 'spending' }"
                         @click="switchType('spending')">{{ trans('models.spending') }}</button>
                 </div>
-                <div class="input" v-if="type === 'spending'">
+                <div class="input">
                     <label>{{ trans('models.tag') }}</label>
                     <Searchable
                         name="tag"
@@ -207,8 +207,14 @@
                     let body = {
                         amount: this.amount,
                         currency_id: this.selectedCurrencyId,
-                        description: this.description
+                        description: this.description,
+                        type: this.type
                     }
+
+                    if (this.tag) {
+                        body["tag"] = this.tag;
+                    }
+
                     if (this.isRecurring) { // It's a recurring
                         body["type"] = this.type;
                         body["interval"] = this.recurringInterval;
@@ -219,21 +225,13 @@
                             body["end"] = this.recurringEndDate
                         }
 
-                        if (this.tag) {
-                            body["tag"] = this.tag
-                        }
-
                         Inertia.post('/recurrings', body, {
                             onFinish: () => this.loading = false
                         });
                     } else {
                         body["date"] = this.date;
 
-                        if (this.type === 'spending' && this.tag) {
-                            body["tag"] = this.tag;
-                        }
-
-                        Inertia.post('/' + this.type + 's', body, {
+                        Inertia.post('/transactions', body, {
                             onFinish: () => this.loading = false
                         });
                     }

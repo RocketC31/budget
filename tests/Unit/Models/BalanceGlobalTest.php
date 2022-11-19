@@ -3,9 +3,8 @@
 namespace Tests\Unit\Models;
 
 use App\Helper;
-use App\Models\Earning;
 use App\Models\Space;
-use App\Models\Spending;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Widget;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,14 +32,16 @@ class BalanceGlobalTest extends TestCase
     {
         $currentDate = new \DateTime();
         //Added earning
-        Earning::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'earning',
             'space_id' => $this->space->id,
             'happened_on' => $currentDate->format('Y-m-d'),
             'amount' => Helper::rawNumberToInteger(150)
         ]);
 
         //Added spending
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->space->id,
             'happened_on' => $currentDate->format('Y-m-d'),
             'amount' => Helper::rawNumberToInteger(71.20)
@@ -69,7 +70,8 @@ class BalanceGlobalTest extends TestCase
         $oldDate = new \DateTime();
         $oldDate->sub(new \DateInterval("P3M"));
         //Add an other spending in older month
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->space->id,
             'happened_on' => $oldDate->format('Y-m-d'),
             'amount' => Helper::rawNumberToInteger(14.27)
@@ -92,7 +94,8 @@ class BalanceGlobalTest extends TestCase
         $oldDate->sub(new \DateInterval("P3M"));
 
         //Add an other spending in older month
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->space->id,
             'happened_on' => $oldDate->format('Y-m-d'),
             'deleted_at' => $oldDate->format('Y-m-d'),

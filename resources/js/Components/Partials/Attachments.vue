@@ -43,10 +43,6 @@
             element: {
                 type: Object,
                 default: null
-            },
-            type: {
-                type: String,
-                default: ''
             }
         },
 
@@ -58,7 +54,7 @@
 
         setup(props) {
             const form = useForm({
-                transaction_type: props.type,
+                transaction_type: props.element.type,
                 transaction_id: props.element.id,
                 file: null
             })

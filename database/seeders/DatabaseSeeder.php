@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder {
-    public function run() {
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
         $year = date('Y');
 
         // User
@@ -28,9 +30,10 @@ class DatabaseSeeder extends Seeder {
         $tagFood = \App\Models\Tag::create(['space_id' => $space->id, 'name' => 'Food']);
         $tagTransport = \App\Models\Tag::create(['space_id' => $space->id, 'name' => 'Transport']);
 
-        for ($i = 1; $i < 12; $i ++) {
+        for ($i = 1; $i < 12; $i++) {
             // Income
-            \App\Models\Earning::create([
+            \App\Models\Transaction::create([
+                'type' => 'earning',
                 'space_id' => $space->id,
                 'happened_on' => $year . '-' . $i . '-24',
                 'description' => 'Wage',
@@ -38,7 +41,8 @@ class DatabaseSeeder extends Seeder {
             ]);
 
             // Bills
-            \App\Models\Spending::create([
+            \App\Models\Transaction::create([
+                'type' => 'spending',
                 'space_id' => $space->id,
                 'tag_id' => $tagBills->id,
                 'happened_on' => $year . '-' . $i . '-01',
@@ -46,7 +50,8 @@ class DatabaseSeeder extends Seeder {
                 'amount' => 2500
             ]);
 
-            \App\Models\Spending::create([
+            \App\Models\Transaction::create([
+                'type' => 'spending',
                 'space_id' => $space->id,
                 'tag_id' => $tagBills->id,
                 'happened_on' => $year . '-' . $i . '-01',
@@ -55,8 +60,9 @@ class DatabaseSeeder extends Seeder {
             ]);
 
             // Food
-            for ($j = 0; $j < rand(1, 10); $j ++) {
-                \App\Models\Spending::create([
+            for ($j = 0; $j < rand(1, 10); $j++) {
+                \App\Models\Transaction::create([
+                    'type' => 'spending',
                     'space_id' => $space->id,
                     'tag_id' => $tagFood->id,
                     'happened_on' => $year . '-' . $i . '-' . rand(1, 28),
@@ -66,8 +72,9 @@ class DatabaseSeeder extends Seeder {
             }
 
             // Transport
-            for ($j = 0; $j < rand(1, 3); $j ++) {
-                \App\Models\Spending::create([
+            for ($j = 0; $j < rand(1, 3); $j++) {
+                \App\Models\Transaction::create([
+                    'type' => 'spending',
                     'space_id' => $space->id,
                     'tag_id' => $tagTransport->id,
                     'happened_on' => $year . '-' . $i . '-' . rand(1, 28),

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Budget;
-use App\Models\Spending;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Tag;
@@ -23,7 +23,11 @@ class TagController extends Controller
 
     public function index(): Response
     {
-        $tags = Tag::ofSpace(session('space_id'))->with('spendings')->with('budgets')->latest()->get();
+        $tags = Tag::ofSpace(session('space_id'))
+            ->with('spendings')
+            ->with('earnings')
+            ->with('budgets')
+            ->latest()->get();
         return Inertia::render('Tags/Index', ['tags' => $tags]);
     }
 
@@ -101,7 +105,7 @@ class TagController extends Controller
         $this->authorize('delete', $tag);
 
         //Unlink spendings
-        Spending::withTrashed()->where('tag_id', "=", $tag->id)->update(['tag_id' => null]);
+        Transaction::withTrashed()->where('tag_id', "=", $tag->id)->update(['tag_id' => null]);
 
         //Remove budget because without tag it's not usefull (definitively delete)
         Budget::withTrashed()->where('tag_id', "=", $tag->id)->forceDelete();
@@ -116,7 +120,7 @@ class TagController extends Controller
         $tagsIds = Tag::ofSpace(session('space_id'))->onlyTrashed()->pluck('id')->toArray();
 
         //Unlink for recurring who will be purged
-        Spending::withTrashed()->whereIn('tag_id', $tagsIds)->update(['tag_id' => null]);
+        Transaction::withTrashed()->whereIn('tag_id', $tagsIds)->update(['tag_id' => null]);
         Budget::withTrashed()->whereIn('tag_id', $tagsIds)->forceDelete();
 
         //Then remove recurrings

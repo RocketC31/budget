@@ -12,14 +12,9 @@ class AttachmentRepository
         return Attachment::find($id);
     }
 
-    public function create(string $transactionType, int $transactionId, string $filePath): Attachment
+    public function create(int $transactionId, string $filePath): Attachment
     {
-        if ($transactionType !== 'earning' && $transactionType !== 'spending') {
-            throw new Exception('Invalid transaction type ("' . $transactionType . '")');
-        }
-
         return Attachment::create([
-            'transaction_type' => $transactionType,
             'transaction_id' => $transactionId,
             'file_path' => $filePath
         ]);

@@ -3,14 +3,15 @@
 namespace Tests\Unit\Models;
 
 use App\Helper;
+use App\Models\Transaction;
 use Tests\TestCase;
-use App\Models\Earning;
 
 class EarningTest extends TestCase
 {
     public function testFormattedAmount()
     {
-        $earning = Earning::factory()->make([
+        $earning = Transaction::factory()->make([
+            'type' => 'earning',
             'amount' => Helper::rawNumberToInteger(39)
         ]);
 

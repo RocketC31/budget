@@ -35,9 +35,7 @@
                                             <i v-if="transaction.recurring_id" class="fas fa-recycle"></i>
                                         </td>
                                         <td class="px-3 text-center">
-                                            <div class="py-3 px-3 text-sm focus:outline-none leading-none rounded" :class="{'text-green-700 bg-green-300 dark:text-green-200 dark:bg-green-600' : transaction.type === 'earnings', 'text-red-800 bg-red-400 dark:text-red-200 dark:bg-red-600' : transaction.type === 'spendings'}">
-                                                <span v-html="currency"></span> {{ transaction.formatted_amount }}
-                                            </div>
+                                            <Currency :currency="currency" :amount="transaction.formatted_amount" :type="transaction.type"></Currency>
                                         </td>
                                         <td class="px-3 text-center">
                                             <div class="flex items-center justify-around focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 dark:text-gray-200 dark:bg-gray-600 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
@@ -71,6 +69,7 @@
     import { ref } from "vue";
     import { formatDate } from '@/tools';
     import { Inertia } from "@inertiajs/inertia";
+    import Currency from "@/Pages/Transactions/Partials/Currency";
 
     defineProps({
         transactions: Array,
@@ -82,7 +81,7 @@
     const dataType = ref('list');
 
     function remove(transaction) {
-        let url = `/${transaction.type}/${transaction.id}/purge`;
+        let url = `transactions/${transaction.id}/purge`;
         if (confirm(trans('actions.confirm_action'))) {
             Inertia.delete(url);
         }
@@ -95,7 +94,7 @@
     }
 
     function restore(transaction) {
-        let url = `/${transaction.type}/${transaction.id}/restore`;
+        let url = `/transactions/${transaction.id}/restore`;
         if (confirm(trans('actions.confirm_action'))) {
             Inertia.post(url);
         }

@@ -3,7 +3,7 @@
 namespace App\Widgets;
 
 use App\Helper;
-use App\Models\Spending;
+use App\Models\Transaction;
 use App\Models\Widget;
 
 class Spent extends Widget
@@ -23,8 +23,9 @@ class Spent extends Widget
     {
         $spent = null;
         if ($this->properties->period === 'today') {
-            $spent = Spending::ofSpace(session('space_id'))
+            $spent = Transaction::ofSpace(session('space_id'))
                 ->whereRaw('DATE(happened_on) = ?', [date('Y-m-d')])
+                ->where('type', 'spending')
                 ->sum('amount');
         }
 
@@ -32,14 +33,16 @@ class Spent extends Widget
             $monday = date('Y-m-d', strtotime('monday this week'));
             $sunday = date('Y-m-d', strtotime('sunday this week'));
 
-            $spent = Spending::ofSpace(session('space_id'))
+            $spent = Transaction::ofSpace(session('space_id'))
                 ->whereRaw('DATE(happened_on) >= ? AND DATE(happened_ON) <= ?', [$monday, $sunday])
+                ->where('type', 'spending')
                 ->sum('amount');
         }
 
         if ($this->properties->period === 'this_month') {
-            $spent = Spending::ofSpace(session('space_id'))
+            $spent = Transaction::ofSpace(session('space_id'))
                 ->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [date('Y'), date('n')])
+                ->where('type', 'spending')
                 ->sum('amount');
         }
 

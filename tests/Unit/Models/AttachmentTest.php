@@ -27,7 +27,7 @@ class AttachmentTest extends TestCase
         ];
 
         foreach ($cases as $case) {
-            $attachment = $attachmentRepository->create('spending', 1, $case['file_path']);
+            $attachment = $attachmentRepository->create(1, $case['file_path']);
 
             $this->assertEquals($case['expected'], $attachment->file_type);
         }

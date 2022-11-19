@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Earning;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EarningFactory extends Factory
+class TransactionFactory extends Factory
 {
-    protected $model = Earning::class;
+    protected $model = Transaction::class;
 
     public function definition(): array
     {

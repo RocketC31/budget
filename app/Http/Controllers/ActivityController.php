@@ -11,7 +11,7 @@ class ActivityController extends Controller
 {
     public function index(Request $request): Response
     {
-        $activities = Activity::ofSpace(session('space_id'))->paginate(20);
+        $activities = Activity::ofSpace(session('space_id'))->orderBy('created_at', 'DESC')->paginate(20);
 
         return Inertia::Render('Activities/Index', ['activities' => $activities]);
     }

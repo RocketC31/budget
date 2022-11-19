@@ -3,14 +3,13 @@
 namespace App\Jobs;
 
 use App\Repositories\ConversionRateRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Repositories\EarningRepository;
 use App\Repositories\RecurringRepository;
-use App\Repositories\SpendingRepository;
 use Exception;
 
 class ProcessRecurrings implements ShouldQueue
@@ -22,8 +21,7 @@ class ProcessRecurrings implements ShouldQueue
 
     private RecurringRepository $recurringRepository;
     private ConversionRateRepository $conversionRateRepository;
-    private EarningRepository $earningRepository;
-    private SpendingRepository $spendingRepository;
+    private TransactionRepository $transactionRepository;
 
     public function __construct()
     {
@@ -33,13 +31,11 @@ class ProcessRecurrings implements ShouldQueue
     public function handle(
         RecurringRepository $recurringRepository,
         ConversionRateRepository $conversionRateRepository,
-        EarningRepository $earningRepository,
-        SpendingRepository $spendingRepository
+        TransactionRepository $transactionRepository
     ) {
         $this->recurringRepository = $recurringRepository;
         $this->conversionRateRepository = $conversionRateRepository;
-        $this->earningRepository = $earningRepository;
-        $this->spendingRepository = $spendingRepository;
+        $this->transactionRepository = $transactionRepository;
 
         $yearlyRecurrings = $this->recurringRepository->getDueYearly();
         $quarterlyRecurrings = $this->recurringRepository->getDueQuarterly();
@@ -136,28 +132,16 @@ class ProcessRecurrings implements ShouldQueue
             }
 
             foreach ($occurancesDates as $occuranceDate) {
-                if ($recurring->type === 'earning') {
-                    $this->earningRepository->create(
-                        $recurring->space_id,
-                        null,
-                        $recurring->id,
-                        $occuranceDate,
-                        $recurring->description,
-                        $amount
-                    );
-                }
-
-                if ($recurring->type === 'spending') {
-                    $this->spendingRepository->create(
-                        $recurring->space_id,
-                        null,
-                        $recurring->id,
-                        $recurring->tag_id,
-                        $occuranceDate,
-                        $recurring->description,
-                        $amount
-                    );
-                }
+                $this->transactionRepository->create(
+                    $recurring->space_id,
+                    $recurring->type,
+                    null,
+                    $recurring->id,
+                    $recurring->tag_id,
+                    $occuranceDate,
+                    $recurring->description,
+                    $amount
+                );
 
                 $this->recurringRepository->update($recurring->id, [
                     'last_used_on' => $occuranceDate

@@ -77,7 +77,7 @@ class Recurring extends Model
 
     public function spendings()
     {
-        return $this->hasMany(Spending::class);
+        return $this->hasMany(Transaction::class)->where('type', 'spendings');
     }
 
     public function tag()

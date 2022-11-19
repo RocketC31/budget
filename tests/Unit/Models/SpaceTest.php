@@ -3,9 +3,8 @@
 namespace Tests\Unit\Models;
 
 use App\Helper;
+use App\Models\Transaction;
 use Tests\TestCase;
-use App\Models\Earning;
-use App\Models\Spending;
 use App\Models\Space;
 
 class SpaceTest extends TestCase
@@ -14,7 +13,8 @@ class SpaceTest extends TestCase
     {
         $space = Space::factory()->create();
 
-        Earning::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'earning',
             'space_id' => $space->id,
             'amount' => Helper::rawNumberToInteger(39),
             'happened_on' => now()
@@ -22,7 +22,8 @@ class SpaceTest extends TestCase
 
         $this->assertEquals('3900', $space->monthlyBalance(now()->year, now()->month));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $space->id,
             'amount' => Helper::rawNumberToInteger(12),
             'happened_on' => now()
@@ -30,7 +31,8 @@ class SpaceTest extends TestCase
 
         $this->assertEquals('2700', $space->monthlyBalance(now()->year, now()->month));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $space->id,
             'amount' => Helper::rawNumberToInteger(50),
             'happened_on' => now()
@@ -39,7 +41,8 @@ class SpaceTest extends TestCase
         // Monthly balance can be negative
         $this->assertEquals('-2300', $space->monthlyBalance(now()->year, now()->month));
 
-        Earning::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'earning',
             'space_id' => $space->id,
             'amount' => Helper::rawNumberToInteger(10),
             'happened_on' => date_create_from_format('Y-m-d', '2018-01-01')
@@ -49,7 +52,8 @@ class SpaceTest extends TestCase
         $this->assertEquals('-2300', $space->monthlyBalance(now()->year, now()->month));
         $this->assertEquals('1000', $space->monthlyBalance(2018, 01));
 
-        Earning::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'earning',
             'space_id' => 2,
             'amount' => Helper::rawNumberToInteger(10),
             'happened_on' => date_create_from_format('Y-m-d', '2020-01-01')

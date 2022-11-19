@@ -27,17 +27,17 @@ class Import extends Model
         'deleted' => ImportDeleted::class
     ];
 
-    protected $appends = [ "spendings" ];
+    protected $appends = [ "transactions" ];
 
-    public function getSpendingsAttribute(): Collection
+    public function getTransactionsAttribute(): Collection
     {
-        return $this->spendings()->get();
+        return $this->transactions()->get();
     }
 
     // Relations
-    public function spendings()
+    public function transactions()
     {
-        return $this->hasMany(Spending::class);
+        return $this->hasMany(Transaction::class);
     }
 
     // Scopes
