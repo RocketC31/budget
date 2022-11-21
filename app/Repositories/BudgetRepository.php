@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Budget;
-use App\Models\Spending;
+use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -64,7 +64,7 @@ class BudgetRepository
         return Budget::find($id);
     }
 
-    public function getSpentById(int $id): int
+    public function getSpentById(int $id, string $type = Transaction::TYPE_SPENDING): int
     {
         $budget = $this->getById($id);
 
@@ -73,30 +73,34 @@ class BudgetRepository
         }
 
         if ($budget->period === 'yearly') {
-            return Spending::where('space_id', session('space_id'))
+            return Transaction::where('space_id', session('space_id'))
                 ->where('tag_id', $budget->tag->id)
+                ->where('type', $type)
                 ->whereRaw('YEAR(happened_on) = ?', [date('Y')])
                 ->sum('amount');
         }
 
         if ($budget->period === 'monthly') {
-            return Spending::where('space_id', session('space_id'))
+            return Transaction::where('space_id', session('space_id'))
                 ->where('tag_id', $budget->tag->id)
+                ->where('type', $type)
                 ->whereRaw('MONTH(happened_on) = ?', [date('n')])
                 ->whereRaw('YEAR(happened_on) = ?', [date('Y')])
                 ->sum('amount');
         }
 
         if ($budget->period === 'weekly') {
-            return Spending::where('space_id', session('space_id'))
+            return Transaction::where('space_id', session('space_id'))
                 ->where('tag_id', $budget->tag->id)
+                ->where('type', $type)
                 ->whereRaw('WEEK(happened_on) = WEEK(NOW())')
                 ->sum('amount');
         }
 
         if ($budget->period === 'daily') {
-            return Spending::where('space_id', session('space_id'))
+            return Transaction::where('space_id', session('space_id'))
                 ->where('tag_id', $budget->tag->id)
+                ->where('type', $type)
                 ->whereRaw('happened_on = ?', [date('Y-m-d')])
                 ->sum('amount');
         }

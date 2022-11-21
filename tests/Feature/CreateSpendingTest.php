@@ -25,7 +25,8 @@ class CreateSpendingTest extends TestCase
             ->followingRedirects()
             ->actingAs($this->user)
             ->withSession(['space_id' => $this->space->id])
-            ->postJson('/spendings', [
+            ->postJson('/transactions', [
+                'type' => 'spending',
                 'date' => date('Y-m-d'),
                 'description' => 'Something for the test',
                 'amount' => '9.999'
@@ -41,7 +42,8 @@ class CreateSpendingTest extends TestCase
             ->followingRedirects()
             ->actingAs($this->user)
             ->withSession(['space_id' => $this->space->id])
-            ->postJson('/spendings', [
+            ->postJson('/transactions', [
+                'type' => 'spending',
                 'date' => date('Y-m-d'),
                 'description' => 'Something for the test',
                 'amount' => '9.99'

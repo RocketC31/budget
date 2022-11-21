@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper;
-use App\Models\Earning;
-use App\Models\Spending;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Recurring;
@@ -113,8 +112,7 @@ class RecurringController extends Controller
         }
 
         //Before remove, we need to unlink all earnings and spendings from this recurring
-        Earning::withTrashed()->where('recurring_id', '=', $id)->update(['recurring_id' => null]);
-        Spending::withTrashed()->where('recurring_id', '=', $id)->update(['recurring_id' => null]);
+        Transaction::withTrashed()->where('recurring_id', '=', $id)->update(['recurring_id' => null]);
 
         $recurring->forceDelete();
 
@@ -139,8 +137,7 @@ class RecurringController extends Controller
         $recurringsIds = Recurring::ofSpace(session('space_id'))->onlyTrashed()->pluck('id')->toArray();
 
         //Unlink for recurring who will be purged
-        Earning::withTrashed()->whereIn('recurring_id', $recurringsIds)->update(['recurring_id' => null]);
-        Spending::withTrashed()->whereIn('recurring_id', $recurringsIds)->update(['recurring_id' => null]);
+        Transaction::withTrashed()->whereIn('recurring_id', $recurringsIds)->update(['recurring_id' => null]);
 
         //Then remove recurrings
         Recurring::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();

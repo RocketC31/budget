@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper;
 use App\Models\Import;
 use App\Models\Tag;
-use App\Repositories\SpendingRepository;
-use App\Repositories\EarningRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,13 +14,11 @@ use Inertia\Response;
 
 class ImportController extends Controller
 {
-    private SpendingRepository $spendingRepository;
-    private EarningRepository $earningRepository;
+    private TransactionRepository $transactionRepository;
 
-    public function __construct(SpendingRepository $spendingRepository, EarningRepository $earningRepository)
+    public function __construct(TransactionRepository $transactionRepository)
     {
-        $this->spendingRepository = $spendingRepository;
-        $this->earningRepository = $earningRepository;
+        $this->transactionRepository = $transactionRepository;
     }
 
     public function index(): Response
@@ -166,27 +163,16 @@ class ImportController extends Controller
                 // TODO CHECK HOW THIS WORKS WITH 1k+ AMOUNTS
                 $amount = str_replace(',', '.', $row['amount']) * 100;
                 $date = date("d-m-Y", strtotime($row['happened_on']));
-
-                if ($row['type'] === 'spending') {
-                    $this->spendingRepository->create(
-                        session('space_id'),
-                        $import->id,
-                        null,
-                        $row['tag_id'],
-                        $date,
-                        $row['description'],
-                        $amount
-                    );
-                } elseif ($row['type'] === 'earning') {
-                    $this->earningRepository->create(
-                        session('space_id'),
-                        $import->id,
-                        null,
-                        $date,
-                        $row['description'],
-                        $amount
-                    );
-                }
+                $this->transactionRepository->create(
+                    session('space_id'),
+                    $row['type'],
+                    $import->id,
+                    null,
+                    $row['tag_id'],
+                    $date,
+                    $row['description'],
+                    $amount
+                );
             }
         }
 
@@ -199,7 +185,7 @@ class ImportController extends Controller
 
     public function destroy(Request $request, Import $import)
     {
-        if (!$import->spendings->count()) {
+        if (!$import->transactions->count()) {
             $import->delete();
         }
 

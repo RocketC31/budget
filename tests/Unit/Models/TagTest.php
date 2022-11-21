@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Transaction;
 use App\Repositories\TagRepository;
 use App\Models\Space;
-use App\Models\Spending;
 use App\Models\Tag;
 use Tests\TestCase;
 
@@ -28,7 +28,8 @@ class TagTest extends TestCase
         $this->assertEquals(0, $repository->getMostExpensiveTags($space->id)[0]->amount);
 
         // After creating spending for said tag
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $space->id,
             'tag_id' => $tag->id,
             'amount' => 1025

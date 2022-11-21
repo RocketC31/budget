@@ -30,12 +30,11 @@ class AttachmentController extends Controller
         $fileName = Str::random(20) . '.' . $request->file('file')->extension();
         $filePath = $request->file('file')->storeAs('attachments', $fileName);
 
-        $transactionType = $request->transaction_type;
         $transactionId = $request->transaction_id;
 
-        $this->attachmentRepository->create($transactionType, $transactionId, $filePath);
+        $this->attachmentRepository->create($transactionId, $filePath);
 
-        return redirect()->intended('/' . $transactionType . 's/' . $transactionId);
+        return redirect()->intended('/transaction/' . $transactionId);
     }
 
     public function download(Request $request, Attachment $attachment): ?BinaryFileResponse
@@ -62,11 +61,10 @@ class AttachmentController extends Controller
         }
 
         // Memorize some details before we delete it
-        $transactionType = $attachment->transaction_type;
         $transactionId = $attachment->transaction_id;
 
         $this->attachmentRepository->delete($id);
 
-        return redirect('/' . $transactionType . 's/' . $transactionId);
+        return redirect('/transaction/' . $transactionId);
     }
 }

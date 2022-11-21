@@ -1,10 +1,10 @@
 <template>
-    <Head :title="trans('models.earning')" />
+    <Head :title="trans('models.' + transaction.type)" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
-            <h2>{{ earning.description }}</h2>
-            <Attachments :element="earning" :type="'earning'"></Attachments>
+            <h2>{{ transaction.description }}</h2>
+            <Attachments :element="transaction"></Attachments>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
@@ -14,8 +14,7 @@
     import { Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import Attachments from "@/Components/Partials/Attachments";
-
     defineProps({
-        earning: Object
+        transaction: Object
     });
 </script>

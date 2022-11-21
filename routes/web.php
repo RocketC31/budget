@@ -39,35 +39,17 @@ Route::group(['middleware' => ['auth']], function () {
     //Transactions
     Route::name('transactions.')->group(function () {
         Route::get('/transactions', [TransactionController::class, 'index'])->name('index');
+        Route::get('/transaction/{transaction}', [TransactionController::class, 'show'])->name('show');
+        Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'edit'])->name('edit');
         Route::get('/transactions/create', [TransactionController::class, 'create'])->name('create');
         Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
+        Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
+        Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
+        Route::post('/transactions/{id}/restore', [TransactionController::class, 'restore']);
+        Route::post('/transactions', [TransactionController::class, 'store']);
+        Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('delete');
+        Route::delete('/transactions/{id}/purge', [TransactionController::class, 'purge'])->name('purge');
         Route::delete('/transactions/purge_all', [TransactionController::class, 'purgeAll'])->name('purge_all');
-    });
-
-    //Earnings
-    Route::name('earnings.')->group(function () {
-        Route::get('/earnings/{earning}', [EarningController::class, 'show'])->name('show');
-        Route::get('/earnings/{earning}/edit', [EarningController::class, 'edit'])->name('edit');
-        Route::patch('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
-        Route::put('/earnings/{earning}', [EarningController::class, 'update'])->name('update');
-        Route::post('/earnings/{id}/restore', [EarningController::class, 'restore']);
-        Route::post('/earnings', [EarningController::class, 'store']);
-        Route::post('/earnings/{earning}/restore', [EarningController::class, 'restore'])->name('restore');
-        Route::delete('/earnings/{earning}', [EarningController::class, 'destroy'])->name('delete');
-        Route::delete('/earnings/{earning}/purge', [EarningController::class, 'purge'])->name('purge');
-    });
-
-    //Spendings
-    Route::name('spendings.')->group(function () {
-        Route::get('/spendings/{spending}', [SpendingController::class, 'show'])->name('show');
-        Route::get('/spendings/{spending}/edit', [SpendingController::class, 'edit'])->name('edit');
-        Route::patch('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
-        Route::put('/spendings/{spending}', [SpendingController::class, 'update'])->name('update');
-        Route::post('/spendings/{id}/restore', [SpendingController::class, 'restore']);
-        Route::post('/spendings', [SpendingController::class, 'store']);
-        Route::post('/spendings/{spending}/restore', [SpendingController::class, 'restore'])->name('restore');
-        Route::delete('/spendings/{id}', [SpendingController::class, 'destroy'])->name('delete');
-        Route::delete('/spendings/{id}/purge', [SpendingController::class, 'purge'])->name('purge');
     });
 
     //Attachments

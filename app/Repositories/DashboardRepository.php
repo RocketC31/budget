@@ -3,9 +3,8 @@
 namespace App\Repositories;
 
 use App\Helper;
-use App\Models\Earning;
 use App\Models\Space;
-use App\Models\Spending;
+use App\Models\Transaction;
 
 class DashboardRepository
 {
@@ -32,11 +31,11 @@ class DashboardRepository
         return max($balance - $sumRecurrings, 0);
     }
 
-    // TODO MOVE TO SPENDINGREPOSITORY IN FUTURE
     public function getTotalAmountSpent(string $year, string $month)
     {
-        return Spending::ofSpace(session('space_id'))
+        return Transaction::ofSpace(session('space_id'))
             ->whereRaw('YEAR(happened_on) = ? AND MONTH(happened_on) = ?', [$year, $month])
+            ->where('type', "spending")
             ->sum('amount');
     }
 
@@ -50,12 +49,14 @@ class DashboardRepository
         }
 
         for ($i = 1; $i <= $daysInMonth; $i++) {
-            $balanceTick -= Spending::ofSpace(session('space_id'))
+            $balanceTick -= Transaction::ofSpace(session('space_id'))
                 ->where('happened_on', $year . '-' . $month . '-' . $i)
+                ->where('type', "spending")
                 ->sum('amount');
 
-            $balanceTick += Earning::ofSpace(session('space_id'))
+            $balanceTick += Transaction::ofSpace(session('space_id'))
                 ->where('happened_on', $year . '-' . $month . '-' . $i)
+                ->where('type', 'earning')
                 ->sum('amount');
 
             $dailyBalance[] = Helper::formatNumber($balanceTick / 100);

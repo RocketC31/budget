@@ -4,8 +4,8 @@ namespace Tests\Unit\Repositories;
 
 use App\Models\Budget;
 use App\Models\Space;
-use App\Models\Spending;
 use App\Models\Tag;
+use App\Models\Transaction;
 use App\Repositories\BudgetRepository;
 use Exception;
 use Tests\TestCase;
@@ -190,7 +190,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion without spendings
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d', strtotime('last year')),
@@ -200,7 +201,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion with spendings, but outside of period
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d'),
@@ -226,7 +228,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion without spendings
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d', strtotime('last month')),
@@ -236,7 +239,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion with spendings, but outside of period
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d'),
@@ -262,7 +266,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion without spendings
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d', strtotime('2 weeks ago')),
@@ -272,7 +277,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion with spendings, but outside of period
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d'),
@@ -298,7 +304,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion without spendings
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d', strtotime('yesterday')),
@@ -308,7 +315,8 @@ class BudgetRepositoryTest extends TestCase
         // Assertion with spendings, but outside of period
         $this->assertEquals(0, $this->budgetRepository->getSpentById($budget->id));
 
-        Spending::factory()->create([
+        Transaction::factory()->create([
+            'type' => 'spending',
             'space_id' => $this->spaceId,
             'tag_id' => $tag->id,
             'happened_on' => date('Y-m-d'),

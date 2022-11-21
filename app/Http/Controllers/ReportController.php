@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Spending;
+use App\Models\Transaction;
 use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class ReportController extends Controller
 
     private function mostExpensiveTags(): Response
     {
-        $totalSpent = Spending::ofSpace(session('space_id'))->sum('amount');
+        $totalSpent = Transaction::ofSpace(session('space_id'))->where('type', 'spending')->sum('amount');
         $mostExpensiveTags = $this->tagRepository->getMostExpensiveTags(session('space_id'));
 
         return Inertia::render('Reports/MostExpensiveTags', compact('totalSpent', 'mostExpensiveTags'));

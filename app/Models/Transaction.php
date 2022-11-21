@@ -9,10 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Spending extends Model
+class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public const TYPE_EARNING = "earning";
+    public const TYPE_SPENDING = "spending";
 
     protected $dates = ['happened_on', 'deleted_at'];
 
@@ -23,10 +26,11 @@ class Spending extends Model
         'tag_id',
         'happened_on',
         'description',
-        'amount'
+        'amount',
+        'type'
     ];
 
-    protected $appends = [ 'type', 'formatted_amount', 'tag' ];
+    protected $appends = [ 'formatted_amount', 'tag' ];
 
     protected $dispatchesEvents = [
         'created' => TransactionCreated::class,
@@ -39,7 +43,7 @@ class Spending extends Model
         return Helper::formatNumber($this->amount / 100);
     }
 
-    public function getFormattedHappenedOnAttribute(): string
+    public function getFormattedHappenedOnAttribute()
     {
         $secondsDifference = strtotime(date('Y-m-d')) - strtotime($this->happened_on);
 
@@ -54,12 +58,12 @@ class Spending extends Model
         return null;
     }
 
-    public function getTypeAttribute(): string
+    // Relations
+    public function attachments()
     {
-        return 'spendings';
+        return $this->hasMany(Attachment::class, 'transaction_id');
     }
 
-    // Relations
     public function import()
     {
         return $this->belongsTo(Import::class);
@@ -73,12 +77,6 @@ class Spending extends Model
     public function tag()
     {
         return $this->belongsTo(Tag::class);
-    }
-
-    public function attachments()
-    {
-        return $this->hasMany(Attachment::class, 'transaction_id')
-            ->where('transaction_type', 'spending');
     }
 
     // Scopes

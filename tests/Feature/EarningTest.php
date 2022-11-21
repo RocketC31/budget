@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Earning;
 use App\Models\Space;
+use App\Models\Transaction;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -15,13 +15,14 @@ class EarningTest extends TestCase
 
         $space = Space::factory()->create();
 
-        $earning = Earning::factory()->create([
-            'space_id' => $space->id
+        $earning = Transaction::factory()->create([
+            'space_id' => $space->id,
+            'type' => 'earning'
         ]);
 
         $this->actingAs($user);
 
-        $response = $this->delete('/earnings/' . $earning->id);
+        $response = $this->delete('/transactions/' . $earning->id);
 
         $response->assertStatus(403);
     }

@@ -10,8 +10,7 @@
                         <img v-if="activity.user" class="avatar" :src="activity.user.avatar" />
                     </div>
                     <div class="row__column row__column--middle">
-                        {{ trans('activities.' + activity.action) }}
-                        <Link :href="'/'+activity.entity_type+'s/'+ activity.entity_id">#{{ activity.entity_id }}</Link>
+                        {{ trans('activities.' + activity.action) }} #{{ activity.entity_id }}
                     </div>
                     <div class="row__column row__column--middle row__column--compact">{{ formatDateTime(activity.created_at) }}</div>
                 </div>

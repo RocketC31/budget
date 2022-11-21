@@ -3,14 +3,15 @@
 namespace Tests\Unit\Models;
 
 use App\Helper;
+use App\Models\Transaction;
 use Tests\TestCase;
-use App\Models\Spending;
 
 class SpendingTest extends TestCase
 {
     public function testFormattedAmount()
     {
-        $spending = Spending::factory()->make([
+        $spending = Transaction::factory()->make([
+            'type' => 'spending',
             'amount' => Helper::rawNumberToInteger(92.35)
         ]);
 

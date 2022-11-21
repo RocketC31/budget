@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -20,15 +19,7 @@ class Attachment extends Model
     // Relationships
     public function transaction()
     {
-        if ($this->transaction_type === 'earning') {
-            return $this->belongsTo(Earning::class, 'transaction_id');
-        }
-
-        if ($this->transaction_type) {
-            return $this->belongsTo(Spending::class, 'transaction_id');
-        }
-
-        throw new Exception('Invalid transaction type for attachment (ID ' . $this->id . ')');
+        return $this->belongsTo(Transaction::class, 'transaction_id');
     }
 
     // Accessors

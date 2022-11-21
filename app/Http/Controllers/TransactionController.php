@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Earning;
+use App\Helper;
 use App\Models\Space;
-use App\Models\Spending;
 use App\Models\Tag;
+use App\Models\Transaction;
+use App\Repositories\ConversionRateRepository;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\RecurringRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\TransactionRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Intervention\Image\Exception\NotFoundException;
 
 class TransactionController extends Controller
 {
@@ -22,17 +25,20 @@ class TransactionController extends Controller
     private CurrencyRepository $currencyRepository;
     private RecurringRepository $recurringRepository;
     private TagRepository $tagRepository;
+    private ConversionRateRepository $conversionRateRepository;
 
     public function __construct(
         TransactionRepository $transactionRepository,
         CurrencyRepository $currencyRepository,
         RecurringRepository $recurringRepository,
-        TagRepository $tagRepository
+        TagRepository $tagRepository,
+        ConversionRateRepository $conversionRateRepository
     ) {
         $this->repository = $transactionRepository;
         $this->currencyRepository = $currencyRepository;
         $this->recurringRepository = $recurringRepository;
         $this->tagRepository = $tagRepository;
+        $this->conversionRateRepository = $conversionRateRepository;
     }
 
     public function index(Request $request): Response
@@ -76,6 +82,24 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function show(Transaction $transaction): Response
+    {
+        $this->authorize('view', $transaction);
+        $transaction->load('attachments');
+        return Inertia::render('Transactions/Show', [
+            'transaction' => $transaction
+        ]);
+    }
+
+    public function edit(Transaction $transaction): Response
+    {
+        $this->authorize('edit', $transaction);
+
+        $tags = Tag::ofSpace(session('space_id'))->latest()->get();
+
+        return Inertia::render('Transactions/Edit', compact('tags', 'transaction'));
+    }
+
     public function create(): Response
     {
         $tags = [];
@@ -97,6 +121,68 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function update(Request $request, Transaction $transaction)
+    {
+        $this->authorize('update', $transaction);
+
+        $request->validate($this->repository->getValidationRules(true));
+
+        $amount = Helper::rawNumberToInteger($request->input('amount'));
+
+        $this->repository->update($transaction->id, [
+            'tag_id' => $request->input('tag_id'),
+            'happened_on' => $request->input('date'),
+            'description' => $request->input('description'),
+            'amount' => $amount
+        ]);
+
+        return redirect()->route('transactions.index');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate($this->repository->getValidationRules());
+
+        $amount = Helper::rawNumberToInteger($request->input('amount'));
+
+        // Convert amount if a different currency was selected
+        if ($request->has('currency_id') && $request->currency_id !== Space::find(session('space_id'))->currency_id) {
+            $amount = $this->conversionRateRepository->convert(
+                $request->currency_id,
+                Space::find(session('space_id'))->currency_id,
+                $amount
+            );
+        }
+
+        $this->repository->create(
+            session('space_id'),
+            $request->input('type'),
+            null,
+            null,
+            $request->input('tag'),
+            $request->input('date'),
+            $request->input('description'),
+            $amount
+        );
+
+        return redirect()->route('transactions.index');
+    }
+
+    public function restore($id): RedirectResponse
+    {
+        $transaction = Transaction::withTrashed()->find($id);
+
+        if (!$transaction) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('restore', $transaction);
+
+        $transaction->restore();
+
+        return back();
+    }
+
     public function trash(): Response
     {
         return Inertia::render('Transactions/Trash', [
@@ -104,16 +190,39 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function purgeAll(): RedirectResponse
+    public function destroy($id)
     {
-        //NO need check because if it's in trash, check already ok. And it's linked to space_id
-        Earning::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
-        Spending::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
+        $transaction = Transaction::find($id);
+        $this->authorize('delete', $transaction);
+
+        $transaction->delete();
+        return redirect()->route('transactions.index');
+    }
+
+    public function purge($id): RedirectResponse
+    {
+        $transaction = Transaction::withTrashed()->find($id);
+
+        if (!$transaction) {
+            throw new NotFoundException();
+        }
+
+        $this->authorize('delete', $transaction);
+
+        $transaction->forceDelete();
 
         return back();
     }
 
-    private function getTransactionsForChart(array $transactions): array
+    public function purgeAll(): RedirectResponse
+    {
+        //NO need check because if it's in trash, check already ok. And it's linked to space_id
+        Transaction::ofSpace(session('space_id'))->onlyTrashed()->forceDelete();
+
+        return back();
+    }
+
+    private function getTransactionsForChart(Collection $transactions): array
     {
         $transactionsChart = [];
         $earningKey = __('models.earnings');
@@ -125,7 +234,7 @@ class TransactionController extends Controller
             $colorToUse = $earningColor;
             $amount = (float)$transaction->formatted_amount;
             //If spending we take tag name
-            if ($transaction instanceof Spending) {
+            if ($transaction->type === Transaction::TYPE_SPENDING) {
                 $keyToUse = $spendingKey;
                 $colorToUse = $spendingColor;
                 $amount = -abs($amount);

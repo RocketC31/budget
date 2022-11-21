@@ -23,7 +23,7 @@
                                 </td>
                                 <td class="px-3 w-5/12">
                                     <div class="flex items-center dark:text-gray-500">
-                                        {{ trans('models.spendings') }}: {{ tag.spendings.length }}
+                                        {{ trans('models.spendings') }}: {{ tag.spendings.length }} | {{ trans('models.earnings') }}: {{ tag.earnings.length }}
                                     </div>
                                 </td>
                                 <td class="px-3 text-center w-2/12">

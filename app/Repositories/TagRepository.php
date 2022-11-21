@@ -35,11 +35,11 @@ class TagRepository
             SELECT
                 tags.name AS name,
                 tags.color AS color,
-                SUM(spendings.amount) AS amount
+                SUM(transactions.amount) AS amount
             FROM
                 tags
             LEFT OUTER JOIN
-                spendings ON tags.id = spendings.tag_id AND spendings.deleted_at IS NULL
+                transactions ON tags.id = transactions.tag_id AND transactions.deleted_at IS NULL
             WHERE
                 tags.space_id = ?';
 
@@ -55,7 +55,7 @@ class TagRepository
             GROUP BY
                 tags.id
             ORDER BY
-                SUM(spendings.amount) DESC
+                SUM(transactions.amount) DESC
         ';
 
         if ($limit) {
