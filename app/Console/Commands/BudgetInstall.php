@@ -66,9 +66,20 @@ class BudgetInstall extends Command
             $this->executeCommand([$nodePackageManager, 'run', 'production']);
         }
 
-        $this->executeCommand(['cp', '.env.example', '.env']);
-        $this->executeCommand(['php', 'artisan', 'key:generate']);
-        $this->executeCommand(['php', 'artisan', 'storage:link']);
+        if (!file_exists('.env')) {
+            $this->info('Copying .env.example to .env');
+            $this->executeCommand(['cp', '.env.example', '.env']);
+        }
+
+        if (env('APP_KEY') === '') {
+            $this->info('Generating key');
+            $this->executeCommand(['php', 'artisan', 'key:generate']);
+        }
+
+        if (!file_exists('public/storage')) {
+            $this->info('Creating symbolic link from public/storage to storage/app/public');
+            $this->executeCommand(['php', 'artisan', 'storage:link']);
+        }
 
         $this->info('Done!');
     }
