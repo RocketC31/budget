@@ -1,4 +1,5 @@
 <?php
+
 return [
     'dashboard' => 'Dashboard',
     'total_spent' => 'Ausgaben Gesamt',

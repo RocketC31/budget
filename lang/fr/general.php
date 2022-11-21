@@ -11,33 +11,33 @@ return [
     'most_expensive_tag' => 'Tag "le plus cher" ',
     'most_expensive_day' => 'Jour "le plus cher"',
     'type' => 'Type',
-    
+
     'analysis' => 'Analyse',
-    
+
     'recent' => 'Récent',
-    
+
     'profile' => 'Profil',
     'account' => 'Compte',
     'preferences' => 'Préférences',
     'billing' => 'Facturation',
-    
+
     'general' => 'Général',
     'members' => 'Membres',
     'invites' => 'Invitations',
     'invited_by' => 'Invité par',
     'invite_someone' => 'Inviter quelqu\'un',
-    
+
     'empty_state' => 'Il n\'y  a pas encore de :resource',
     'empty_attachments' => 'Aucune pièce jointe pour cette :resource',
-    
+
     'verify_account' => 'Vous devez vérifier votre compte&mdash;merci de vérifier votre e-mail',
     'spaces_explanation' => 'Les espaces peuvent être utilisés pour séparer vos finances dans Budget. Par exemple, vous pouvez avoir un espace pour vos finances personnelles et un autre espace pour les finances de votre entreprise.',
     'got_a_suggestion' => 'Faire une suggestion',
-    
+
     'invite' => 'Inviter',
     'invited_to' => 'Vous avez été invité par',
     'sent_by' => 'Envoyé par',
-    
+
     'of' => 'sur',
     'or' => 'ou',
     'spent' => 'Dépensé',

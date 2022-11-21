@@ -3,7 +3,7 @@
 return [
     'required' => 'Het veld is verplicht',
     'confirmed' => 'Komt niet overeen',
-    
+
     'max' => [
         'string' => 'Mag niet groter zijn dan :max karakters',
     ],
