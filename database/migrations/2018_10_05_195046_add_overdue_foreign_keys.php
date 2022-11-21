@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddOverdueForeignKeys extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         Schema::table('tags', function ($table) {
             $table->foreign('space_id')->references('id')->on('spaces');
         });
@@ -31,7 +32,8 @@ class AddOverdueForeignKeys extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::table('tags', function ($table) {
             $table->dropForeign('tags_space_id_foreign');
         });
@@ -56,4 +58,4 @@ class AddOverdueForeignKeys extends Migration {
             $table->dropForeign('user_space_space_id_foreign');
         });
     }
-}
+};

@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTypeColumnToRecurringsTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -27,4 +27,4 @@ class AddTypeColumnToRecurringsTable extends Migration
             $table->dropColumn('type');
         });
     }
-}
+};

@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIdeasTable extends Migration {
-    public function up() {
+return new class extends Migration
+{
+    public function up()
+    {
         Schema::create('ideas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
@@ -17,11 +19,12 @@ class CreateIdeasTable extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::table('ideas', function ($table) {
             $table->dropForeign('ideas_user_id_foreign');
         });
 
         Schema::dropIfExists('ideas');
     }
-}
+};

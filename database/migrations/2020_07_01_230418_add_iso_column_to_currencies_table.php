@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsoColumnToCurrenciesTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -18,15 +18,15 @@ class AddIsoColumnToCurrenciesTable extends Migration
 
             if (strlen($currency->symbol) !== 3) {
                 switch ($currency->symbol) {
-                    case '&euro;';
+                    case '&euro;':
                         $iso = 'EUR';
                         break;
 
-                    case '&dollar;';
+                    case '&dollar;':
                         $iso = 'USD';
                         break;
 
-                    case '&pound;';
+                    case '&pound;':
                         $iso = 'GBP';
                         break;
                 }
@@ -42,4 +42,4 @@ class AddIsoColumnToCurrenciesTable extends Migration
             $table->dropColumn('iso');
         });
     }
-}
+};
