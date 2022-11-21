@@ -71,7 +71,7 @@ class BudgetInstall extends Command
             $this->executeCommand(['cp', '.env.example', '.env']);
         }
 
-        if (env('APP_KEY') === '') {
+        if (env('APP_KEY') === '' || env('APP_KEY') === null) {
             $this->info('Generating key');
             $this->executeCommand(['php', 'artisan', 'key:generate']);
         }
