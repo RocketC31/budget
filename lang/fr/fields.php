@@ -12,14 +12,14 @@ return [
     'weekly_report' => 'Rapport Hebdomadaire',
     'default_transaction_type' => 'Type de transaction standard',
     'first_day_of_week' => 'Premier jour de la semaine',
-    
+
     'date' => 'Date',
     'date_format' => 'Format de date',
     'description' => 'Description',
     'amount' => 'Montant',
 
     'period' => 'Période',
-    
+
     'file' => 'Fichier',
 
     'color' => 'Couleur',
