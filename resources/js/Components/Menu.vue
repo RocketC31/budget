@@ -86,7 +86,7 @@
                     <BreezeDropdownLink @click="resetTheme" :href="route('logout')" method="post" as="button">
                         {{ trans('pages.log_out') }}
                     </BreezeDropdownLink>
-                    <BreezeDropdown :align="'left'" width="48" v-if="spaces.length > 1">
+                    <BreezeDropdown :align="'center'" width="48" v-if="spaces.length > 1">
                         <template #trigger>
                             <span class="inline-flex rounded-md w-full">
                                 <button type="button" class="flex w-full px-4 py-2 text-left text-sm leading-5 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 dark:hover:text-white hover:text-blue-600 rounded focus:outline-none transition duration-150 ease-in-out">
