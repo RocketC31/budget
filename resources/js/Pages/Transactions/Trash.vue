@@ -81,9 +81,8 @@
     const dataType = ref('list');
 
     function remove(transaction) {
-        let url = `transactions/${transaction.id}/purge`;
         if (confirm(trans('actions.confirm_action'))) {
-            Inertia.delete(url);
+            Inertia.delete(route('transactions.purge', { id: transaction.id }));
         }
     }
 
@@ -94,9 +93,8 @@
     }
 
     function restore(transaction) {
-        let url = `/transactions/${transaction.id}/restore`;
         if (confirm(trans('actions.confirm_action'))) {
-            Inertia.post(url);
+            Inertia.post(route('transactions.restore', { id: transaction.id }));
         }
     }
 </script>

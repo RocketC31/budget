@@ -4,7 +4,6 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EarningController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\RecurringController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\ResendVerificationMailController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SpaceController;
 use App\Http\Controllers\SpaceInviteController;
-use App\Http\Controllers\SpendingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TranslationsController;
@@ -45,11 +43,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
         Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
         Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
-        Route::post('/transactions/{id}/restore', [TransactionController::class, 'restore']);
+        Route::post('/transactions/{id}/restore', [TransactionController::class, 'restore'])->name('restore');
         Route::post('/transactions', [TransactionController::class, 'store']);
+        Route::delete('/transactions/purge_all', [TransactionController::class, 'purgeAll'])->name('purge_all');
         Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('delete');
         Route::delete('/transactions/{id}/purge', [TransactionController::class, 'purge'])->name('purge');
-        Route::delete('/transactions/purge_all', [TransactionController::class, 'purgeAll'])->name('purge_all');
     });
 
     //Attachments
