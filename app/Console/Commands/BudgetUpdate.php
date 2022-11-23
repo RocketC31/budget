@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Exception;
-use Illuminate\Console\Command;
+use App\Console\Commands\BudgetCommand;
 
-class BudgetUpdate extends Command
+class BudgetUpdate extends BudgetCommand
 {
     protected $signature = 'budget:update';
     protected $description = 'Update the application to the latest version';
@@ -15,22 +15,18 @@ class BudgetUpdate extends Command
         parent::__construct();
     }
 
-    private function doesBinaryExist(string $name): bool
-    {
-        return shell_exec('which ' . $name);
-    }
-
     public function handle(): void
     {
-        if (!$this->doesBinaryExist('git')) {
+        if (!$this->programExists('git')) {
             throw new Exception('Could not find Git');
         }
 
         // Fetch tags from repository
-        shell_exec('git fetch --tags');
+        $this->executeCommand(['git', 'fetch', '--tags']);
 
-        $currentVersion = rtrim(shell_exec('git describe --tag --abbrev=0'), PHP_EOL);
-        $latestVersion = rtrim(shell_exec('git describe --tags $(git rev-list --tags --max-count=1)'), PHP_EOL);
+        $currentVersion = $this->executeCommand(['git', 'describe', '--tag', '--abbrev=0']);
+        $rev = $this->executeCommand(['git', 'rev-list', '--tags', '--max-count=1']);
+        $latestVersion = $this->executeCommand(['git', 'describe', '--tags', $rev]);
 
         $this->info('Currently running on ' . $currentVersion . ', latest version is ' . $latestVersion);
 
@@ -40,42 +36,50 @@ class BudgetUpdate extends Command
             exit(0);
         }
 
-        if (!$this->doesBinaryExist('composer')) {
-            throw new Exception('Could not find Composer, reverting update');
+        if (!$this->programExists('composer')) {
+            throw new Exception('Could not find Composer, quitting update');
         }
 
         // Check out on latest version
-        shell_exec('git checkout -f ' . $latestVersion);
+        $this->executeCommand(['git', 'checkout', '-f', $latestVersion]);
 
         // Enable maintenance mode
-        shell_exec('php artisan down');
+        $this->executeCommand(['php', 'artisan', 'down'], true);
 
-        // Install Composer dependencies
-        shell_exec('composer install --no-dev -o');
+        $this->info('Installing Composer packages');
+        $this->executeCommand(['composer', 'install', '--no-dev', '-o']);
 
         // Migrate database
-        shell_exec('php artisan migrate --force');
+        $this->executeCommand(['php', 'artisan', 'migrate', '--force'], true);
 
-        // Transpile front-end assets
-        $nodePackageManager = null;
-
-        if ($this->doesBinaryExist('npm')) {
-            $nodePackageManager = 'npm';
-        } elseif ($this->doesBinaryExist('yarn')) {
-            $nodePackageManager = 'yarn';
-        }
+        $nodePackageManager = $this->option('node-package-manager');
 
         if (!$nodePackageManager) {
-            $this->warn('Neither NPM nor Yarn were found, could not update front-end assets');
+            $nodePackageManager = $this->choice('Which package manager would you like to use for Node.js?', [
+                'npm',
+                'yarn',
+            ], 0);
+        }
+
+        if (!$this->programExists($nodePackageManager)) {
+            $this->error('Could not find "' . $nodePackageManager . '", will not be able to compile front-end assets');
         } else {
-            shell_exec($nodePackageManager . ' install && ' . $nodePackageManager . ' run production');
+            $this->info('Installing Node.js packages');
+            $this->executeCommand([$nodePackageManager, 'install']);
+
+            if ($nodePackageManager === 'npm') {
+                $this->executeCommand(['git', 'restore', 'yarn.lock']);
+            }
+
+            $this->info('Compiling front-end assets');
+            $this->executeCommand([$nodePackageManager, 'run', 'production']);
         }
 
         // Destroy existing sessions
-        shell_exec('rm ' . storage_path() . '/framework/sessions/*');
+        $this->executeCommand(['rm', storage_path(), '/framework/sessions/*']);
 
         // Disable maintenance mode
-        shell_exec('php artisan up');
+        $this->executeCommand(['php', 'artisan', 'up'], true);
 
         $this->info('Successfully updated to ' . $latestVersion . ', you should probably restart your queue workers as well'); // phpcs:ignore
     }

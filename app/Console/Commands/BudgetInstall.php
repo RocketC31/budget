@@ -2,12 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Exception;
-use Illuminate\Console\Command;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use App\Console\Commands\BudgetCommand;
 
-class BudgetInstall extends Command
+class BudgetInstall extends BudgetCommand
 {
     protected $signature = 'budget:install {--node-package-manager=}';
     protected $description = 'Runs most of the commands needed to make Budget work';
@@ -17,32 +14,11 @@ class BudgetInstall extends Command
         parent::__construct();
     }
 
-    private function executeCommand($command): string
-    {
-        $process = new Process($command);
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        return $process->getOutput();
-    }
-
-    private function programExists(string $program): bool
-    {
-        try {
-            $this->executeCommand(['which', $program]);
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function handle(): void
     {
+        $this->info('Installing Composer packages');
+        $this->executeCommand(['composer', 'install', '--no-dev', '-o']);
+
         $nodePackageManager = $this->option('node-package-manager');
 
         if (!$nodePackageManager) {
