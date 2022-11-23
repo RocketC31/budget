@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new SyncStripeSubscriptions())->everyMinute()->when(function () {
-            return Helper::arePlansEnabled();
+            return Helper::arePlansEnabled() && !is_null(config('stripe.secret'));
         });
 
         // Daily
