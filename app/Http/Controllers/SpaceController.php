@@ -14,15 +14,12 @@ use App\Models\Space;
 use App\Models\User;
 use App\Providers\NordigenServiceProvider;
 use App\Repositories\BankRepository;
-use App\Services\NordigenService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
-use Nordigen\NordigenPHP\API\NordigenClient;
 
 class SpaceController extends Controller
 {
