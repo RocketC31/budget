@@ -16,10 +16,13 @@ class Space extends Model
 
     protected $fillable = [
         'currency_id',
-        'name'
+        'name',
+        'sync_active',
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $appends = [ 'bank' ];
 
     // Relations
     public function users(): BelongsToMany
@@ -71,6 +74,16 @@ class Space extends Model
     public function getAbbreviatedNameAttribute(): string
     {
         return Str::limit($this->name, 3);
+    }
+
+    public function bank()
+    {
+        return $this->hasOne(Bank::class);
+    }
+
+    public function getBankAttribute()
+    {
+        return $this->bank()->first();
     }
 
     //

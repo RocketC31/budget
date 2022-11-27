@@ -29,5 +29,6 @@ return [
     'list' => 'List',
     'chart' => 'Chart',
     'status' => 'Status',
-    'deletion_date' => 'Deletion date'
+    'deletion_date' => 'Deletion date',
+    'sync_bank_activate' => 'Activate bank synchronization'
 ];

@@ -229,5 +229,10 @@ return [
     'disable_registration' => env('DISABLE_REGISTRATION', false),
     'patch_method_available' => env("PATCH_METHOD_AVAILABLE", true),
     'redis_available' => env("REDIS_AVAILABLE", true),
-    'demo_mode' => env("DEMO_MODE", false)
+    'demo_mode' => env("DEMO_MODE", false),
+    'bank_sync' => [
+        'secret_id' => env("BANK_SYNC_SECRET_ID", false),
+        'secret_key' => env("BANK_SYNC_SECRET_KEY", false),
+        'available' => env("BANK_SYNC_SECRET_ID", false) && env("BANK_SYNC_SECRET_KEY", false)
+    ]
 ];

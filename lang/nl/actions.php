@@ -34,5 +34,6 @@ return [
     'select_all' => 'Selecteer alles',
     'deselect_all' => 'Deselecteer alles',
     'remove_all' => 'Verwijder alles',
-    'back' => 'Terug'
+    'back' => 'Terug',
+    'connect_bank' => 'Log in op de bank'
 ];

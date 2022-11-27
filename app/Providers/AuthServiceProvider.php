@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Bank;
 use App\Models\Import;
 use App\Models\Transaction;
+use App\Policies\BankPolicy;
 use App\Policies\ImportPolicy;
 use App\Policies\TagPolicy;
 use App\Models\Tag;
@@ -30,7 +32,8 @@ class AuthServiceProvider extends ServiceProvider
         Transaction::class => TransactionPolicy::class,
         Recurring::class => RecurringPolicy::class,
         Tag::class => TagPolicy::class,
-        Import::class => ImportPolicy::class
+        Import::class => ImportPolicy::class,
+        Bank::class => BankPolicy::class
     ];
 
     /**

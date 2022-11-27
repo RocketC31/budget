@@ -53,5 +53,6 @@ return [
     'cant_edit_currency' => 'Je kan de valuate niet meer aanpassen',
     'empty_trash' => 'Prullenbak is leeg',
     'change_your_preference' => 'Verander je voorkeur',
-    'demo_mode' => "[DEMO_MODE] De database wordt iedere dag gereset."
+    'demo_mode' => "[DEMO_MODE] De database wordt iedere dag gereset.",
+    'configured_bank' => 'Bank momenteel geconfigureerd :'
 ];

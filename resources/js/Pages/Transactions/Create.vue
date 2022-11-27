@@ -183,7 +183,10 @@
             },
 
             tagUpdated(payload) {
-                this.tag = payload.key
+                this.tag = null;
+                if (payload && payload.key) {
+                    this.tag = payload.key
+                }
             },
 
             getTodaysDate() {

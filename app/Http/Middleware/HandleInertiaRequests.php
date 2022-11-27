@@ -54,7 +54,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
             ],
-            'registrationDisable' => config('app.disable_registration')
+            'registrationDisable' => config('app.disable_registration'),
+            'bank_sync_available' => config('app.bank_sync.available'),
         ]);
     }
 }

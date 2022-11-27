@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\BankSyncController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportController;
@@ -153,6 +154,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/spaces/{space}/invites/{invite}/accept', [SpaceInviteController::class, 'accept'])->name('accept');
         Route::post('/spaces/{space}/invites/{invite}/deny', [SpaceInviteController::class, 'deny'])->name('deny');
     });
+
+    //Sync Banking
+    Route::any('/sync_bank/{space}', BankSyncController::class)->name('sync_bank');
 
     Route::get('/translations', TranslationsController::class);
 });

@@ -2,8 +2,8 @@
     <tr tabindex="0" class="focus:outline-none h-16 border-y border-gray-100 dark:border-gray-700 rounded">
         <td class="px-1">
             <div class="flex items-center pl-5">
-                <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2">
-                    {{ transaction.description }}
+                <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2" :title="transaction.description">
+                    {{ truncate(transaction.description, 25) }}
                     <br> <span class="text-sm text-gray-400">{{ formatDate(transaction.happened_on) }}</span>
                 </p>
             </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-    import { formatDate } from '@/tools';
+    import { formatDate, truncate } from '@/tools';
     import { trans } from "matice";
     import { Link } from "@inertiajs/inertia-vue3";
     import Tag from '@/Components/Partials/Tag';
