@@ -10,13 +10,12 @@
                         <div class="input">
                             <label>{{ trans('fields.name') }}</label>
                             <input type="text" name="name" v-model="form.name" />
-                            <ValidationError v-if="errors.name"></ValidationError>
+                            <ValidationError v-if="errors.name" :message="errors.name"></ValidationError>
                         </div>
                         <div class="input input--small mb-0">
                             <label>{{ trans('fields.file') }}</label>
                             <input type="file" name="file" @input="form.file = $event.target.files[0]" />
-                            <div v-if="errors.file && errors.file[0] === 'validation.mimes'" style="font-size: 14px; color: red; margin-bottom: 20px;">{{ trans('validation.please_upload_csv') }}</div>
-                            <ValidationError v-else :message="errors.file"></ValidationError>
+                            <ValidationError v-if="errors.file" :message="errors.file"></ValidationError>
                         </div>
                     </div>
                     <div class="box__section box__section--highlight row row--right">
