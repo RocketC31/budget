@@ -37,6 +37,6 @@ class BankSyncController extends Controller
             }
         }
 
-        return redirect()->route('settings.spaces.index');
+        return redirect()->route('settings.spaces.edit', $space->id);
     }
 }

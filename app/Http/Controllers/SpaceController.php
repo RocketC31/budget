@@ -121,7 +121,7 @@ class SpaceController extends Controller
         if (config('app.bank_sync.available')) {
             $data['sync_active'] = $request->sync_active ? 1 : 0;
 
-            if ($request->bank && $request->sync_active) {
+            if ($request->bank && $request->sync_active && (!$space->bank || is_null($space->bank->account_id))) {
                 $request->validate($this->bankRepository->getValidationRules());
                 //If whe have data for bank
                 $bankProvider = new NordigenServiceProvider(
