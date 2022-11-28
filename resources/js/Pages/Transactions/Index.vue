@@ -9,7 +9,7 @@
                 </div>
                 <div class="row__column row__column--compact row__column--middle w-full sm:w-auto flex items-center justify-between">
                     <Link :href="route('transactions.trash')" class="m-0 sm:m-3">{{ trans('activities.trashes.index') }}</Link>
-                    <Link :href="route('transactions.create')" class="button">{{ trans('actions.create') }} {{ trans('models.transactions') }}</Link>
+                    <Link :href="route('transactions.create')" class="button">{{ trans('actions.create') }} {{ trans('models.transaction') }}</Link>
                 </div>
             </div>
             <div class="row md:flex-row flex-col">
