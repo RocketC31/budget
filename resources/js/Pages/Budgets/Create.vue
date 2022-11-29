@@ -1,5 +1,5 @@
 <template>
-    <Head :title="trans('models.budget')" />
+    <Head :title="trans('actions.create') + ' ' + trans('models.budget')" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">

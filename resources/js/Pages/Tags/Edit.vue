@@ -1,5 +1,5 @@
 <template>
-    <Head :title="trans('models.transactions')" />
+    <Head :title="trans('actions.edit') + ' ' + trans('models.tag')" />
 
     <BreezeAuthenticatedLayout>
         <div class="wrapper my-3">
