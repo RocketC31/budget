@@ -25,14 +25,14 @@ class BudgetController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('Budgets/Index', [
-            'budgets' => $this->budgetRepository->getActive()
-        ]);
+        $budgets = $this->budgetRepository->getActive()->sortBy('tag.name')->values();
+
+        return Inertia::render('Budgets/Index', ['budgets' => $budgets]);
     }
 
     public function create()
     {
-        $tags = Tag::ofSpace(session('space_id'))->latest()->get();
+        $tags = Tag::ofSpace(session('space_id'))->orderBy('name')->get();
 
         return Inertia::render('Budgets/Create', ['tags' => $tags]);
     }

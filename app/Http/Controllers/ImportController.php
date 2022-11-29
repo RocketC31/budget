@@ -100,7 +100,7 @@ class ImportController extends Controller
     {
         $this->authorize('modify', $import);
 
-        $tags = Tag::ofSpace(session('space_id'))->get();
+        $tags = Tag::ofSpace(session('space_id'))->orderBy('name')->get();
 
         $file = fopen(storage_path('app/imports/' . $import->file), 'r');
 

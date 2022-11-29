@@ -27,7 +27,7 @@ class TagController extends Controller
             ->with('spendings')
             ->with('earnings')
             ->with('budgets')
-            ->latest()->get();
+            ->orderBy('name')->get();
         return Inertia::render('Tags/Index', ['tags' => $tags]);
     }
 
