@@ -29,7 +29,7 @@ class FetchTransactionFromBank implements ShouldQueue
                 config('app.bank_sync.secret_key')
             );
             $dateFrom = new \DateTime();
-            $dateFrom->sub(new \DateInterval("P3D"));
+            $dateFrom->sub(new \DateInterval("P1D"));
             foreach ($banks as $bank) {
                 $data = $bankProvider->getTransactions(
                     $bank->account_id,
