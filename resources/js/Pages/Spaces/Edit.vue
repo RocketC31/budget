@@ -30,7 +30,7 @@
                                     <Searchable :distinct-key="'name'" :name="'bank'" :items="getBanksName()" :initial="getCurrentBankName()" @SelectUpdated="bankUpdated"></Searchable>
                                 </div>
                                 <a v-if="linkBank" :href="linkBank">{{ trans('actions.connect_bank') }}</a>
-                                <div v-if="space.bank && space.bank.account_id" class="hint mt-05">{{ trans('general.configured_bank') }} {{ space.bank.name }}</div>
+                                <div v-if="space.bank && space.bank.account_id && space.sync_active" class="hint mt-05">{{ trans('general.configured_bank') }} {{ space.bank.name }}</div>
                             </template>
                         </div>
                     </div>

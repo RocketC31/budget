@@ -24,23 +24,26 @@ class FetchTransactionFromBank implements ShouldQueue
     {
         if (config('app.bank_sync.available')) {
             $banks = Bank::whereNotNull("account_id")->get();
-            $bankProvider = new NordigenServiceProvider(
-                config('app.bank_sync.secret_id'),
-                config('app.bank_sync.secret_key')
-            );
-            $dateFrom = new \DateTime();
-            $dateFrom->sub(new \DateInterval("P1D"));
-            foreach ($banks as $bank) {
-                $data = $bankProvider->getTransactions(
-                    $bank->account_id,
-                    $dateFrom->format('Y-m-d'),
-                    $dateFrom->format('Y-m-d')
+            try {
+                $bankProvider = new NordigenServiceProvider(
+                    config('app.bank_sync.secret_id'),
+                    config('app.bank_sync.secret_key')
                 );
-                if (array_key_exists("transactions", $data) && array_key_exists("booked", $data["transactions"])) {
-                    foreach ($data["transactions"]["booked"] as $transaction) {
-                        $this->createTransactionFromBank($bank->space_id, $transaction);
+                $dateFrom = new \DateTime();
+                $dateFrom->sub(new \DateInterval("P1D"));
+                foreach ($banks as $bank) {
+                    $data = $bankProvider->getTransactions(
+                        $bank->account_id,
+                        $dateFrom->format('Y-m-d'),
+                        $dateFrom->format('Y-m-d')
+                    );
+                    if (array_key_exists("transactions", $data) && array_key_exists("booked", $data["transactions"])) {
+                        foreach ($data["transactions"]["booked"] as $transaction) {
+                            $this->createTransactionFromBank($bank->space_id, $transaction);
+                        }
                     }
                 }
+            } catch (\Exception $exception) {
             }
         }
     }

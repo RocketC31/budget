@@ -23,20 +23,23 @@ class BankSyncController extends Controller
             && Auth::user()->can('edit', $bank)
             && $bank->requisition_id
         ) {
-            $bankProvider = new NordigenServiceProvider(
-                config('app.bank_sync.secret_id'),
-                config('app.bank_sync.secret_key')
-            );
-            $accounts = $bankProvider->getListOfAccounts($bank->requisition_id);
-            if ($accounts) {
-                $bank->fill([
-                    "account_id" => $accounts[0],
-                    "link" => null,
-                    "requisition_id" => null
-                ])->save();
+            try {
+                $bankProvider = new NordigenServiceProvider(
+                    config('app.bank_sync.secret_id'),
+                    config('app.bank_sync.secret_key')
+                );
+                $accounts = $bankProvider->getListOfAccounts($bank->requisition_id);
+                if ($accounts) {
+                    $bank->fill([
+                        "account_id" => $accounts[0],
+                        "link" => null,
+                        "requisition_id" => null
+                    ])->save();
+                }
+            } catch (\Exception $exception) {
             }
         }
 
-        return redirect()->route('settings.spaces.edit', $space->id);
+        return redirect()->route('spaces.edit', $space->id);
     }
 }
