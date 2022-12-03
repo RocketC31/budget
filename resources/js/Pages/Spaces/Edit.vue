@@ -124,14 +124,14 @@
     });
 
     function getBanksName() {
-        return this.props.banks.map(bank => {
+        return props.banks.map(bank => {
             bank.label = bank.name;
             return bank;
         });
     }
 
     function getCurrentBankName() {
-        return this.props.space.bank && this.props.space.bank.name ? this.props.space.bank.name : ''
+        return props.space.bank && props.space.bank.name ? props.space.bank.name : ''
     }
 
     function submitSpace() {
