@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div :class="{'relative': useAsRelative}">
         <div @click.stop="open = ! open">
             <slot name="trigger" />
         </div>
@@ -39,6 +39,10 @@
         },
         contentClasses: {
             default: () => ['py-1', 'bg-white', 'dark:bg-neutral-700']
+        },
+        useAsRelative: {
+            type: Boolean,
+            default: true
         }
     });
 

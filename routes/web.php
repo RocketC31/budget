@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/transactions/trash', [TransactionController::class, 'trash'])->name('trash');
         Route::patch('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
         Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('update');
+        Route::patch('/transactions/{transaction}/tag', [TransactionController::class, 'updateTag'])->name('update_tag');
+        Route::put('/transactions/{transaction}/tag', [TransactionController::class, 'updateTag'])->name('update_tag');
         Route::post('/transactions/{id}/restore', [TransactionController::class, 'restore'])->name('restore');
         Route::post('/transactions', [TransactionController::class, 'store']);
         Route::delete('/transactions/purge_all', [TransactionController::class, 'purgeAll'])->name('purge_all');

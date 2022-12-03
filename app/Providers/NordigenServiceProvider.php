@@ -18,7 +18,6 @@ class NordigenServiceProvider
         $this->client->createAccessToken();
     }
 
-
     public function getListOfInstitutions(string $country): array
     {
         return $this->client->institution->getInstitutionsByCountry($country);

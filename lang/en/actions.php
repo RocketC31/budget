@@ -35,5 +35,6 @@ return [
     'deselect_all' => 'Deselect all',
     'remove_all' => 'Remove all',
     'back' => 'Back',
-    'connect_bank' => 'Login to bank'
+    'connect_bank' => 'Login to bank',
+    'choose_tag' => 'Choose a tag'
 ];
