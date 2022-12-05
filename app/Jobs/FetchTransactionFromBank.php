@@ -19,7 +19,6 @@ class FetchTransactionFromBank implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-
     public function handle(): void
     {
         if (config('app.bank_sync.available')) {
