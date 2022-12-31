@@ -52,7 +52,11 @@ class BudgetUpdate extends BudgetCommand
         // Migrate database
         $this->executeCommand(['php', 'artisan', 'migrate', '--force'], true);
 
-        $nodePackageManager = $this->option('node-package-manager');
+        try {
+            $nodePackageManager = $this->option('node-package-manager');
+        } catch (Exception $exception) {
+            $nodePackageManager = null;
+        }
 
         if (!$nodePackageManager) {
             $nodePackageManager = $this->choice('Which package manager would you like to use for Node.js?', [

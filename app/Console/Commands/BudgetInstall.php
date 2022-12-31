@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Console\Commands\BudgetCommand;
+use Exception;
 
 class BudgetInstall extends BudgetCommand
 {
@@ -19,7 +20,11 @@ class BudgetInstall extends BudgetCommand
         $this->info('Installing Composer packages');
         $this->executeCommand(['composer', 'install', '--no-dev', '-o']);
 
-        $nodePackageManager = $this->option('node-package-manager');
+        try {
+            $nodePackageManager = $this->option('node-package-manager');
+        } catch (Exception $exception) {
+            $nodePackageManager = null;
+        }
 
         if (!$nodePackageManager) {
             $nodePackageManager = $this->choice('Which package manager would you like to use for Node.js?', [
