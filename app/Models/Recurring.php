@@ -25,7 +25,8 @@ class Recurring extends Model
         'tag_id',
         'description',
         'amount',
-        'currency_id'
+        'currency_id',
+        'active'
     ];
 
     protected $dates = ['deleted_at'];

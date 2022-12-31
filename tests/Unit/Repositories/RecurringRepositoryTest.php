@@ -396,4 +396,42 @@ class RecurringRepositoryTest extends TestCase
 
         $this->assertFalse($contains);
     }
+
+    public function testRecurringInactive(): void
+    {
+        // Assert that recurring (that has never been used before) is due
+        $neverUsedRecurring = Recurring::factory()->create([
+            'space_id' => $this->space->id,
+            'type' => 'earning',
+            'interval' => 'daily',
+            'last_used_on' => null
+        ]);
+
+        $recurringsDueDaily = $this->recurringRepository->getDueDaily();
+
+        $contains = false;
+        foreach ($recurringsDueDaily as $recurring) {
+            if ($recurring->id === $neverUsedRecurring->id) {
+                $contains = true;
+            }
+        }
+
+        $this->assertTrue($contains);
+
+        //Now update recurring and set as inactive
+        $this->recurringRepository->update($neverUsedRecurring->id, [
+            'active' => false
+        ]);
+
+        $recurringsDueDaily = $this->recurringRepository->getDueDaily();
+
+        $contains = false;
+        foreach ($recurringsDueDaily as $recurring) {
+            if ($recurring->id === $neverUsedRecurring->id) {
+                $contains = true;
+            }
+        }
+
+        $this->assertFalse($contains);
+    }
 }

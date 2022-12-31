@@ -20,6 +20,9 @@
                     <input type="text" name="amount" v-model="form.amount" />
                     <ValidationError v-if="errors.amount" :message="errors.amount"></ValidationError>
                 </div>
+                <div class="input">
+                    <Toggle @UpdateActive="onActiveSyncUpdate" :label="trans('fields.active')" :checked="form.active"></Toggle>
+                </div>
                 <div class="row">
                     <div class="row__column row__column--compact">
                         <button class="button">{{ trans('actions.edit') }}</button>
@@ -35,6 +38,7 @@
     import {Head, useForm, usePage} from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import ValidationError from "@/Components/ValidationError";
+    import Toggle from "@/Components/Toggle";
     import DatePicker from "@/Components/DatePicker";
     import { computed } from "vue";
 
@@ -43,6 +47,10 @@
     });
 
     const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+
+    function onActiveSyncUpdate(isActive) {
+        form.active = (isActive) ? 1 : 0;
+    }
 
     function submit() {
         if (patchMethodAvailable.value) {
@@ -55,7 +63,8 @@
     const form = useForm({
         date: new Date(props.recurring.last_used_on).toISOString().slice(0, 10),
         description: props.recurring.description,
-        amount: props.recurring.formatted_amount
+        amount: props.recurring.formatted_amount,
+        active: props.recurring.active
     });
 
     function onDateUpdate(date) {
