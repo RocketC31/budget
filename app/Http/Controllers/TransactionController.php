@@ -139,6 +139,19 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index');
     }
 
+    public function updateTag(Request $request, Transaction $transaction): RedirectResponse
+    {
+        $this->authorize('update', $transaction);
+
+        $request->validate(['tag_id' => 'nullable|exists:tags,id']);
+
+        $this->repository->update($transaction->id, [
+            'tag_id' => $request->input('tag_id'),
+        ]);
+
+        return back();
+    }
+
     public function store(Request $request)
     {
         $request->validate($this->repository->getValidationRules());

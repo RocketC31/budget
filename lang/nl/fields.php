@@ -28,5 +28,6 @@ return [
     'list' => 'Lijst',
     'chart' => 'Grafiek',
     'status' => 'Status',
-    'deletion_date' => 'Verwijder datum'
+    'deletion_date' => 'Verwijder datum',
+    'sync_bank_activate' => 'Activeer banksynchronisatie'
 ];

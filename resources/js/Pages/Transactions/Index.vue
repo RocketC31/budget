@@ -50,7 +50,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <List v-if="transactions && dataType === 'list'" :transactions="transactions" :currency="currency"></List>
+                        <List v-if="transactions && dataType === 'list'" :transactions="transactions" :currency="currency" :tags="tags"></List>
                         <Chart v-if="transactionsChart && dataType === 'chart'" :transactions-chart="transactionsChart"></Chart>
                         <ResumeTags v-if="tagsPrice && dataType === 'tags'" :tags-price="tagsPrice" :currency="currency"></ResumeTags>
                     </template>

@@ -6,12 +6,12 @@
             <span v-else v-html="selected.label"></span>
         </div>
         <div class="searchable__container">
-            <div class="searchable__list" v-if="shown">
+            <div class="searchable__list" v-if="shown && queriedItems">
                 <input type="search" v-model="query" :placeholder="trans('actions.search')" ref="query" />
                 <ul :style="{ 'max-height': size * 50 + 'px' }">
                     <li
                         class="row"
-                        v-for="item in queriedItems"
+                        v-for="item in queriedItems" :key="item"
                         @click="select(item)">
                         <div
                             class="row__column row__column--compact"
@@ -34,82 +34,91 @@
     import { trans } from "matice";
 
     export default {
-            props: {
-                name: String,
-                size: { type: Number, default: 4 },
-                items: Array,
-                initial: String
+        props: {
+            name: String,
+            size: { type: Number, default: 4 },
+            items: Array,
+            initial: String,
+            distinctKey: {
+                type: String,
+                default: 'key'
             },
+            canUnselectLast: { type: Boolean, default: true }
+        },
 
-            setup(props) {
-                return { trans }
-            },
+        setup(props) {
+            return { trans }
+        },
 
-            data() {
-                return {
-                    shown: false,
-                    selected: this.initial ? this.getItemByKey(this.initial) : null,
-                    query: ''
+        data() {
+            return {
+                shown: false,
+                selected: this.initial ? this.getItemByKey(this.initial) : null,
+                query: ''
+            }
+        },
+
+        computed: {
+            inputValue() {
+                if (this.selected) {
+                    return this.selected.key
                 }
+
+                return ''
             },
 
-            computed: {
-                inputValue() {
-                    if (this.selected) {
-                        return this.selected.key
+            queriedItems() {
+                return this.items.filter(item => {
+                    if (this.query.length < 1 || item.label.toUpperCase().indexOf(this.query.toUpperCase()) > -1) {
+                        return item
                     }
+                });
+            }
+        },
 
-                    return ''
-                },
-
-                queriedItems() {
-                    return this.items.filter(item => {
-                        if (this.query.length < 1 || item.label.toUpperCase().indexOf(this.query.toUpperCase()) > -1) {
-                            return item
-                        }
-                    })
+        methods: {
+            getItemByKey(key) {
+                for (let i = 0; i < this.items.length; i ++) {
+                    if (this.items[i][this.distinctKey] === key) {
+                        return this.items[i]
+                    }
                 }
             },
 
-            methods: {
-                getItemByKey(key) {
-                    for (let i = 0; i < this.items.length; i ++) {
-                        if (this.items[i].key == key) {
-                            return this.items[i]
-                        }
+            isSelected(item) {
+                return this.selected && this.selected === item;
+            },
+
+            toggleShown() {
+                this.shown = !this.shown
+
+                this.$nextTick(() => {
+                    if (this.$refs.query) {
+                        this.$refs.query.focus()
                     }
-                },
+                })
+            },
 
-                isSelected(item) {
-                    return this.selected == item
-                },
+            show() {
+                this.shown = true
+            },
 
-                toggleShown() {
-                    this.shown = !this.shown
+            hide() {
+                this.shown = false
+            },
 
-                    this.$nextTick(() => {
-                        if (this.$refs.query) {
-                            this.$refs.query.focus()
-                        }
-                    })
-                },
-
-                show() {
-                    this.shown = true
-                },
-
-                hide() {
-                    this.shown = false
-                },
-
-                select(payload) {
-                    this.selected = payload
-
-                    this.hide()
-
-                    // Update parent
-                    this.$emit('SelectUpdated', this.selected)
+            select(payload) {
+                //If it's the currently selected where we re click. Considere it's to unset it !
+                if (this.isSelected(payload) && this.canUnselectLast) {
+                    payload = null;
                 }
+                this.selected = payload
+
+                this.hide()
+
+                // Update parent
+                this.$emit('SelectUpdated', this.selected)
             }
         }
+    }
 </script>

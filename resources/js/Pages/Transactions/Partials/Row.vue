@@ -2,14 +2,31 @@
     <tr tabindex="0" class="focus:outline-none h-16 border-y border-gray-100 dark:border-gray-700 rounded">
         <td class="px-1">
             <div class="flex items-center pl-5">
-                <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2">
-                    {{ transaction.description }}
+                <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2" :title="transaction.description">
+                    {{ truncate(transaction.description, 25) }}
                     <br> <span class="text-sm text-gray-400">{{ formatDate(transaction.happened_on) }}</span>
                 </p>
             </div>
         </td>
         <td class="px-3 text-center">
-            <Tag :tag="transaction.tag"></Tag>
+            <BreezeDropdown align="bottom" width="48" :use-as-relative="false" v-if="tags.length > 0">
+                <template #trigger>
+                    <span class="inline-flex rounded-md w-full">
+                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 focus:outline-none transition ease-in-out duration-150">
+                            <Tag v-if="transaction.tag" :tag="transaction.tag"></Tag>
+                            <div v-else>
+                                {{ trans("actions.choose_tag") }}
+                            </div>
+                        </button>
+                    </span>
+                </template>
+
+                <template #content class="ho">
+                    <div v-for="tag in tagsChoice" @click.prevent="changeTag(tag)" class="cursor-pointer block w-full px-4 py-2 text-left text-sm leading-5 text-gray-400 dark:text-white hover:bg-blue-50 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-white rounded focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                        <Tag :tag="tag"></Tag>
+                    </div>
+                </template>
+            </BreezeDropdown>
         </td>
         <td class="px-3 w-10 text-center dark:text-gray-500">
             <i v-if="transaction.recurring_id" class="fas fa-recycle"></i>
@@ -34,22 +51,46 @@
 </template>
 
 <script setup>
-    import { formatDate } from '@/tools';
+    import { formatDate, truncate } from '@/tools';
     import { trans } from "matice";
-    import { Link } from "@inertiajs/inertia-vue3";
+    import {Link, usePage} from "@inertiajs/inertia-vue3";
     import Tag from '@/Components/Partials/Tag';
+    import BreezeDropdown from '@/Components/Dropdown.vue';
     import Currency from './Currency';
     import { Inertia } from '@inertiajs/inertia'
+    import { computed } from "vue";
 
     const props = defineProps({
         transaction: Object,
+        tags: Array,
         currency: String
+    });
+
+    const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+
+    const tagsChoice = computed(() => {
+        return [{name: "--", id: null }].concat(props.tags);
     });
 
     function remove() {
         let url = `/transactions/${props.transaction.id}`;
         if (confirm(trans('actions.confirm_action'))) {
             Inertia.delete(url);
+        }
+    }
+
+    function changeTag(tag) {
+        if (tag.id === null) {
+            props.transaction.tag = null;
+            props.transaction.tag_id = null;
+        } else {
+            props.transaction.tag = tag;
+            props.transaction.tag_id = tag.id;
+        }
+        if (patchMethodAvailable.value) {
+            Inertia.patch(route('transactions.update_tag', { transaction: props.transaction.id }), props.transaction, { preserveState: true });
+        } else {
+            Inertia.put(route('transactions.update_tag', { transaction: props.transaction.id }), props.transaction, { preserveState: true });
         }
     }
 </script>

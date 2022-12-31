@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Helper;
 use App\Jobs\FetchConversionRates;
+use App\Jobs\FetchTransactionFromBank;
 use App\Jobs\GlobalBalanceRefresh;
 use App\Jobs\ProcessRecurrings;
 use App\Jobs\ResetDatabaseDemoMode;
@@ -39,6 +40,7 @@ class Kernel extends ConsoleKernel
         // Daily
         $schedule->job(new ProcessRecurrings())->daily();
         $schedule->job(new FetchConversionRates())->daily();
+        $schedule->job(new FetchTransactionFromBank())->daily();
         $schedule->job(new GlobalBalanceRefresh())->when(function () {
             if (config("app.redis_available", true)) {
                 try {

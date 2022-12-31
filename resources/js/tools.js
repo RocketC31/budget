@@ -40,5 +40,14 @@ module.exports = {
     },
     contains(needle, string) {
         return string.includes(needle);
+    },
+    redirect(link) {
+        window.location.href = link;
+    },
+    truncate: function (text, num) {
+        if (text.length > num) {
+            return text.split("").slice(0, num).join("") + "...";
+        }
+        return text;
     }
 }

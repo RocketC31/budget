@@ -34,5 +34,7 @@ return [
     'select_all' => 'Tout sélectionner',
     'deselect_all' => 'Tout désélectionner',
     'remove_all' => 'Tout supprimer',
-    'back' => 'Retour'
+    'back' => 'Retour',
+    'connect_bank' => 'Se connecter à la banque',
+    'choose_tag' => 'Choisir une étiquette'
 ];

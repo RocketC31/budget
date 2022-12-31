@@ -3,7 +3,7 @@
         <table class="w-full whitespace-nowrap">
             <tbody>
             <template v-for="transaction in transactions">
-                <Row :transaction="transaction" :currency="currency"></Row>
+                <Row :transaction="transaction" :currency="currency" :tags="tags"></Row>
             </template>
             </tbody>
         </table>
@@ -15,6 +15,7 @@
 
     defineProps({
         transactions: Array,
+        tags: Array,
         currency: String
     });
 </script>

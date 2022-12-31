@@ -32,6 +32,7 @@ You can use Budget by hosting it yourself.
 * Supports multiple currencies
 * Available in multiple languages
 * Weekly summary available through e-mail
+* Transactions synchronisation with your bank
 
 ## Requirements
 
@@ -84,6 +85,23 @@ REDIS_AVAILABLE:true
 # For server who not have PATCH method available. If set to false, PUT method will be used
 PATCH_METHOD_AVAILABLE:true
 ```
+
+## Add possibility to sync transactions with bank
+In this project we have implement Nordigen API. For permit to use it.
+You need to create an account on https://nordigen.com.
+When it's done, create new user secrets and set it in .env
+```
+BANK_SYNC_SECRET_ID= //secret id from nordigen
+BANK_SYNC_SECRET_KEY= //secret key from nordigen
+```
+When it's done, users can now add synchronisation with their bank on their space.
+
+On `Option > Spaces > Options (on the space where add sync)`.
+- Toggle the sync bank button
+- Save
+- Select the bank from the list (bank listing depend of your lang)
+- Save
+- Click to connect to the bank link
 
 ## Docker
 

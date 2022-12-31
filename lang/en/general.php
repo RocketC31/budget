@@ -54,5 +54,6 @@ return [
     'cant_edit_currency' => 'You cannot modify the currency anymore',
     'empty_trash' => 'Trash is empty',
     'change_your_preference' => 'Change your preference',
-    'demo_mode' => "[DEMO_MODE] The database will be reset daily."
+    'demo_mode' => "[DEMO_MODE] The database will be reset daily.",
+    'configured_bank' => 'Bank currently configured :'
 ];

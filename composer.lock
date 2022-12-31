@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d56088acda131c0748b01638d37be3f3",
+    "content-hash": "39bc4fcf41e5285904ad0a78bc3939fe",
     "packages": [
         {
             "name": "brick/math",
@@ -2713,6 +2713,61 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.2"
             },
             "time": "2022-11-12T15:38:23+00:00"
+        },
+        {
+            "name": "nordigen/nordigen-php",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nordigen/nordigen-php.git",
+                "reference": "012cce217531a8b469cdcf998fb8f97d1155a400"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nordigen/nordigen-php/zipball/012cce217531a8b469cdcf998fb8f97d1155a400",
+                "reference": "012cce217531a8b469cdcf998fb8f97d1155a400",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.3",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "blastcloud/guzzler": "^2.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nordigen\\NordigenPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nordigen Solutions",
+                    "email": "support@nordigen.com",
+                    "homepage": "https://nordigen.com"
+                }
+            ],
+            "description": "Nordigen official API client for PHP",
+            "homepage": "https://nordigen.com",
+            "keywords": [
+                "Open Banking",
+                "api",
+                "nordigen",
+                "psd2"
+            ],
+            "support": {
+                "issues": "https://github.com/nordigen/nordigen-php/issues",
+                "source": "https://github.com/nordigen/nordigen-php/tree/1.0.2"
+            },
+            "time": "2022-05-03T16:30:51+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -8994,5 +9049,5 @@
         "ext-calendar": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.0.0"
 }

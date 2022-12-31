@@ -53,5 +53,6 @@ return [
     'cant_edit_currency' => 'Vous ne pouvez plus modifier la devise',
     'empty_trash' => 'La corbeille est vide',
     'change_your_preference' => 'Changez vos préférences',
-    'demo_mode' => "[MODE_DEMO] La base de donnée sera réinitialiser tous les jours."
+    'demo_mode' => "[MODE_DEMO] La base de donnée sera réinitialiser tous les jours.",
+    'configured_bank' => 'Banque actuellement configuré :'
 ];

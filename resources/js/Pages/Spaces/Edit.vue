@@ -22,6 +22,16 @@
                                 </select>
                                 <div class="hint mt-05">{{ trans('general.cant_edit_currency') }}</div>
                             </div>
+                            <template v-if="syncBankActive">
+                                <div class="input input--small mt-4 mb-0" >
+                                    <Toggle @UpdateActive="onActiveSyncUpdate" :label="trans('fields.sync_bank_activate')" :checked="space.sync_active"></Toggle>
+                                </div>
+                                <div class="input input--small mt-4 mb-0" v-if="banks.length > 0">
+                                    <Searchable :distinct-key="'name'" :name="'bank'" :items="getBanksName()" :initial="getCurrentBankName()" @SelectUpdated="bankUpdated"></Searchable>
+                                </div>
+                                <a v-if="linkBank" :href="linkBank">{{ trans('actions.connect_bank') }}</a>
+                                <div v-if="space.bank && space.bank.account_id && space.sync_active" class="hint mt-05">{{ trans('general.configured_bank') }} {{ space.bank.name }}</div>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -99,9 +109,12 @@
     import { capitalize } from '@/tools';
     import Danger from "@/Components/Partials/Alerts/Danger";
     import Success from "@/Components/Partials/Alerts/Success";
+    import Toggle from "@/Components/Toggle";
+    import Searchable from "@/Components/Searchable";
 
     const props = defineProps({
-        space: Object
+        space: Object,
+        banks: Array
     });
 
     const space = ref(props.space);
@@ -109,6 +122,17 @@
         email: null,
         role: 'admin'
     });
+
+    function getBanksName() {
+        return props.banks.map(bank => {
+            bank.label = bank.name;
+            return bank;
+        });
+    }
+
+    function getCurrentBankName() {
+        return props.space.bank && props.space.bank.name ? props.space.bank.name : ''
+    }
 
     function submitSpace() {
         if (patchMethodAvailable.value)
@@ -121,7 +145,23 @@
         Inertia.post(route('spaces.invite', { space: space.value.id }), invite.value);
     }
 
+    function onActiveSyncUpdate(isActive) {
+        space.value.sync_active = (isActive) ? 1 : 0;
+    }
+
+    function bankUpdated(bank) {
+        space.value.bank = bank;
+        space.value.bank.link = null;
+    }
+
     const errors = computed(() => usePage().props.value.errors);
+    const linkBank = computed(() => {
+        if (props.space.bank) {
+            return props.space.bank.link;
+        }
+        return null;
+    });
     const flash = computed(() => usePage().props.value.flash.message);
     const patchMethodAvailable = computed(() => usePage().props.value.patchMethodAvailable);
+    const syncBankActive = computed(() => usePage().props.value.bank_sync_available);
 </script>

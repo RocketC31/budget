@@ -7,7 +7,7 @@
                 <div class="box__section">
                     <div class="input input--small">
                         <label>{{ trans('fields.language') }}</label>
-                        <Searchable :name="'language'" :items="languages" :initial="user.language" @SelectUpdated="languageUpdated"></Searchable>
+                        <Searchable :name="'language'" :items="languages" :initial="user.language" :can-unselect-last="false" @SelectUpdated="languageUpdated"></Searchable>
                         <ValidationError v-if="errors.language" :message="errors.language"></ValidationError>
                     </div>
                     <div class="input input--small">
@@ -88,7 +88,9 @@
     });
 
     function languageUpdated(payload) {
-        form.language = payload.key
+        if (payload && payload.key) {
+            form.language = payload.key
+        }
     }
 
     onMounted(() => {
