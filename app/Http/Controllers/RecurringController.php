@@ -79,6 +79,7 @@ class RecurringController extends Controller
             'date' => 'date|date_format:Y-m-d',
             'description' => 'required|max:255',
             'amount' => 'required|regex:/^\d*(\.\d{2})?$/',
+            'active' => 'integer|in:1,0',
         ]);
         $amount = Helper::rawNumberToInteger($request->input('amount'));
         $date = new \DateTime($request->input('date'));
@@ -86,7 +87,8 @@ class RecurringController extends Controller
             'last_used_on' => $request->input('date'),
             'day' => $date->format('j'),
             'description' => $request->input('description'),
-            'amount' => $amount
+            'amount' => $amount,
+            'active' => $request->input('active')
         ]);
 
         return redirect()->route('recurrings.index');

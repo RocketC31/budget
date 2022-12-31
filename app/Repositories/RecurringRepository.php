@@ -43,6 +43,7 @@ class RecurringRepository
         $dateYearAgo = date('Y-m-d', strtotime('-1 year'));
 
         return Recurring::where('interval', 'yearly')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -73,6 +74,7 @@ class RecurringRepository
         $lastDateLastMonth = date('Y-m-d', strtotime('last day of last month'));
 
         $query = Recurring::where('interval', 'monthly')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -100,13 +102,13 @@ class RecurringRepository
     public function getDueQuarterly(): Collection
     {
         $dateToday = date('Y-m-d');
-        $dateToday = date('Y-m-d');
         $lastDateCurrentMonth = date('Y-m-d', strtotime('last day of this month'));
 
         $dateThreeMonthsAgo = date('Y-m-d', strtotime('-3 months'));
         $lastDateThreeMonthsAgo = date('Y-m-d', strtotime('last day of 3 months ago'));
 
         $query = Recurring::where('interval', 'quarterly')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -137,6 +139,7 @@ class RecurringRepository
         $dateTwoWeeksAgo = date('Y-m-d', strtotime('-2 weeks'));
 
         return Recurring::where('interval', 'biweekly')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -157,6 +160,7 @@ class RecurringRepository
         $dateWeekAgo = date('Y-m-d', strtotime('-1 week'));
 
         return Recurring::where('interval', 'weekly')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -176,6 +180,7 @@ class RecurringRepository
         $dateToday = date('Y-m-d');
 
         return Recurring::where('interval', 'daily')
+            ->where('active', true)
             ->where('starts_on', '<=', $dateToday)
             ->where(function ($query) use ($dateToday) {
                 $query
@@ -220,7 +225,8 @@ class RecurringRepository
             'tag_id' => $tagId,
             'description' => $description,
             'amount' => $amount,
-            'currency_id' => $currencyId
+            'currency_id' => $currencyId,
+            'active' => true
         ]);
     }
 
