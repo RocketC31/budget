@@ -42,8 +42,12 @@
                     <div class="row">
                         <div class="row__column row__column--compact mr-1" v-if="currencies.length > 1">
                             <select v-model="selectedCurrencyId">
-                                <option v-for="currency in currencies" :key="'currencies-' + currency.id" :value="currency.id">
-                                    <span v-html="currency.symbol"></span>
+                                <option
+                                    v-for="currency in currencies"
+                                    :key="'currencies-' + currency.id"
+                                    :value="currency.id"
+                                    v-html="currency.symbol == currency.iso ? currency.symbol : `${currency.iso} ${currency.symbol}`"
+                                >
                                 </option>
                             </select>
                         </div>
