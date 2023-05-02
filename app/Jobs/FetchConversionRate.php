@@ -49,9 +49,9 @@ class FetchConversionRate implements ShouldQueue
                 continue;
             }
 
-            $url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/' 
+            $url = 'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/'
                    . strtolower($baseCurrency->iso) . '/' . strtolower($targetCurrency->iso) . '.json';
-            
+
             try {
                 $response = $client->request('GET', $url);
                 $decoded_response = json_decode($response->getBody(), true);
