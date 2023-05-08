@@ -49,7 +49,7 @@
     import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
     import { trans } from 'matice';
     import { computed } from "vue";
-    import Success from "@/Components/Partials/Alerts/Success";
+    import Success from "@/Components/Partials/Alerts/Success.vue";
     import {Inertia} from "@inertiajs/inertia";
 
     const props = defineProps({

@@ -104,13 +104,13 @@
     import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
     import { ref, computed } from "vue";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import ValidationError from "@/Components/ValidationError";
+    import ValidationError from "@/Components/ValidationError.vue";
     import { Inertia } from "@inertiajs/inertia";
     import { capitalize } from '@/tools';
-    import Danger from "@/Components/Partials/Alerts/Danger";
-    import Success from "@/Components/Partials/Alerts/Success";
-    import Toggle from "@/Components/Toggle";
-    import Searchable from "@/Components/Searchable";
+    import Danger from "@/Components/Partials/Alerts/Danger.vue";
+    import Success from "@/Components/Partials/Alerts/Success.vue";
+    import Toggle from "@/Components/Toggle.vue";
+    import Searchable from "@/Components/Searchable.vue";
 
     const props = defineProps({
         space: Object,

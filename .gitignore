@@ -19,3 +19,4 @@ yarn-error.log
 version.txt
 .phpunit.result.cache
 /storage/backup/*
+/public/build

@@ -46,8 +46,8 @@
     import { Link, Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import EmptyState from "@/Components/Partials/EmptyState";
-    import Tag from '@/Components/Partials/Tag';
+    import EmptyState from "@/Components/Partials/EmptyState.vue";
+    import Tag from '@/Components/Partials/Tag.vue';
     import { Inertia } from "@inertiajs/inertia";
 
     defineProps({

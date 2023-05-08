@@ -126,9 +126,9 @@
     import { ref, computed } from "vue";
     import { capitalize } from "@/tools";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import Searchable from "@/Components/Searchable";
-    import ValidationError from "@/Components/ValidationError";
-    import DatePicker from "@/Components/DatePicker";
+    import Searchable from "@/Components/Searchable.vue";
+    import ValidationError from "@/Components/ValidationError.vue";
+    import DatePicker from "@/Components/DatePicker.vue";
     import { Inertia } from "@inertiajs/inertia";
 
     export default {

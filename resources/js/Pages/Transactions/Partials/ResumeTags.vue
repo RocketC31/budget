@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-    import TagPrice from "@/Components/Partials/TagPrice";
+    import TagPrice from "@/Components/Partials/TagPrice.vue";
 
     defineProps({
         tagsPrice: Array,

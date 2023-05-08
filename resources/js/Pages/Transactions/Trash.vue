@@ -63,13 +63,13 @@
 <script setup>
     import { Head, Link } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
-    import EmptyState from '@/Components/Partials/EmptyState';
-    import Tag from '@/Components/Partials/Tag';
+    import EmptyState from '@/Components/Partials/EmptyState.vue';
+    import Tag from '@/Components/Partials/Tag.vue';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { ref } from "vue";
     import { formatDate } from '@/tools';
     import { Inertia } from "@inertiajs/inertia";
-    import Currency from "@/Pages/Transactions/Partials/Currency";
+    import Currency from "@/Pages/Transactions/Partials/Currency.vue";
 
     defineProps({
         transactions: Array,

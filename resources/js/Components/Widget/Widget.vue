@@ -4,8 +4,8 @@
 </template>
 
 <script setup>
-    import Balance from "@/Components/Widget/Balance";
-    import Spent from "@/Components/Widget/Spent";
+    import Balance from "@/Components/Widget/Balance.vue";
+    import Spent from "@/Components/Widget/Spent.vue";
 
     defineProps({
         widget: {

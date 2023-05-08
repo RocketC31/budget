@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-    import Row from "@/Pages/Transactions/Partials/Row";
+    import Row from "@/Pages/Transactions/Partials/Row.vue";
 
     defineProps({
         transactions: Array,

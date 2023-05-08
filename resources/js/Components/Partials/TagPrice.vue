@@ -19,7 +19,7 @@
 
 <script setup>
     import { formattedAmount } from '@/tools';
-    import Tag from "@/Components/Partials/Tag";
+    import Tag from "@/Components/Partials/Tag.vue";
 
     defineProps({
         tagsPrice: Array,

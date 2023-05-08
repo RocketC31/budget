@@ -46,7 +46,6 @@
         data() {
             return {
                 show: false,
-
                 displayYear: new Date().getFullYear(),
                 displayMonth: new Date().getMonth() + 1,
                 year: this.startDate ? this.startDate.substring(0, 4) : new Date().getFullYear(),

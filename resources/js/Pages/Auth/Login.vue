@@ -57,7 +57,7 @@
     import {Head, Link, useForm, usePage} from '@inertiajs/inertia-vue3';
     import { trans } from 'matice'
     import { computed } from "vue";
-    import Success from "@/Components/Partials/Alerts/Success";
+    import Success from "@/Components/Partials/Alerts/Success.vue";
     import { changeTheme } from '@/tools';
 
     const props = defineProps({

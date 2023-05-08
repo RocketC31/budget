@@ -41,6 +41,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: Set up .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Install Composer dependencies
@@ -49,8 +52,8 @@ jobs:
         run: php artisan key:generate
       - name: npm install
         run: npm install
-      - name: Run build js (for mix)
-        run: npm run production
+      - name: Run build js
+        run: npm run build
       - name: Prepare database
         run: php artisan migrate --database=testing
       - name: Run PHPUnit

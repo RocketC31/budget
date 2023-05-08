@@ -71,8 +71,8 @@
     import { Link, Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import { formattedAmount, formatDate } from '@/tools';
-    import Tag from "@/Components/Partials/Tag";
-    import EmptyState from "@/Components/Partials/EmptyState";
+    import Tag from "@/Components/Partials/Tag.vue";
+    import EmptyState from "@/Components/Partials/EmptyState.vue";
     import {Inertia} from "@inertiajs/inertia";
 
     defineProps({

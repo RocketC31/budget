@@ -37,9 +37,9 @@
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import {Head, useForm, usePage} from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
-    import ValidationError from "@/Components/ValidationError";
-    import Toggle from "@/Components/Toggle";
-    import DatePicker from "@/Components/DatePicker";
+    import ValidationError from "@/Components/ValidationError.vue";
+    import Toggle from "@/Components/Toggle.vue";
+    import DatePicker from "@/Components/DatePicker.vue";
     import { computed } from "vue";
 
     const props = defineProps({
