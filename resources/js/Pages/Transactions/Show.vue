@@ -13,7 +13,7 @@
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
-    import Attachments from "@/Components/Partials/Attachments";
+    import Attachments from "@/Components/Partials/Attachments.vue";
     defineProps({
         transaction: Object
     });

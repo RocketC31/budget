@@ -13,8 +13,8 @@
     import { Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import Layout from '@/Pages/Settings/Layout.vue';
-    import Wizard from "@/Components/Widget/Wizard";
-    import WizardList from "@/Components/Widget/List";
+    import Wizard from "@/Components/Widget/Wizard.vue";
+    import WizardList from "@/Components/Widget/List.vue";
 
     defineProps({
         types: Array,

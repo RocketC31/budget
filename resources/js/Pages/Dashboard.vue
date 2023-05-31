@@ -36,8 +36,8 @@
     import { Head } from '@inertiajs/inertia-vue3';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import Tag from '@/Components/Partials/Tag.vue';
-    import Widget from "@/Components/Widget/Widget";
-    import Chart from "@/Components/Partials/Chart";
+    import Widget from "@/Components/Widget/Widget.vue";
+    import Chart from "@/Components/Partials/Chart.vue";
 
     defineProps({
         month: Number,

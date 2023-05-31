@@ -37,8 +37,8 @@
     import { Head, usePage, Link } from '@inertiajs/inertia-vue3';
     import { ref, computed } from "vue";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import ValidationError from "@/Components/ValidationError";
-    import ColorPicker from "@/Components/ColorPicker";
+    import ValidationError from "@/Components/ValidationError.vue";
+    import ColorPicker from "@/Components/ColorPicker.vue";
     import { Inertia } from "@inertiajs/inertia";
 
     const props = defineProps({

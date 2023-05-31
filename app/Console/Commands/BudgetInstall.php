@@ -44,7 +44,7 @@ class BudgetInstall extends BudgetCommand
             }
 
             $this->info('Compiling front-end assets');
-            $this->executeCommand([$nodePackageManager, 'run', 'production']);
+            $this->executeCommand([$nodePackageManager, 'run', 'build']);
         }
 
         if (!file_exists('.env')) {

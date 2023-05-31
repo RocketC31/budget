@@ -33,7 +33,7 @@
     import { trans } from 'matice';
     import Layout from '@/Pages/Settings/Layout.vue';
     import { computed, onMounted } from "vue";
-    import ValidationError from "@/Components/ValidationError";
+    import ValidationError from "@/Components/ValidationError.vue";
 
     function submit() {
         form.post(route('settings.profile'));

@@ -22,7 +22,7 @@
     import { trans } from "matice";
     import { Link, Head } from "@inertiajs/inertia-vue3";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import Chart from "@/Components/Partials/Chart";
+    import Chart from "@/Components/Partials/Chart.vue";
 
     const props = defineProps({
         year: String,

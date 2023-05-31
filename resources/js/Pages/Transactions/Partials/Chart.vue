@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import Chart from "@/Components/Partials/Chart";
+    import Chart from "@/Components/Partials/Chart.vue";
     import { trans } from "matice";
 
     export default {

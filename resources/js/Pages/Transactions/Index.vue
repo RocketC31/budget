@@ -65,11 +65,11 @@
     import { Link, Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import List from "@/Pages/Transactions/Partials/List";
+    import List from "@/Pages/Transactions/Partials/List.vue";
     import { ref } from "vue";
-    import Chart from "@/Pages/Transactions/Partials/Chart";
-    import ResumeTags from "@/Pages/Transactions/Partials/ResumeTags";
-    import EmptyState from "@/Components/Partials/EmptyState";
+    import Chart from "@/Pages/Transactions/Partials/Chart.vue";
+    import ResumeTags from "@/Pages/Transactions/Partials/ResumeTags.vue";
+    import EmptyState from "@/Components/Partials/EmptyState.vue";
 
     defineProps({
         tags: Array,

@@ -12,7 +12,7 @@
     import { trans } from "matice";
     import { Head } from "@inertiajs/inertia-vue3";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import TagPrice from "@/Components/Partials/TagPrice";
+    import TagPrice from "@/Components/Partials/TagPrice.vue";
 
     const props = defineProps({
         totalSpent: String,

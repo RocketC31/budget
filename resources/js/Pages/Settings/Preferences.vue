@@ -60,8 +60,8 @@
     import { trans } from 'matice';
     import Layout from '@/Pages/Settings/Layout.vue';
     import { computed, onMounted } from "vue";
-    import ValidationError from "@/Components/ValidationError";
-    import Searchable from "@/Components/Searchable";
+    import ValidationError from "@/Components/ValidationError.vue";
+    import Searchable from "@/Components/Searchable.vue";
     import { changeTheme } from '@/tools';
 
     defineProps({

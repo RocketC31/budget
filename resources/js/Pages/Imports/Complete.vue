@@ -40,7 +40,7 @@
                                     <option value="earning">{{ trans('models.earning') }}</option>
                                 </select>
                                 <ValidationError v-if="errors['rows.'+index+'.type']" :message="errors['rows.'+index+'.type']" ></ValidationError>
-                            </div>                             
+                            </div>
                             <div class="row__column">
                                 <select :name="'rows['+index+'][tag_id]'" v-model="form.rows[index]['tag_id']" :disabled="rows[index]['type'] === 'earning'">
                                     <option value="">-</option>
@@ -76,7 +76,7 @@
     import { trans } from 'matice';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { computed } from "vue";
-    import ValidationError from "@/Components/ValidationError";
+    import ValidationError from "@/Components/ValidationError.vue";
 
     const props = defineProps({
         tags: Array,

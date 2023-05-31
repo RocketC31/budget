@@ -39,7 +39,7 @@
     import { Link } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import { Head } from '@inertiajs/inertia-vue3';
-    import EmptyState from "@/Components/Partials/EmptyState";
+    import EmptyState from "@/Components/Partials/EmptyState.vue";
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 
     defineProps({

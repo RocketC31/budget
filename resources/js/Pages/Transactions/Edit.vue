@@ -49,9 +49,9 @@
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
-    import DatePicker from "@/Components/DatePicker";
-    import ValidationError from "@/Components/ValidationError";
-    import Searchable from "@/Components/Searchable";
+    import DatePicker from "@/Components/DatePicker.vue";
+    import ValidationError from "@/Components/ValidationError.vue";
+    import Searchable from "@/Components/Searchable.vue";
     import { computed } from "vue";
 
     export default {

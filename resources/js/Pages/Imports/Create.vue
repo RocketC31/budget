@@ -36,7 +36,7 @@
     import {Link, Head, useForm, usePage} from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-    import ValidationError from "@/Components/ValidationError";
+    import ValidationError from "@/Components/ValidationError.vue";
     import { computed } from "vue";
 
     const form = useForm({

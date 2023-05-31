@@ -54,9 +54,9 @@
     import { formatDate, truncate } from '@/tools';
     import { trans } from "matice";
     import {Link, usePage} from "@inertiajs/inertia-vue3";
-    import Tag from '@/Components/Partials/Tag';
+    import Tag from '@/Components/Partials/Tag.vue';
     import BreezeDropdown from '@/Components/Dropdown.vue';
-    import Currency from './Currency';
+    import Currency from './Currency.vue';
     import { Inertia } from '@inertiajs/inertia'
     import { computed } from "vue";
 
