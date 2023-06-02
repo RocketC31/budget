@@ -36,5 +36,6 @@ return [
     'remove_all' => 'Tout supprimer',
     'back' => 'Retour',
     'connect_bank' => 'Se connecter à la banque',
-    'choose_tag' => 'Choisir une étiquette'
+    'choose_tag' => 'Choisir une étiquette',
+    'delete_space' => 'Supprimer cet espace'
 ];

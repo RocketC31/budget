@@ -11,6 +11,7 @@ use App\Mail\InvitedToSpace;
 use App\Models\Bank;
 use App\Models\Currency;
 use App\Models\Space;
+use App\Models\UserSpace;
 use App\Models\User;
 use App\Providers\NordigenServiceProvider;
 use App\Repositories\BankRepository;
@@ -152,6 +153,29 @@ class SpaceController extends Controller
         $space->fill($data)->save();
 
         return back();
+    }
+
+    public function delete(Request $request, Space $space): RedirectResponse
+    {
+        $this->authorize("delete", $space);
+
+        //Need to have one other space. If not, you cant delete !
+        $usersSpaceCount = UserSpace::where('user_id', '=', Auth::user()->id)->where('role', '=', 'admin')->count();
+        if ($usersSpaceCount <= 1) {
+            abort(403, "You have only one last space. You can't delete it !");
+        }
+
+        //TODO : remove all one by one where space_id exist in database
+        // Or... Add foreign key constrains on delete cascade
+        $space->forceDelete();
+
+        $newSpaceForSession = Auth::user()->spaces
+            ->where('id', $space->id)
+            ->first();
+
+        (new StoreSpaceInSessionAction())->execute($newSpaceForSession->id);
+
+        return redirect()->route('dashboard');
     }
 
     public function invite(Request $request, Space $space): RedirectResponse

@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
         Route::put('/spaces/{space}/update', [SpaceController::class, 'update'])->name('update');
         Route::post('/spaces/{space}/invite', [SpaceController::class, 'invite'])->name('invite');
+        Route::delete('/spaces/{space}', [SpaceController::class, 'delete'])->name('delete');
     });
 
     Route::name('space_invites.')->group(function () {

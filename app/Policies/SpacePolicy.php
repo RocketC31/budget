@@ -35,4 +35,9 @@ class SpacePolicy
 
         return $usersSpace && $usersSpace->pivot->role === 'admin';
     }
+
+    public function delete(User $user, Space $space): bool
+    {
+        return $this->edit($user, $space);
+    }
 }

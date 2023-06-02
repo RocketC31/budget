@@ -95,6 +95,7 @@
                     </div>
                 </div>
             </div>
+            <button class="mt-3 text-red-500 hover:text-red-700" @click="removeSpace">{{ trans('actions.delete_space') }}</button>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
@@ -132,6 +133,13 @@
 
     function getCurrentBankName() {
         return props.space.bank && props.space.bank.name ? props.space.bank.name : ''
+    }
+
+    function removeSpace() {
+        let url = `/spaces/${props.space.id}`;
+        if (confirm(trans('actions.confirm_action'))) {
+            Inertia.delete(url);
+        }
     }
 
     function submitSpace() {
