@@ -42,7 +42,7 @@ return [
     'or' => 'ou',
     'spent' => 'Dépensé',
     'properties' => 'Propriétés',
-    'other' => 'Other',
+    'other' => 'Autre',
     'will_convert' => 'sera converti vers',
     'how_long_spending' => 'Combien de temps dureront ces dépenses ?',
     'forever' => 'Toujours',
@@ -54,5 +54,5 @@ return [
     'empty_trash' => 'La corbeille est vide',
     'change_your_preference' => 'Changez vos préférences',
     'demo_mode' => "[MODE_DEMO] La base de donnée sera réinitialiser tous les jours.",
-    'configured_bank' => 'Banque actuellement configuré :'
+    'configured_bank' => 'Banque actuellement configuré :',
 ];

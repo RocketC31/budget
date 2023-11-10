@@ -75,8 +75,6 @@
             data['email'] = form.email;
         }
 
-        console.log(data);
-
         Inertia.post(route('password.email'), data);
     };
 

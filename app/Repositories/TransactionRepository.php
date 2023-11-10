@@ -101,8 +101,13 @@ class TransactionRepository
             ->whereRaw('YEAR(`happened_on`) = ? AND MONTH(`happened_on`) = ?', [$year, $month]);
 
         if ($filterBy) {
-            if (array_key_exists("tag", $filterBy)) {
-                $transactions->whereIn('tag_id', [$filterBy['tag']]);
+            if (array_key_exists('tag', $filterBy) && !empty($filterBy['tag'])) {
+                $tagsArray = explode(",", $filterBy['tag']);
+                $transactions->whereIn('tag_id', $tagsArray);
+            }
+
+            if (array_key_exists('search', $filterBy)) {
+                $transactions->where('description', 'LIKE', '%' . $filterBy['search'] . '%');
             }
         }
 

@@ -31,16 +31,20 @@
                             <ValidationError v-if="errors.amount" :message="errors.amount"></ValidationError>
                         </div>
                     </div>
-                    <div class="box__section box__section--highlight row row--right">
-                        <div class="row__column row__column--compact row__column--middle">
-                            <Link :href="route('transactions.index')">{{ trans('actions.cancel') }}</Link>
+                    <div class="box__section box__section--highlight row justify-between">
+                        <div class="cursor-pointer" @click.stop="removeTransaction(transaction.id, dataType)">
+                            <i class="fas fa-trash fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
                         </div>
-                        <div class="row__column row__column--compact ml-2">
+                        <div class="flex items-center gap-2">
+                            <Link :href="route('transactions.index')">{{ trans('actions.cancel') }}</Link>
                             <button class="button">{{ trans('actions.save') }}</button>
                         </div>
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="wrapper my-5">
+            <Attachments :element="transaction"></Attachments>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
@@ -53,9 +57,13 @@
     import ValidationError from "@/Components/ValidationError.vue";
     import Searchable from "@/Components/Searchable.vue";
     import { computed } from "vue";
+    import Attachments from "@/Components/Partials/Attachments.vue";
+    import {removeTransaction} from "@/tools";
 
     export default {
+        methods: {removeTransaction},
         components: {
+            Attachments,
             DatePicker,
             Link,
             BreezeAuthenticatedLayout,
@@ -66,6 +74,7 @@
 
         props: {
             transaction: Object,
+            dataType: String,
             tags: Array
         },
 
@@ -77,6 +86,7 @@
                 tag_id: props.transaction.tag_id,
                 date: new Date(props.transaction.happened_on).toISOString().slice(0, 10),
                 description: props.transaction.description,
+                dataType: props.dataType,
                 amount: props.transaction.formatted_amount
             });
             function submit() {

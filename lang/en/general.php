@@ -8,6 +8,7 @@ return [
     'left_to_spend' => 'Left to Spend',
     'total_earned' => 'Total Earned',
     'total_spent' => 'Total Spent',
+    'total' => 'Total',
     'most_expensive_tag' => 'Most Expensive Tag',
     'most_expensive_day' => 'Most Expensive Day',
 

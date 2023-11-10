@@ -34,7 +34,7 @@ class AttachmentController extends Controller
 
         $this->attachmentRepository->create($transactionId, $filePath);
 
-        return redirect()->intended('/transaction/' . $transactionId);
+        return redirect()->intended('/transaction/' . $transactionId . '/edit');
     }
 
     public function download(Request $request, Attachment $attachment): ?BinaryFileResponse
@@ -45,7 +45,8 @@ class AttachmentController extends Controller
             abort(403);
         }
 
-        if ($attachment->file_type !== 'pdf') {
+        //jpeg,png,pdf
+        if (!in_array($attachment->file_type, ['pdf', 'jpeg', 'png'])) {
             return null;
         }
 
@@ -65,6 +66,6 @@ class AttachmentController extends Controller
 
         $this->attachmentRepository->delete($id);
 
-        return redirect('/transaction/' . $transactionId);
+        return redirect('/transaction/' . $transactionId . '/edit');
     }
 }

@@ -17,43 +17,42 @@
                         <div class="transaction-block overflow-auto" id="transaction-list">
                             <table class="w-full whitespace-nowrap">
                                 <tbody>
-                                <template v-for="recurring in recurrings">
-                                    <tr tabindex="0" class="focus:outline-none h-16 border-y border-gray-100 dark:border-gray-700 rounded">
-                                        <td class="px-1">
-                                            <div class="flex items-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 dark:text-gray-500 mr-2">
-                                                    {{ recurring.description }}
-                                                    <br> <span class="text-sm text-gray-400">{{ formatDate(recurring.last_used_on) }}</span>
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td class="px-3 text-center">
-                                            <Tag :tag="recurring.tag"></Tag>
-                                        </td>
-                                        <td class="px-3 text-center">
-                                            <div class="flex items-center dark:text-gray-500">
-                                                <div class="py-3 px-3 text-sm focus:outline-none leading-none rounded text-blue-700 bg-blue-300 dark:text-blue-200 dark:bg-blue-600">
-                                                    {{ trans('calendar.intervals.' + recurring.interval) }}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-3 text-center">
-                                            <div class="py-3 px-3 text-sm focus:outline-none leading-none rounded" :class="{'text-green-700 bg-green-300 dark:text-green-200 dark:bg-green-600' : recurring.type === 'earning', 'text-red-800 bg-red-400 dark:text-red-200 dark:bg-red-600' : recurring.type === 'spending'}">
-                                                <span v-html="currency"></span> {{ recurring.formatted_amount }}
-                                            </div>
-                                        </td>
-                                        <td class="px-3 text-center">
-                                            <div class="flex items-center justify-around focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 dark:text-gray-200 dark:bg-gray-600 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
-                                                <Link class="p-3" :href="route('recurrings.edit', { id: recurring.id })">
-                                                    <i class="fas fa-pencil fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
+                                    <template v-for="recurring in recurrings" :key="`${recurring.index}`">
+                                        <tr tabindex="0" class="focus:outline-none h-12 border-y border-gray-100 dark:border-gray-700 rounded">
+                                            <td class="px-1 w-7/12">
+                                                <Link :href="route('recurrings.edit', { id: recurring.id })">
+                                                    <div class="flex items-center pl-5">
+                                                        <p class="text-base font-medium leading-none text-gray-700 hover:text-gray-900 dark:text-gray-500 mr-2 ease-in duration-200 dark:hover:text-gray-400" :title="recurring.description">
+                                                            {{ truncate(recurring.description, 60) }}
+                                                        </p>
+                                                    </div>
                                                 </Link>
+                                            </td>
+                                            <td class="text-sm">
+                                                <template v-if="recurring.last_used_on">
+                                                    {{ formatDate(recurring.last_used_on, { dateStyle: 'short'}) }}
+                                                </template>
+                                            </td>
+                                            <td class="px-3 text-center">
+                                                <Tag :tag="recurring.tag"></Tag>
+                                            </td>
+                                            <td class="px-3 text-center">
+                                                <div class="flex items-center dark:text-gray-500">
+                                                    <div class="py-3 px-3 text-sm focus:outline-none leading-none rounded text-blue-700 bg-blue-300 dark:text-blue-200 dark:bg-blue-600">
+                                                        {{ trans('calendar.intervals.' + recurring.interval) }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-3 text-center">
+                                                <Currency  :currency="currency"  :amount="recurring.formatted_amount" :type="recurring.type"></Currency>
+                                            </td>
+                                            <td class="px-3 text-center">
                                                 <div class="p-3 cursor-pointer" @click.stop="remove(recurring)">
                                                     <i class="fas fa-trash fa-xs c-light ml-1 dark:hover:text-gray-100"></i>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -69,10 +68,11 @@
     import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
     import { Link, Head } from "@inertiajs/inertia-vue3";
     import { trans } from 'matice';
-    import { formatDate } from '@/tools';
+    import {formatDate, truncate} from '@/tools';
     import EmptyState from "@/Components/Partials/EmptyState.vue";
     import Tag from '@/Components/Partials/Tag.vue';
     import {Inertia} from "@inertiajs/inertia";
+    import Currency from "@/Pages/Transactions/Partials/Currency.vue";
 
     defineProps({
         recurrings: Array,
