@@ -63,6 +63,12 @@ class TransactionController extends Controller
 
         $transactions = $this->repository->getTransactionsByYearMonth($month, $year, $filterBy);
         $transactionsChart = $this->getTransactionsForChart($transactions);
+        $totalSpentInMont = 0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->type === Transaction::TYPE_SPENDING) {
+                $totalSpentInMont += $transaction->amount;
+            }
+        }
 
         $search = [
             "year" => $year,
@@ -76,31 +82,32 @@ class TransactionController extends Controller
             'tagsPrice' => $tagsPrice,
             'transactionsChart' => $transactionsChart,
             'currentMonthIndex' => $currentMonthIndex,
+            'filterBy' => $filterBy,
+            'totalSpent' => Helper::formatNumber($totalSpentInMont / 100),
             'month' => $currentDate->format("n"),
             'year' => $year,
-            'tags' => Tag::ofSpace(session('space_id'))->orderBy('name')->get()
+            'tags' => Tag::ofSpace(session('space_id'))->orderBy('name')->get(),
+            'dataType' => $this->getDataType($request)
         ]);
     }
 
-    public function show(Transaction $transaction): Response
-    {
-        $this->authorize('view', $transaction);
-        $transaction->load('attachments');
-        return Inertia::render('Transactions/Show', [
-            'transaction' => $transaction
-        ]);
-    }
-
-    public function edit(Transaction $transaction): Response
+    public function edit(Transaction $transaction, Request $request): Response
     {
         $this->authorize('edit', $transaction);
-
+        $transaction->load('attachments');
         $tags = Tag::ofSpace(session('space_id'))->orderBy('name')->get();
-
-        return Inertia::render('Transactions/Edit', compact('tags', 'transaction'));
+        $dataType = $this->getDataType($request);
+        return Inertia::render(
+            'Transactions/Edit',
+            compact(
+                'tags',
+                'transaction',
+                'dataType'
+            )
+        );
     }
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
         $tags = [];
 
@@ -112,6 +119,7 @@ class TransactionController extends Controller
         }
 
         return Inertia::render('Transactions/Create', [
+            'dataType' => $this->getDataType($request),
             'tags' => $tags,
             'currencies' => $this->currencyRepository->getIfConversionRatePresent(),
             'defaultTransactionType' => Auth::user()->default_transaction_type,
@@ -136,20 +144,7 @@ class TransactionController extends Controller
             'amount' => $amount
         ]);
 
-        return redirect()->route('transactions.index');
-    }
-
-    public function updateTag(Request $request, Transaction $transaction): RedirectResponse
-    {
-        $this->authorize('update', $transaction);
-
-        $request->validate(['tag_id' => 'nullable|exists:tags,id']);
-
-        $this->repository->update($transaction->id, [
-            'tag_id' => $request->input('tag_id'),
-        ]);
-
-        return back();
+        return redirect()->route('transactions.index', [ 'dataType' => $this->getDataType($request)]);
     }
 
     public function store(Request $request)
@@ -178,7 +173,7 @@ class TransactionController extends Controller
             $amount
         );
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index', [ 'dataType' => $this->getDataType($request) ]);
     }
 
     public function restore($id): RedirectResponse
@@ -203,13 +198,13 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $transaction = Transaction::find($id);
         $this->authorize('delete', $transaction);
 
         $transaction->delete();
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index', [ "dataType" => $this->getDataType($request)]);
     }
 
     public function purge($id): RedirectResponse
@@ -269,5 +264,24 @@ class TransactionController extends Controller
         }
 
         return $transactionsChart;
+    }
+
+    private function getDataType(Request $request): string
+    {
+        if (
+            $request->input('dataType')
+            && in_array(
+                $request->input('dataType'),
+                [
+                    'resume',
+                    'list',
+                    'chart',
+                    'tags'
+                ]
+            )
+        ) {
+            return $request->input('dataType');
+        }
+        return "resume";
     }
 }

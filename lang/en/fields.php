@@ -31,5 +31,6 @@ return [
     'status' => 'Status',
     'deletion_date' => 'Deletion date',
     'sync_bank_activate' => 'Activate bank synchronization',
-    'active' => 'Active'
+    'active' => 'Active',
+    'resume' => 'Resume'
 ];

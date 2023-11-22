@@ -1,5 +1,5 @@
 <template>
-    <div class="row row--separate row--bottom mt-3 mb-1">
+    <div class="row row--separate row--bottom my-3">
         <h3>{{ trans('models.attachments') }}</h3>
         <form @submit.prevent="submitFile">
             <input type="file" name="file" @input="form.file = $event.target.files[0]" @change="submitFile" />
@@ -64,7 +64,9 @@
                     _method: 'put',
                     file: form.file,
                     forceFormData: true,
-                    onSuccess: () => form.reset('file'),
+                    onSuccess: () => {
+                        form.reset('file')
+                    },
                 })
             }
 

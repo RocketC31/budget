@@ -142,6 +142,7 @@
         },
 
         props: {
+            dataType: String,
             tags: Array,
             currencies: Array,
             defaultTransactionType: String,
@@ -215,7 +216,8 @@
                         amount: this.amount,
                         currency_id: this.selectedCurrencyId,
                         description: this.description,
-                        type: this.type
+                        type: this.type,
+                        dataType: this.dataType
                     }
 
                     if (this.tag) {

@@ -1,4 +1,5 @@
-import { getLocale } from "matice";
+import {getLocale, trans} from "matice";
+import {Inertia} from "@inertiajs/inertia";
 
 export function changeTheme(theme) {
     let bodyClass = document.getElementById("body").classList;
@@ -54,6 +55,26 @@ export function truncate (text, num) {
         return text.split("").slice(0, num).join("") + "...";
     }
     return text;
+}
+
+export function debounce(fn, wait) {
+    let timer;
+    return (...args) => {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        const context = this;
+        timer = setTimeout(()=> {
+            fn.apply(context, args);
+        }, wait);
+    }
+}
+
+export function removeTransaction(transactionId, dataType = "resume") {
+    let url = `/transactions/${transactionId}?dataType=${dataType}`;
+    if (confirm(trans('actions.confirm_action'))) {
+        Inertia.delete(url);
+    }
 }
 
 export default {
