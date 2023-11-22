@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "@ckpack/vue-color": "^1.1.8",
-        "axios": "^0.26.1",
+        "axios": "^1.6.0",
         "chart.js": "^3.7.1",
         "matice": "https://github.com/RocketC31/matice",
         "uuid": "^8.3.2"
