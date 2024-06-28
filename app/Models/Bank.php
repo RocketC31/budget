@@ -12,7 +12,8 @@ class Bank extends Model
         'requisition_id',
         'account_id',
         'space_id',
-        'link'
+        'link',
+        'ai_active'
     ];
 
     protected $dates = ['happened_on', 'deleted_at'];

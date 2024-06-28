@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\FindTagFromAI;
 use App\Helper;
 use App\Models\Bank;
+use App\Models\Tag;
 use App\Models\Transaction;
 use App\Providers\NordigenServiceProvider;
 use Illuminate\Bus\Queueable;
@@ -18,19 +20,23 @@ class FetchTransactionFromBank implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+    use FindTagFromAI;
+
+    protected array $tags = [];
 
     public function handle(): void
     {
-        if (config('app.bank_sync.available')) {
+        if (config('bank_sync.available')) {
             $banks = Bank::whereNotNull("account_id")->get();
             try {
                 $bankProvider = new NordigenServiceProvider(
-                    config('app.bank_sync.secret_id'),
-                    config('app.bank_sync.secret_key')
+                    config('bank_sync.secret_id'),
+                    config('bank_sync.secret_key')
                 );
                 $dateFrom = new \DateTime();
                 $dateFrom->sub(new \DateInterval("P1D"));
                 foreach ($banks as $bank) {
+                    $tags = Tag::ofSpace($bank->space_id)->get()->toArray();
                     $data = $bankProvider->getTransactions(
                         $bank->account_id,
                         $dateFrom->format('Y-m-d'),
@@ -38,7 +44,7 @@ class FetchTransactionFromBank implements ShouldQueue
                     );
                     if (array_key_exists("transactions", $data) && array_key_exists("booked", $data["transactions"])) {
                         foreach ($data["transactions"]["booked"] as $transaction) {
-                            $this->createTransactionFromBank($bank->space_id, $transaction);
+                            $this->createTransactionFromBank($bank, $transaction, $tags);
                         }
                     }
                 }
@@ -47,11 +53,18 @@ class FetchTransactionFromBank implements ShouldQueue
         }
     }
 
-    private function createTransactionFromBank(int $spaceId, array $bankData)
+    private function createTransactionFromBank(Bank $bank, array $bankData, ?array $tags = null): void
     {
+        $description = $this->cleanDescription($bankData['remittanceInformationUnstructuredArray']);
+        $tagId = null;
+        if ((bool)$bank->ai_active) {
+            $tagId = $this->findTagFromIA($description, $tags);
+        }
+
         $params = [
             'type' => floatval($bankData['transactionAmount']['amount']) < 0 ? 'spending' : 'earning',
-            'space_id' => $spaceId,
+            'space_id' => $bank->space_id,
+            'tag_id' => $tagId,
             'happened_on' => $bankData['valueDate'],
             'description' => $this->cleanDescription($bankData['remittanceInformationUnstructuredArray']),
             'amount' => Helper::rawNumberToInteger(

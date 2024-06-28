@@ -31,6 +31,9 @@
                                 </div>
                                 <a v-if="linkBank" :href="linkBank">{{ trans('actions.connect_bank') }}</a>
                                 <div v-if="space.bank && space.bank.account_id && space.sync_active" class="hint mt-05">{{ trans('general.configured_bank') }} {{ space.bank.name }}</div>
+                                <div v-if="space.bank && space.bank.account_id && space.sync_active" class="input input--small mt-4 mb-0" >
+                                    <Toggle @UpdateActive="(isActive) => space.bank.ai_active = isActive ? 1 : 0" :label="trans('fields.sync_bank_ai_activate')" :checked="space.bank.ai_active"></Toggle>
+                                </div>
                             </template>
                         </div>
                     </div>

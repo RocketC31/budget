@@ -55,7 +55,8 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message')
             ],
             'registrationDisable' => config('app.disable_registration'),
-            'bank_sync_available' => config('app.bank_sync.available'),
+            'bank_sync_available' => config('bank_sync.available'),
+            'ai_api' => !is_null(config('bank_sync.ai_api')),
         ]);
     }
 }

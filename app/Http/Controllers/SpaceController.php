@@ -83,11 +83,11 @@ class SpaceController extends Controller
         $banks = [];
         //If active sync is send, and if we have config available
         $space->load('bank');
-        if ($space->sync_active && config('app.bank_sync.available') && !$space->bank) {
+        if ($space->sync_active && config('bank_sync.available') && !$space->bank) {
             try {
                 $bankProvider = new NordigenServiceProvider(
-                    config('app.bank_sync.secret_id'),
-                    config('app.bank_sync.secret_key')
+                    config('bank_sync.secret_id'),
+                    config('bank_sync.secret_key')
                 );
 
                 $banks = $bankProvider->getListOfInstitutions(Auth::user()->language);
@@ -121,30 +121,46 @@ class SpaceController extends Controller
         }
 
         //If active sync is send, and if we have config available
-        if (config('app.bank_sync.available')) {
+        if (config('bank_sync.available')) {
             $data['sync_active'] = $request->sync_active ? 1 : 0;
-
-            if ($request->bank && $request->sync_active && (!$space->bank || is_null($space->bank->account_id))) {
+            if ($request->bank && $request->sync_active) {
+                $bankData = null;
                 $request->validate($this->bankRepository->getValidationRules());
-                //If whe have data for bank
-                try {
-                    $bankProvider = new NordigenServiceProvider(
-                        config('app.bank_sync.secret_id'),
-                        config('app.bank_sync.secret_key')
-                    );
+                if (!$space->bank || is_null($space->bank->account_id)) {
+                    //If whe have data for bank
+                    try {
+                        $bankProvider = new NordigenServiceProvider(
+                            config('bank_sync.secret_id'),
+                            config('bank_sync.secret_key')
+                        );
 
-                    $sessionData = $bankProvider->getSessionData(route('sync_bank', $space->id), $request->bank['id']);
-                    if (array_key_exists("link", $sessionData) && array_key_exists("requisition_id", $sessionData)) {
-                        Bank::updateOrCreate([
-                            'space_id' => $space->id
-                        ], [
-                            'requisition_id' => $sessionData["requisition_id"],
-                            'name' => $request->bank["name"],
-                            'logo' => $request->bank["logo"],
-                            'link' => $sessionData["link"]
-                        ]);
+                        $sessionData = $bankProvider->getSessionData(
+                            route('sync_bank', $space->id),
+                            $request->bank['id']
+                        );
+                        if (
+                            array_key_exists("link", $sessionData)
+                            && array_key_exists("requisition_id", $sessionData)
+                        ) {
+                            $bankData = [
+                                'requisition_id' => $sessionData["requisition_id"],
+                                'name' => $request->bank["name"],
+                                'logo' => $request->bank["logo"],
+                                'link' => $sessionData["link"]
+                            ];
+                        }
+                    } catch (\Exception $exception) {
                     }
-                } catch (\Exception $exception) {
+                } else {
+                    $bankData = [
+                        'ai_active' => $request->bank["ai_active"]
+                    ];
+                }
+
+                if (!is_null($bankData)) {
+                    Bank::updateOrCreate([
+                        'space_id' => $space->id
+                    ], $bankData);
                 }
             }
         }

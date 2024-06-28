@@ -25,8 +25,8 @@ class BankSyncController extends Controller
         ) {
             try {
                 $bankProvider = new NordigenServiceProvider(
-                    config('app.bank_sync.secret_id'),
-                    config('app.bank_sync.secret_key')
+                    config('bank_sync.secret_id'),
+                    config('bank_sync.secret_key')
                 );
                 $accounts = $bankProvider->getListOfAccounts($bank->requisition_id);
                 if ($accounts) {

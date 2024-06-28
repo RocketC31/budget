@@ -9,7 +9,8 @@ class BankRepository
         return [
             'bank.id' => 'required|max:255',
             'bank.logo' => 'required|max:255',
-            'bank.name' => 'required|max:255'
+            'bank.name' => 'required|max:255',
+            'bank.ai_active' => 'sometimes|boolean'
         ];
     }
 }
