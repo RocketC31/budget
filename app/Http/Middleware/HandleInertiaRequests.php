@@ -45,15 +45,19 @@ class HandleInertiaRequests extends Middleware
         $space = session('space_id') ? Space::find(session('space_id')) : null;
         $versionFileExists = file_exists(base_path() . '/version.txt');
         $versionNumber = $versionFileExists ? file_get_contents(base_path() . '/version.txt') : '-';
-        $bank = Bank::ofSpace($space->id)->first();
         $bankExpireIn = null;
-        if ($bank) {
-            $createdDate = new DateTime($bank->created_at);
-            $expirationDate = (clone $createdDate)->add(new DateInterval("P90D"));
-            $now = new DateTime();
-            $interval = $now->diff($expirationDate);
-            $bankExpireIn = $expirationDate < $now ? 0 : $interval->days;
+        if ($space) {
+            $bank = Bank::ofSpace($space->id)->first();
+
+            if ($bank) {
+                $createdDate = new DateTime($bank->created_at);
+                $expirationDate = (clone $createdDate)->add(new DateInterval("P90D"));
+                $now = new DateTime();
+                $interval = $now->diff($expirationDate);
+                $bankExpireIn = $expirationDate < $now ? 0 : $interval->days;
+            }
         }
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user()
