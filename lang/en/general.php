@@ -56,5 +56,6 @@ return [
     'empty_trash' => 'Trash is empty',
     'change_your_preference' => 'Change your preference',
     'demo_mode' => "[DEMO_MODE] The database will be reset daily.",
-    'configured_bank' => 'Bank currently configured :'
+    'configured_bank' => 'Bank currently configured :',
+    'bank_expire_in' => 'Your bank sync expires in :days days. To continue using the service, please disable and re-enable sync to renew your consent.',
 ];

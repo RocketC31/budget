@@ -26,7 +26,6 @@ trait FindTagFromAI
         $prompt .= " This categories can to be in an other language. Translate it before done your choice";
         $prompt .= " Don't give any other text explanation.";
 
-        //TODO: if needed make interface for other IA Provider
         try {
             $client = new Client(config('bank_sync.ai_api'));
             $response = $client->geminiPro()->generateContent(new TextPart($prompt))->text();

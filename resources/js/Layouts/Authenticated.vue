@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div v-if="bankExpireIn !== null && bankExpireIn < 7" class="p-2 text-center bg-yellow-100">
+            {{ trans('general.bank_expire_in', { args: { days: bankExpireIn } } ) }}
+        </div>
         <Menu></Menu>
         <!-- Page Content -->
         <main>
@@ -34,6 +37,7 @@
     import { Inertia } from "@inertiajs/inertia";
 
     const versionNumber = computed(() => usePage().props.value.versionNumber);
+    const bankExpireIn = computed(() => usePage().props.value.bank_expire_in)
 
     const user = computed(() => usePage().props.value.auth.user);
     const flash = computed(() => usePage().props.value.flash.message);
