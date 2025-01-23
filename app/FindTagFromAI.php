@@ -31,7 +31,8 @@ trait FindTagFromAI
         $prompt .= " This categories can to be in an other language. Translate it before done your choice";
         $prompt .= " Don't give any other text explanation.";
         if ($tagOnSimilar) {
-            $prompt .= " For information, a previous similar transaction was assigned to the category {$tagSimilarLabel} with ID {$tagOnSimilar}.";
+            $prompt .= " For information, a previous similar transaction was assigned to the category";
+            $prompt .= " {$tagSimilarLabel} with ID {$tagOnSimilar}.";
             $prompt .= " If you wouldn't have categorized it in the same place trust this similar category instead.";
         }
         try {
