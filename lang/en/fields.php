@@ -31,6 +31,7 @@ return [
     'status' => 'Status',
     'deletion_date' => 'Deletion date',
     'sync_bank_activate' => 'Activate bank synchronization',
+    'sync_bank_ai_activate' => 'Enable automatic AI tag assignment',
     'active' => 'Active',
     'resume' => 'Resume'
 ];

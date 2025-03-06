@@ -55,4 +55,5 @@ return [
     'change_your_preference' => 'Changez vos préférences',
     'demo_mode' => "[MODE_DEMO] La base de donnée sera réinitialiser tous les jours.",
     'configured_bank' => 'Banque actuellement configuré :',
+    'bank_expire_in' => 'Votre synchronisation bancaire expire dans :days jours. Pour continuer à bénéficier du service, merci de désactiver et de réactiver la synchronisation afin de renouveler votre consentement.',
 ];

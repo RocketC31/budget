@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Bank;
 use App\Models\Space;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -42,6 +45,19 @@ class HandleInertiaRequests extends Middleware
         $space = session('space_id') ? Space::find(session('space_id')) : null;
         $versionFileExists = file_exists(base_path() . '/version.txt');
         $versionNumber = $versionFileExists ? file_get_contents(base_path() . '/version.txt') : '-';
+        $bankExpireIn = null;
+        if ($space) {
+            $bank = Bank::ofSpace($space->id)->first();
+
+            if ($bank) {
+                $createdDate = new DateTime($bank->created_at);
+                $expirationDate = (clone $createdDate)->add(new DateInterval("P90D"));
+                $now = new DateTime();
+                $interval = $now->diff($expirationDate);
+                $bankExpireIn = $expirationDate < $now ? 0 : $interval->days;
+            }
+        }
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user()
@@ -55,7 +71,9 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message')
             ],
             'registrationDisable' => config('app.disable_registration'),
-            'bank_sync_available' => config('app.bank_sync.available'),
+            'bank_sync_available' => config('bank_sync.available'),
+            'ai_api' => !is_null(config('bank_sync.ai_api')),
+            'bank_expire_in' => $bankExpireIn
         ]);
     }
 }

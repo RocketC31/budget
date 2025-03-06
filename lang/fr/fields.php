@@ -31,6 +31,7 @@ return [
     'status' => 'Statut',
     'deletion_date' => 'Date de suppression',
     'sync_bank_activate' => 'Activer la synchronisation bancaire',
+    'sync_bank_ai_activate' => 'Activer l\'attribution des tags automatiques par IA',
     'active' => 'Actif',
     'resume' => "Résumé"
 ];

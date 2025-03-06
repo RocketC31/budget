@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FindTagFromAI;
 use App\Helper;
 use App\Models\Space;
 use App\Models\Tag;
@@ -21,6 +22,8 @@ use Intervention\Image\Exception\NotFoundException;
 
 class TransactionController extends Controller
 {
+    use FindTagFromAI;
+
     private TransactionRepository $repository;
     private CurrencyRepository $currencyRepository;
     private RecurringRepository $recurringRepository;
