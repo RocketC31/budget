@@ -8,7 +8,7 @@
         "php": "^8.0",
         "ext-calendar": "*",
         "doctrine/dbal": "^2.8",
-        "gemini-api-php/client": "^1.4",
+        "gemini-api-php/client": "^1.7.2",
         "genl/matice": "^1.1",
         "guzzlehttp/guzzle": "^7.4.2",
         "inertiajs/inertia-laravel": "^1.3.0",

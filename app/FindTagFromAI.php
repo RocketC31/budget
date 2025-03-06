@@ -37,7 +37,7 @@ trait FindTagFromAI
         }
         try {
             $client = new Client(config('bank_sync.ai_api'));
-            $response = $client->geminiPro()->generateContent(new TextPart($prompt))->text();
+            $response = $client->geminiPro15()->generateContent(new TextPart($prompt))->text();
             return (int)$response > 0 ? (int)$response : null;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());

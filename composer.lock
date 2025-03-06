@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2900a30a99796e901e058f16c53150a4",
+    "content-hash": "349977bec865fee6d3c005c6e6f3b10b",
     "packages": [
         {
             "name": "brick/math",
@@ -917,16 +917,16 @@
         },
         {
             "name": "gemini-api-php/client",
-            "version": "v1.6.0",
+            "version": "v1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gemini-api-php/client.git",
-                "reference": "e3bc5201f2356755fbf10165761c58257eb72c71"
+                "reference": "a48e61285d82b24117a5c8928dd1e504818f908b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gemini-api-php/client/zipball/e3bc5201f2356755fbf10165761c58257eb72c71",
-                "reference": "e3bc5201f2356755fbf10165761c58257eb72c71",
+                "url": "https://api.github.com/repos/gemini-api-php/client/zipball/a48e61285d82b24117a5c8928dd1e504818f908b",
+                "reference": "a48e61285d82b24117a5c8928dd1e504818f908b",
                 "shasum": ""
             },
             "require": {
@@ -978,9 +978,9 @@
             ],
             "support": {
                 "issues": "https://github.com/gemini-api-php/client/issues",
-                "source": "https://github.com/gemini-api-php/client/tree/v1.6.0"
+                "source": "https://github.com/gemini-api-php/client/tree/v1.7.2"
             },
-            "time": "2024-12-01T16:48:18+00:00"
+            "time": "2025-01-31T15:31:02+00:00"
         },
         {
             "name": "genl/matice",
